@@ -34,6 +34,7 @@ export type OrderItemAvgAggregateOutputType = {
   sheets: number | null
   sheetsPerRoll: number | null
   unitPrice: runtime.Decimal | null
+  supplyAmount: runtime.Decimal | null
   materialWidth: runtime.Decimal | null
   sizeWidth: runtime.Decimal | null
   sizeHeight: runtime.Decimal | null
@@ -49,6 +50,7 @@ export type OrderItemSumAggregateOutputType = {
   sheets: number | null
   sheetsPerRoll: number | null
   unitPrice: runtime.Decimal | null
+  supplyAmount: runtime.Decimal | null
   materialWidth: runtime.Decimal | null
   sizeWidth: runtime.Decimal | null
   sizeHeight: runtime.Decimal | null
@@ -66,6 +68,7 @@ export type OrderItemMinAggregateOutputType = {
   sheets: number | null
   sheetsPerRoll: number | null
   unitPrice: runtime.Decimal | null
+  supplyAmount: runtime.Decimal | null
   material: string | null
   materialWidth: runtime.Decimal | null
   perforation: boolean | null
@@ -97,6 +100,7 @@ export type OrderItemMaxAggregateOutputType = {
   sheets: number | null
   sheetsPerRoll: number | null
   unitPrice: runtime.Decimal | null
+  supplyAmount: runtime.Decimal | null
   material: string | null
   materialWidth: runtime.Decimal | null
   perforation: boolean | null
@@ -128,6 +132,7 @@ export type OrderItemCountAggregateOutputType = {
   sheets: number
   sheetsPerRoll: number
   unitPrice: number
+  supplyAmount: number
   material: number
   materialWidth: number
   perforation: number
@@ -159,6 +164,7 @@ export type OrderItemAvgAggregateInputType = {
   sheets?: true
   sheetsPerRoll?: true
   unitPrice?: true
+  supplyAmount?: true
   materialWidth?: true
   sizeWidth?: true
   sizeHeight?: true
@@ -174,6 +180,7 @@ export type OrderItemSumAggregateInputType = {
   sheets?: true
   sheetsPerRoll?: true
   unitPrice?: true
+  supplyAmount?: true
   materialWidth?: true
   sizeWidth?: true
   sizeHeight?: true
@@ -191,6 +198,7 @@ export type OrderItemMinAggregateInputType = {
   sheets?: true
   sheetsPerRoll?: true
   unitPrice?: true
+  supplyAmount?: true
   material?: true
   materialWidth?: true
   perforation?: true
@@ -222,6 +230,7 @@ export type OrderItemMaxAggregateInputType = {
   sheets?: true
   sheetsPerRoll?: true
   unitPrice?: true
+  supplyAmount?: true
   material?: true
   materialWidth?: true
   perforation?: true
@@ -253,6 +262,7 @@ export type OrderItemCountAggregateInputType = {
   sheets?: true
   sheetsPerRoll?: true
   unitPrice?: true
+  supplyAmount?: true
   material?: true
   materialWidth?: true
   perforation?: true
@@ -371,6 +381,7 @@ export type OrderItemGroupByOutputType = {
   sheets: number | null
   sheetsPerRoll: number | null
   unitPrice: runtime.Decimal | null
+  supplyAmount: runtime.Decimal | null
   material: string | null
   materialWidth: runtime.Decimal | null
   perforation: boolean
@@ -425,6 +436,7 @@ export type OrderItemWhereInput = {
   sheets?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   sheetsPerRoll?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   unitPrice?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFilter<"OrderItem"> | boolean
@@ -458,6 +470,7 @@ export type OrderItemOrderByWithRelationInput = {
   sheets?: Prisma.SortOrderInput | Prisma.SortOrder
   sheetsPerRoll?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  supplyAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   material?: Prisma.SortOrderInput | Prisma.SortOrder
   materialWidth?: Prisma.SortOrderInput | Prisma.SortOrder
   perforation?: Prisma.SortOrder
@@ -495,6 +508,7 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   sheets?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   sheetsPerRoll?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   unitPrice?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFilter<"OrderItem"> | boolean
@@ -528,6 +542,7 @@ export type OrderItemOrderByWithAggregationInput = {
   sheets?: Prisma.SortOrderInput | Prisma.SortOrder
   sheetsPerRoll?: Prisma.SortOrderInput | Prisma.SortOrder
   unitPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  supplyAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   material?: Prisma.SortOrderInput | Prisma.SortOrder
   materialWidth?: Prisma.SortOrderInput | Prisma.SortOrder
   perforation?: Prisma.SortOrder
@@ -567,6 +582,7 @@ export type OrderItemScalarWhereWithAggregatesInput = {
   sheets?: Prisma.IntNullableWithAggregatesFilter<"OrderItem"> | number | null
   sheetsPerRoll?: Prisma.IntNullableWithAggregatesFilter<"OrderItem"> | number | null
   unitPrice?: Prisma.DecimalNullableWithAggregatesFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.DecimalNullableWithAggregatesFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableWithAggregatesFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableWithAggregatesFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolWithAggregatesFilter<"OrderItem"> | boolean
@@ -595,6 +611,7 @@ export type OrderItemCreateInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -628,6 +645,7 @@ export type OrderItemUncheckedCreateInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -656,6 +674,7 @@ export type OrderItemUpdateInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -689,6 +708,7 @@ export type OrderItemUncheckedUpdateInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -720,6 +740,7 @@ export type OrderItemCreateManyInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -748,6 +769,7 @@ export type OrderItemUpdateManyMutationInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -779,6 +801,7 @@ export type OrderItemUncheckedUpdateManyInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -826,6 +849,7 @@ export type OrderItemCountOrderByAggregateInput = {
   sheets?: Prisma.SortOrder
   sheetsPerRoll?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  supplyAmount?: Prisma.SortOrder
   material?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
   perforation?: Prisma.SortOrder
@@ -855,6 +879,7 @@ export type OrderItemAvgOrderByAggregateInput = {
   sheets?: Prisma.SortOrder
   sheetsPerRoll?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  supplyAmount?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
   sizeWidth?: Prisma.SortOrder
   sizeHeight?: Prisma.SortOrder
@@ -872,6 +897,7 @@ export type OrderItemMaxOrderByAggregateInput = {
   sheets?: Prisma.SortOrder
   sheetsPerRoll?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  supplyAmount?: Prisma.SortOrder
   material?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
   perforation?: Prisma.SortOrder
@@ -903,6 +929,7 @@ export type OrderItemMinOrderByAggregateInput = {
   sheets?: Prisma.SortOrder
   sheetsPerRoll?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  supplyAmount?: Prisma.SortOrder
   material?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
   perforation?: Prisma.SortOrder
@@ -932,6 +959,7 @@ export type OrderItemSumOrderByAggregateInput = {
   sheets?: Prisma.SortOrder
   sheetsPerRoll?: Prisma.SortOrder
   unitPrice?: Prisma.SortOrder
+  supplyAmount?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
   sizeWidth?: Prisma.SortOrder
   sizeHeight?: Prisma.SortOrder
@@ -1038,6 +1066,7 @@ export type OrderItemCreateWithoutProductInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -1069,6 +1098,7 @@ export type OrderItemUncheckedCreateWithoutProductInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -1129,6 +1159,7 @@ export type OrderItemScalarWhereInput = {
   sheets?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   sheetsPerRoll?: Prisma.IntNullableFilter<"OrderItem"> | number | null
   unitPrice?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFilter<"OrderItem"> | boolean
@@ -1157,6 +1188,7 @@ export type OrderItemCreateWithoutOrderInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -1188,6 +1220,7 @@ export type OrderItemUncheckedCreateWithoutOrderInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -1244,6 +1277,7 @@ export type OrderItemCreateManyProductInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -1272,6 +1306,7 @@ export type OrderItemUpdateWithoutProductInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1303,6 +1338,7 @@ export type OrderItemUncheckedUpdateWithoutProductInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1333,6 +1369,7 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1363,6 +1400,7 @@ export type OrderItemCreateManyOrderInput = {
   sheets?: number | null
   sheetsPerRoll?: number | null
   unitPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: boolean
@@ -1391,6 +1429,7 @@ export type OrderItemUpdateWithoutOrderInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1422,6 +1461,7 @@ export type OrderItemUncheckedUpdateWithoutOrderInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1452,6 +1492,7 @@ export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
   sheets?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   sheetsPerRoll?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   unitPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1485,6 +1526,7 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   sheets?: boolean
   sheetsPerRoll?: boolean
   unitPrice?: boolean
+  supplyAmount?: boolean
   material?: boolean
   materialWidth?: boolean
   perforation?: boolean
@@ -1520,6 +1562,7 @@ export type OrderItemSelectScalar = {
   sheets?: boolean
   sheetsPerRoll?: boolean
   unitPrice?: boolean
+  supplyAmount?: boolean
   material?: boolean
   materialWidth?: boolean
   perforation?: boolean
@@ -1541,7 +1584,7 @@ export type OrderItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "productName" | "printType" | "printPrice" | "sheets" | "sheetsPerRoll" | "unitPrice" | "material" | "materialWidth" | "perforation" | "sizeWidth" | "sizeHeight" | "shape" | "okkuri" | "lamination" | "foil" | "cuttingMethod" | "rollDirection" | "slit" | "dataType" | "lastDataDate" | "designFileStatus" | "designImageUrl" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
+export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "productName" | "printType" | "printPrice" | "sheets" | "sheetsPerRoll" | "unitPrice" | "supplyAmount" | "material" | "materialWidth" | "perforation" | "sizeWidth" | "sizeHeight" | "shape" | "okkuri" | "lamination" | "foil" | "cuttingMethod" | "rollDirection" | "slit" | "dataType" | "lastDataDate" | "designFileStatus" | "designImageUrl" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.OrderItem$productArgs<ExtArgs>
@@ -1563,6 +1606,7 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     sheets: number | null
     sheetsPerRoll: number | null
     unitPrice: runtime.Decimal | null
+    supplyAmount: runtime.Decimal | null
     material: string | null
     materialWidth: runtime.Decimal | null
     perforation: boolean
@@ -1962,6 +2006,7 @@ export interface OrderItemFieldRefs {
   readonly sheets: Prisma.FieldRef<"OrderItem", 'Int'>
   readonly sheetsPerRoll: Prisma.FieldRef<"OrderItem", 'Int'>
   readonly unitPrice: Prisma.FieldRef<"OrderItem", 'Decimal'>
+  readonly supplyAmount: Prisma.FieldRef<"OrderItem", 'Decimal'>
   readonly material: Prisma.FieldRef<"OrderItem", 'String'>
   readonly materialWidth: Prisma.FieldRef<"OrderItem", 'Decimal'>
   readonly perforation: Prisma.FieldRef<"OrderItem", 'Boolean'>

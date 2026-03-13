@@ -199,6 +199,7 @@ export const OrderItemScalarFieldEnum = {
   sheets: 'sheets',
   sheetsPerRoll: 'sheetsPerRoll',
   unitPrice: 'unitPrice',
+  supplyAmount: 'supplyAmount',
   material: 'material',
   materialWidth: 'materialWidth',
   perforation: 'perforation',
