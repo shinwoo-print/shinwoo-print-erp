@@ -64,7 +64,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         lastDataDate: item.lastDataDate
           ? item.lastDataDate.toISOString().split("T")[0]
           : "",
-        labelGap: item.labelGap ? item.labelGap.toString() : "", // ← 추가
+        labelGap: item.labelGap ? item.labelGap.toString() : "",
       })),
     };
 
@@ -131,6 +131,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           deliveryRegion: data.deliveryRegion || null,
           photoInspection: data.photoInspection || false,
           sampleShipping: data.sampleShipping || false,
+          tightRoll: data.tightRoll || false,
           items: {
             create: data.items.map((item, index) => ({
               productId: item.productId || null,

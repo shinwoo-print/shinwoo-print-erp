@@ -75,6 +75,7 @@ export const orderFormSchema = z.object({
   deliveryRegion: z.string().max(50).optional().or(z.literal("")),
   photoInspection: z.boolean().optional().default(false),
   sampleShipping: z.boolean().optional().default(false),
+  tightRoll: z.boolean().optional().default(false),
 });
 
 export type OrderFormValues = z.infer<typeof orderFormSchema>;

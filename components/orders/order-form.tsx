@@ -108,6 +108,7 @@ const defaultFormValues: OrderFormValues = {
   deliveryRegion: "",
   photoInspection: false,
   sampleShipping: false,
+  tightRoll: false,
   items: [{ ...emptyItem }],
 };
 
@@ -253,6 +254,7 @@ export function OrderForm({
         deliveryRegion: data.deliveryRegion || "",
         photoInspection: data.photoInspection || false,
         sampleShipping: data.sampleShipping || false,
+        tightRoll: data.tightRoll || false,
         items: (data.items || []).map(
           (item: Record<string, unknown>, idx: number) => ({
             productId: item.productId ?? null,
@@ -468,7 +470,7 @@ export function OrderForm({
                 />
               </div>
 
-              {/* 체크박스: 사진검수 + 샘플발송 */}
+              {/* 체크박스: 사진검수 + 샘플발송 + 롤짱짱하게 */}
               <div className="flex items-center gap-6 col-span-2">
                 <div className="flex items-center gap-2">
                   <input
@@ -490,6 +492,17 @@ export function OrderForm({
                   />
                   <Label htmlFor="sampleShipping" className="text-[0.95rem]">
                     샘플발송
+                  </Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="tightRoll"
+                    className="h-4 w-4 rounded border-gray-300"
+                    {...register("tightRoll")}
+                  />
+                  <Label htmlFor="tightRoll" className="text-[0.95rem]">
+                    롤 짱짱하게 감아주세요
                   </Label>
                 </div>
               </div>

@@ -1,9 +1,11 @@
-// app/api/estimates/route.ts
 import { prisma } from "@/lib/prisma";
 import { generateEstimateNumber } from "@/lib/utils/generate-number";
 import { estimateFormSchema } from "@/lib/validators/estimate";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * GET /api/estimates — 견적서 목록 (검색 + 진행단계필터 + 페이지네이션)
+ */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
@@ -40,6 +42,8 @@ export async function GET(request: NextRequest) {
       ...e,
       estimateDate: e.estimateDate.toISOString().split("T")[0],
       totalSupplyAmount: e.totalSupplyAmount.toString(),
+      totalVat: e.totalVat.toString(),
+      totalAmount: e.totalAmount.toString(),
       itemCount: e.items.length,
       items: undefined,
     }));
@@ -54,6 +58,9 @@ export async function GET(request: NextRequest) {
   }
 }
 
+/**
+ * POST /api/estimates — 견적서 생성
+ */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -80,10 +87,14 @@ export async function POST(request: NextRequest) {
 
     const estimateNumber = await generateEstimateNumber(client.companyName);
 
-    // totalSupplyAmount 계산
+    // 합계 계산
     const totalSupply = data.items.reduce((sum, item) => {
       return sum + (Number(item.supplyAmount) || 0);
     }, 0);
+    const totalVat = data.items.reduce((sum, item) => {
+      return sum + (Number(item.vat) || 0);
+    }, 0);
+    const totalAmount = totalSupply + totalVat;
 
     const estimate = await prisma.estimate.create({
       data: {
@@ -91,9 +102,12 @@ export async function POST(request: NextRequest) {
         estimateDate: new Date(data.estimateDate),
         clientId: data.clientId,
         clientContactName: data.clientContactName || null,
+        recipientText: data.recipientText || null,
         stage: data.stage || "1차제안",
         validDays: data.validDays,
         totalSupplyAmount: totalSupply,
+        totalVat: totalVat,
+        totalAmount: totalAmount,
         note: data.note || null,
         items: {
           create: data.items.map((item, idx) => ({
@@ -101,8 +115,11 @@ export async function POST(request: NextRequest) {
             productName: item.productName,
             spec: item.spec || null,
             quantity: item.quantity,
+            quantityText: item.quantityText || null,
             unitPrice: item.unitPrice ? Number(item.unitPrice) : 0,
+            unitPriceText: item.unitPriceText || null,
             supplyAmount: item.supplyAmount ? Number(item.supplyAmount) : 0,
+            vat: item.vat ? Number(item.vat) : 0,
             note: item.note || null,
             sortOrder: idx,
           })),
@@ -129,10 +146,13 @@ function serializeEstimate(e: Record<string, unknown>) {
   return {
     ...e,
     totalSupplyAmount: e.totalSupplyAmount ? String(e.totalSupplyAmount) : "0",
+    totalVat: e.totalVat ? String(e.totalVat) : "0",
+    totalAmount: e.totalAmount ? String(e.totalAmount) : "0",
     items: items.map((item) => ({
       ...item,
       unitPrice: item.unitPrice ? String(item.unitPrice) : "0",
       supplyAmount: item.supplyAmount ? String(item.supplyAmount) : "0",
+      vat: item.vat ? String(item.vat) : "0",
     })),
   };
 }

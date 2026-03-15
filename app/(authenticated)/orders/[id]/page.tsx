@@ -31,6 +31,7 @@ interface OrderData {
   deliveryRegion: string | null;
   photoInspection: boolean;
   sampleShipping: boolean;
+  tightRoll: boolean;
   client: {
     id: number;
     companyName: string;
@@ -196,6 +197,7 @@ export default function OrderDetailPage() {
     deliveryRegion: order.deliveryRegion || "",
     photoInspection: order.photoInspection || false,
     sampleShipping: order.sampleShipping || false,
+    tightRoll: order.tightRoll || false,
     items: order.items.map((item, idx) => ({
       productId: item.productId,
       productName: item.productName || "",

@@ -1,4 +1,3 @@
-// lib/validators/estimate.ts
 import { z } from "zod";
 
 const estimateItemSchema = z.object({
@@ -9,8 +8,11 @@ const estimateItemSchema = z.object({
     const n = Number(v);
     return isNaN(n) || n < 0 ? 0 : n;
   }),
+  quantityText: z.string().max(50).optional().or(z.literal("")),
   unitPrice: z.string().optional().or(z.literal("")),
+  unitPriceText: z.string().max(50).optional().or(z.literal("")),
   supplyAmount: z.string().optional().or(z.literal("")),
+  vat: z.string().optional().or(z.literal("")),
   note: z.string().max(200).optional().or(z.literal("")),
   sortOrder: z.number().optional().default(0),
 });
@@ -21,11 +23,15 @@ export const estimateFormSchema = z.object({
     .min(1, "거래처를 선택하세요"),
   estimateDate: z.string().min(1, "견적일은 필수입니다"),
   clientContactName: z.string().max(50).optional().or(z.literal("")),
+  recipientText: z.string().max(200).optional().or(z.literal("")),
   stage: z.string().max(30).optional().default("1차제안"),
   validDays: z.union([z.number(), z.string()]).transform((v) => {
     const n = Number(v);
     return isNaN(n) || n < 1 ? 10 : n;
   }),
+  totalSupplyAmount: z.string().optional().or(z.literal("")),
+  totalVat: z.string().optional().or(z.literal("")),
+  totalAmount: z.string().optional().or(z.literal("")),
   note: z.string().optional().or(z.literal("")),
   items: z.array(estimateItemSchema).min(1, "최소 1개의 품목을 추가하세요"),
 });

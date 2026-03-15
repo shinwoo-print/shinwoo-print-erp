@@ -70,6 +70,7 @@ export async function POST(_request: NextRequest, { params }: RouteParams) {
         deliveryRegion: source.deliveryRegion,
         photoInspection: source.photoInspection,
         sampleShipping: source.sampleShipping,
+        tightRoll: source.tightRoll,
         items: {
           create: source.items.map((item, index) => ({
             productId: item.productId,
