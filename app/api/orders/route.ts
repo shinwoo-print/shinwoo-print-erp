@@ -108,6 +108,13 @@ export async function POST(request: NextRequest) {
         receiverName: data.receiverName || null,
         receiverPhone: data.receiverPhone || null,
         note: data.note || null,
+        worker: data.worker || null,
+        clientContact: data.clientContact || null,
+        clientPhone: data.clientPhone || null,
+        deliveryMethod: data.deliveryMethod || null,
+        deliveryRegion: data.deliveryRegion || null,
+        photoInspection: data.photoInspection || false,
+        sampleShipping: data.sampleShipping || false,
         items: {
           create: data.items.map((item, index) => ({
             productId: item.productId || null,
@@ -138,6 +145,11 @@ export async function POST(request: NextRequest) {
               : null,
             designFileStatus: item.designFileStatus || null,
             designImageUrl: item.designImageUrl || null,
+            cuttingType: item.cuttingType || null,
+            sheetsPerSheet: item.sheetsPerSheet || null,
+            labelGap: item.labelGap || null,
+            dieCutter: item.dieCutter || null,
+            resinPlate: item.resinPlate || null,
             sortOrder: index,
           })),
         },
@@ -172,6 +184,7 @@ function serializeOrder(order: Record<string, unknown>) {
       sizeWidth: item.sizeWidth ? String(item.sizeWidth) : null,
       sizeHeight: item.sizeHeight ? String(item.sizeHeight) : null,
       okkuri: item.okkuri ? String(item.okkuri) : null,
+      labelGap: item.labelGap ? String(item.labelGap) : null, // ← 추가
     })),
   };
 }

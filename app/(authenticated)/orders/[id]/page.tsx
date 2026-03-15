@@ -24,6 +24,13 @@ interface OrderData {
   receiverName: string | null;
   receiverPhone: string | null;
   note: string | null;
+  worker: string | null;
+  clientContact: string | null;
+  clientPhone: string | null;
+  deliveryMethod: string | null;
+  deliveryRegion: string | null;
+  photoInspection: boolean;
+  sampleShipping: boolean;
   client: {
     id: number;
     companyName: string;
@@ -56,6 +63,11 @@ interface OrderData {
     lastDataDate: string;
     designFileStatus: string;
     designImageUrl: string | null;
+    cuttingType: string | null;
+    sheetsPerSheet: string | null;
+    labelGap: string | null;
+    dieCutter: string | null;
+    resinPlate: string | null;
     sortOrder: number;
   }>;
 }
@@ -177,6 +189,13 @@ export default function OrderDetailPage() {
     receiverName: order.receiverName || "",
     receiverPhone: order.receiverPhone || "",
     note: order.note || "",
+    worker: order.worker || "",
+    clientContact: order.clientContact || "",
+    clientPhone: order.clientPhone || "",
+    deliveryMethod: order.deliveryMethod || "",
+    deliveryRegion: order.deliveryRegion || "",
+    photoInspection: order.photoInspection || false,
+    sampleShipping: order.sampleShipping || false,
     items: order.items.map((item, idx) => ({
       productId: item.productId,
       productName: item.productName || "",
@@ -202,6 +221,11 @@ export default function OrderDetailPage() {
       lastDataDate: item.lastDataDate || "",
       designFileStatus: item.designFileStatus || "",
       designImageUrl: item.designImageUrl || "",
+      cuttingType: item.cuttingType || "",
+      sheetsPerSheet: item.sheetsPerSheet || "",
+      labelGap: item.labelGap || "",
+      dieCutter: item.dieCutter || "",
+      resinPlate: item.resinPlate || "",
       sortOrder: idx,
     })),
   };

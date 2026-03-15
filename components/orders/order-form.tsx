@@ -80,6 +80,11 @@ const emptyItem = {
   lastDataDate: "",
   designFileStatus: "",
   designImageUrl: "",
+  cuttingType: "",
+  sheetsPerSheet: "",
+  labelGap: "",
+  dieCutter: "",
+  resinPlate: "",
   sortOrder: 0,
 };
 
@@ -96,6 +101,13 @@ const defaultFormValues: OrderFormValues = {
   receiverName: "",
   receiverPhone: "",
   note: "",
+  worker: "",
+  clientContact: "",
+  clientPhone: "",
+  deliveryMethod: "",
+  deliveryRegion: "",
+  photoInspection: false,
+  sampleShipping: false,
   items: [{ ...emptyItem }],
 };
 
@@ -234,6 +246,13 @@ export function OrderForm({
         receiverName: data.receiverName || "",
         receiverPhone: data.receiverPhone || "",
         note: data.note || "",
+        worker: data.worker || "",
+        clientContact: data.clientContact || "",
+        clientPhone: data.clientPhone || "",
+        deliveryMethod: data.deliveryMethod || "",
+        deliveryRegion: data.deliveryRegion || "",
+        photoInspection: data.photoInspection || false,
+        sampleShipping: data.sampleShipping || false,
         items: (data.items || []).map(
           (item: Record<string, unknown>, idx: number) => ({
             productId: item.productId ?? null,
@@ -260,6 +279,11 @@ export function OrderForm({
             lastDataDate: (item.lastDataDate as string) || "",
             designFileStatus: (item.designFileStatus as string) || "",
             designImageUrl: (item.designImageUrl as string) || "",
+            cuttingType: (item.cuttingType as string) || "",
+            sheetsPerSheet: (item.sheetsPerSheet as string) || "",
+            labelGap: (item.labelGap as string) || "",
+            dieCutter: (item.dieCutter as string) || "",
+            resinPlate: (item.resinPlate as string) || "",
             sortOrder: idx,
           }),
         ),
@@ -391,6 +415,84 @@ export function OrderForm({
                   {...register("orderer")}
                 />
               </div>
+              {/* 담당자(작업자) */}
+              <div className="space-y-2">
+                <Label className="text-[0.95rem]">작업자</Label>
+                <Input
+                  className="text-[0.95rem]"
+                  placeholder="작업자명"
+                  {...register("worker")}
+                />
+              </div>
+
+              {/* 거래처 담당자 */}
+              <div className="space-y-2">
+                <Label className="text-[0.95rem]">거래처 담당자</Label>
+                <Input
+                  className="text-[0.95rem]"
+                  placeholder="담당자명"
+                  {...register("clientContact")}
+                />
+              </div>
+
+              {/* 거래처 연락처 */}
+              <div className="space-y-2">
+                <Label className="text-[0.95rem]">거래처 연락처</Label>
+                <Input
+                  className="text-[0.95rem]"
+                  placeholder="010-0000-0000"
+                  {...register("clientPhone")}
+                />
+              </div>
+
+              {/* 배송방법 */}
+              <div className="space-y-2">
+                <Label className="text-[0.95rem]">배송방법</Label>
+                <select
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.95rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  {...register("deliveryMethod")}
+                >
+                  <option value="">선택</option>
+                  <option value="직배송">직배송</option>
+                  <option value="택배">택배</option>
+                </select>
+              </div>
+
+              {/* 배송지역 */}
+              <div className="space-y-2">
+                <Label className="text-[0.95rem]">배송지역</Label>
+                <Input
+                  className="text-[0.95rem]"
+                  placeholder="배송지역"
+                  {...register("deliveryRegion")}
+                />
+              </div>
+
+              {/* 체크박스: 사진검수 + 샘플발송 */}
+              <div className="flex items-center gap-6 col-span-2">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="photoInspection"
+                    className="h-4 w-4 rounded border-gray-300"
+                    {...register("photoInspection")}
+                  />
+                  <Label htmlFor="photoInspection" className="text-[0.95rem]">
+                    사진검수
+                  </Label>
+                </div>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="sampleShipping"
+                    className="h-4 w-4 rounded border-gray-300"
+                    {...register("sampleShipping")}
+                  />
+                  <Label htmlFor="sampleShipping" className="text-[0.95rem]">
+                    샘플발송
+                  </Label>
+                </div>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -429,6 +531,7 @@ export function OrderForm({
                   register={register}
                   setValue={setValue}
                   watch={watch}
+                  errors={errors}
                   onRemove={() => remove(index)}
                   canRemove={fields.length > 1}
                   products={products}

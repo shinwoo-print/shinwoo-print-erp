@@ -455,6 +455,58 @@ export function OrderItemRow({
               />
             </div>
           </div>
+          {/* 7행: 재단방식(롤/시트) + 시트당매수 + 라벨간격 + 도무송칼 + 수지판 */}
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+            <div className="space-y-1">
+              <Label className="text-[0.85rem]">재단(롤/시트)</Label>
+              <select
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                {...register(`items.${index}.cuttingType`)}
+              >
+                <option value="">선택</option>
+                <option value="롤">롤</option>
+                <option value="시트">시트</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[0.85rem]">시트당매수</Label>
+              <Input
+                className="text-[0.9rem]"
+                placeholder="예: 100매"
+                {...register(`items.${index}.sheetsPerSheet`)}
+              />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[0.85rem]">라벨간격(mm)</Label>
+              <Input
+                className="text-[0.9rem]"
+                placeholder="0"
+                {...register(`items.${index}.labelGap`)}
+              />
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[0.85rem]">도무송칼</Label>
+              <select
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                {...register(`items.${index}.dieCutter`)}
+              >
+                <option value="">선택</option>
+                <option value="보유">보유</option>
+                <option value="주문">주문</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <Label className="text-[0.85rem]">수지판</Label>
+              <select
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                {...register(`items.${index}.resinPlate`)}
+              >
+                <option value="">선택</option>
+                <option value="보유">보유</option>
+                <option value="주문">주문</option>
+              </select>
+            </div>
+          </div>
         </div>
       )}
     </div>

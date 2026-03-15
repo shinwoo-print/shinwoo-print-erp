@@ -64,6 +64,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         lastDataDate: item.lastDataDate
           ? item.lastDataDate.toISOString().split("T")[0]
           : "",
+        labelGap: item.labelGap ? item.labelGap.toString() : "", // ← 추가
       })),
     };
 
@@ -123,6 +124,13 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           receiverName: data.receiverName || null,
           receiverPhone: data.receiverPhone || null,
           note: data.note || null,
+          worker: data.worker || null,
+          clientContact: data.clientContact || null,
+          clientPhone: data.clientPhone || null,
+          deliveryMethod: data.deliveryMethod || null,
+          deliveryRegion: data.deliveryRegion || null,
+          photoInspection: data.photoInspection || false,
+          sampleShipping: data.sampleShipping || false,
           items: {
             create: data.items.map((item, index) => ({
               productId: item.productId || null,
@@ -155,6 +163,11 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
                 : null,
               designFileStatus: item.designFileStatus || null,
               designImageUrl: item.designImageUrl || null,
+              cuttingType: item.cuttingType || null,
+              sheetsPerSheet: item.sheetsPerSheet || null,
+              labelGap: item.labelGap || null,
+              dieCutter: item.dieCutter || null,
+              resinPlate: item.resinPlate || null,
               sortOrder: index,
             })),
           },
