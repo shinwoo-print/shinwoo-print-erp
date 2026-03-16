@@ -2,7 +2,9 @@
 
 import { OrderForm } from "@/components/orders/order-form";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
+import { PdfDownloadButton } from "@/components/shared/pdf-download-button";
 import { Button } from "@/components/ui/button";
 import type { OrderFormValues } from "@/lib/validators/order";
 import { Copy, Loader2, Trash2 } from "lucide-react";
@@ -240,6 +242,11 @@ export default function OrderDetailPage() {
         backHref="/orders"
         actions={
           <div className="flex items-center gap-2">
+            <PdfDownloadButton url={`/api/orders/${id}/pdf`} />
+            <ExcelDownloadButton
+              url={`/api/orders/${id}/excel`}
+              fileName={`발주서_${order.orderNumber}_${order.client.companyName}`}
+            />
             <Button
               variant="outline"
               onClick={handleCopy}

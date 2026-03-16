@@ -1,11 +1,13 @@
 "use client";
 
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
+import { PdfDownloadButton } from "@/components/shared/pdf-download-button";
 import { TransactionForm } from "@/components/transactions/transaction-form";
 import { Button } from "@/components/ui/button";
 import type { TransactionFormValues } from "@/lib/validators/transaction";
-import { Download, FileSpreadsheet, Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -167,24 +169,11 @@ export default function TransactionDetailPage() {
         backHref="/invoices"
         actions={
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              disabled
-              className="text-[0.95rem]"
-              title="P3에서 연결 예정"
-            >
-              <Download className="mr-2 h-4 w-4" />
-              PDF
-            </Button>
-            <Button
-              variant="outline"
-              disabled
-              className="text-[0.95rem]"
-              title="P3에서 연결 예정"
-            >
-              <FileSpreadsheet className="mr-2 h-4 w-4" />
-              엑셀
-            </Button>
+            <PdfDownloadButton url={`/api/transactions/${id}/pdf`} />
+            <ExcelDownloadButton
+              url={`/api/transactions/${id}/excel`}
+              fileName={`거래명세서_${transaction.transactionNumber}_${transaction.client.companyName}`}
+            />
             <Button
               variant="destructive"
               onClick={() => setDeleteOpen(true)}

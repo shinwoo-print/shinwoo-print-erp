@@ -2,10 +2,12 @@
 
 import { EstimateForm } from "@/components/estimates/estimate-form";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
+import { PdfDownloadButton } from "@/components/shared/pdf-download-button";
 import { Button } from "@/components/ui/button";
 import type { EstimateFormValues } from "@/lib/validators/estimate";
-import { Download, FileSpreadsheet, Loader2, Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -164,24 +166,11 @@ export default function EstimateDetailPage() {
         backHref="/quotes"
         actions={
           <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              disabled
-              className="text-[0.95rem]"
-              title="P3에서 연결 예정"
-            >
-              <Download className="mr-2 h-4 w-4" />
-              PDF
-            </Button>
-            <Button
-              variant="outline"
-              disabled
-              className="text-[0.95rem]"
-              title="P3에서 연결 예정"
-            >
-              <FileSpreadsheet className="mr-2 h-4 w-4" />
-              엑셀
-            </Button>
+            <PdfDownloadButton url={`/api/estimates/${id}/pdf`} />
+            <ExcelDownloadButton
+              url={`/api/estimates/${id}/excel`}
+              fileName={`견적서_${estimate.estimateNumber}_${estimate.client.companyName}`}
+            />
             <Button
               variant="destructive"
               onClick={() => setDeleteOpen(true)}
