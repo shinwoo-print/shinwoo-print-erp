@@ -16,13 +16,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-
+import { z } from "zod";
 interface SystemOption {
   id: number;
   label: string;
   value: string;
 }
-
+type EstimateFormInput = z.input<typeof estimateFormSchema>;
 interface ClientOption {
   id: number;
   companyName: string;
@@ -88,7 +88,7 @@ export function EstimateForm({
     setValue,
     watch,
     formState: { errors },
-  } = useForm<EstimateFormValues>({
+  } = useForm<EstimateFormInput, unknown, EstimateFormValues>({
     resolver: zodResolver(estimateFormSchema),
     defaultValues: defaultValues || defaultFormValues,
   });

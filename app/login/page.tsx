@@ -36,7 +36,7 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        router.push("/dashboard");
+        router.push("/orders");
         router.refresh();
       } else {
         setError(data.message || "로그인에 실패했습니다.");
