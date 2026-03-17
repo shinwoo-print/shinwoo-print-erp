@@ -6,12 +6,11 @@ import { prisma } from "@/lib/prisma";
  * 같은 날 같은 거래처 2건째 -> -02
  */
 async function generateDocNumber(
-  prefix: string,
   clientName: string,
-  model: "order" | "estimate" | "transaction",
+  model: "order" | "estimate" | "transaction"
 ): Promise<string> {
   const kstNow = new Date(
-    new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }),
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" })
   );
   const yy = String(kstNow.getFullYear()).slice(2);
   const mm = String(kstNow.getMonth() + 1).padStart(2, "0");
@@ -53,18 +52,12 @@ async function generateDocNumber(
   return `${base}${String(seq).padStart(2, "0")}`;
 }
 
-export async function generateOrderNumber(clientName: string): Promise<string> {
-  return generateDocNumber("ORD", clientName, "order");
+export async function generateOrderNumber(clientName: string) {
+  return generateDocNumber(clientName, "order");
 }
-
-export async function generateEstimateNumber(
-  clientName: string,
-): Promise<string> {
-  return generateDocNumber("EST", clientName, "estimate");
+export async function generateEstimateNumber(clientName: string) {
+  return generateDocNumber(clientName, "estimate");
 }
-
-export async function generateTransactionNumber(
-  clientName: string,
-): Promise<string> {
-  return generateDocNumber("TXN", clientName, "transaction");
+export async function generateTransactionNumber(clientName: string) {
+  return generateDocNumber(clientName, "transaction");
 }
