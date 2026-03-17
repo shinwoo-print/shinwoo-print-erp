@@ -57,9 +57,7 @@ export async function GET(request: NextRequest) {
     const serialized = data.map((record) => ({
       ...record,
       unitPrice: record.unitPrice ? record.unitPrice.toString() : null,
-      supplyAmount: record.supplyAmount
-        ? record.supplyAmount.toString()
-        : null,
+      supplyAmount: record.supplyAmount ? record.supplyAmount.toString() : null,
       taxIncludedAmount: record.taxIncludedAmount
         ? record.taxIncludedAmount.toString()
         : null,
@@ -112,8 +110,7 @@ export async function POST(request: NextRequest) {
     const parsed = salesRecordFormSchema.safeParse(body);
 
     if (!parsed.success) {
-      const firstError =
-        parsed.error.issues[0]?.message || "유효성 검사 실패";
+      const firstError = parsed.error.issues[0]?.message || "유효성 검사 실패";
       return NextResponse.json(
         { message: firstError, errors: parsed.error.issues },
         { status: 400 },

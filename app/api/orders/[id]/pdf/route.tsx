@@ -1,6 +1,6 @@
-import { prisma } from "@/lib/prisma";
-import { renderPdfToResponse } from "@/lib/pdf/render-pdf";
 import { OrderPdfDocument } from "@/components/pdf/order-pdf";
+import { renderPdfToResponse } from "@/lib/pdf/render-pdf";
+import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 type RouteParams = { params: Promise<{ id: string }> };
@@ -13,7 +13,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
     if (isNaN(orderId)) {
       return NextResponse.json(
         { message: "유효하지 않은 ID입니다" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -30,7 +30,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
     if (!order) {
       return NextResponse.json(
         { message: "발주서를 찾을 수 없습니다" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -38,9 +38,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
       orderNumber: order.orderNumber,
       clientCompanyName: order.client.companyName,
       orderDate: order.orderDate.toISOString().split("T")[0],
-      dueDate: order.dueDate
-        ? order.dueDate.toISOString().split("T")[0]
-        : null,
+      dueDate: order.dueDate ? order.dueDate.toISOString().split("T")[0] : null,
       orderer: order.orderer,
       worker: order.worker,
       clientContact: order.clientContact,
@@ -94,14 +92,14 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
 
     const fileName = `발주서_${order.orderNumber}_${order.client.companyName}`;
     return await renderPdfToResponse(
-      <OrderPdfDocument data={ pdfData } />,
-      fileName
+      <OrderPdfDocument data={pdfData} />,
+      fileName,
     );
   } catch (error) {
     console.error("발주서 PDF 생성 오류:", error);
     return NextResponse.json(
       { message: "PDF 생성에 실패했습니다" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

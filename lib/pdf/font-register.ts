@@ -1,6 +1,7 @@
 import { Font } from "@react-pdf/renderer";
+import path from "path";
 
 Font.register({
   family: "NanumGothic",
-  src: "/fonts/NanumGothic-Regular.ttf",
+  src: path.join(process.cwd(), "public", "fonts", "NanumGothic-Regular.ttf"),
 });
