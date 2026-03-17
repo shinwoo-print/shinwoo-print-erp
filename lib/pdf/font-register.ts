@@ -1,3 +1,4 @@
+// lib/pdf/font-register.ts
 import { Font } from "@react-pdf/renderer";
 import path from "path";
 
