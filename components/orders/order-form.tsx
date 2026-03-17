@@ -255,9 +255,9 @@ export function OrderForm({
         photoInspection: data.photoInspection || false,
         sampleShipping: data.sampleShipping || false,
         tightRoll: data.tightRoll || false,
-        items: (data.items && data.items.length > 0
-          ? (data.items as Record<string, unknown>[]).map(
-              (item: Record<string, unknown>, idx: number) => ({
+        items:
+          data.items && data.items.length > 0
+            ? data.items.map((item: Record<string, unknown>, idx: number) => ({
                 productId: item.productId ?? null,
                 productName: (item.productName as string) || "",
                 printType: (item.printType as string) || "",
@@ -288,9 +288,8 @@ export function OrderForm({
                 dieCutter: (item.dieCutter as string) || "",
                 resinPlate: (item.resinPlate as string) || "",
                 sortOrder: idx,
-              }),
-            )
-          : [{ ...emptyItem }]) as OrderFormValues["items"],
+              }))
+            : [{ ...emptyItem }],
       });
     } catch {
       alert("발주서를 불러오는 중 오류가 발생했습니다");
