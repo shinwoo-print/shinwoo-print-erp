@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { EstimateFormValues } from "@/lib/validators/estimate";
+import type { EstimateFormInput } from "@/lib/validators/estimate";
 import { ChevronDown, ChevronUp, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type {
@@ -22,10 +22,10 @@ interface ProductOption {
 
 interface EstimateItemRowProps {
   index: number;
-  register: UseFormRegister<EstimateFormValues>;
-  setValue: UseFormSetValue<EstimateFormValues>;
-  watch: UseFormWatch<EstimateFormValues>;
-  errors: FieldErrors<EstimateFormValues>;
+  register: UseFormRegister<EstimateFormInput>;
+  setValue: UseFormSetValue<EstimateFormInput>;
+  watch: UseFormWatch<EstimateFormInput>;
+  errors: FieldErrors<EstimateFormInput>;
   onRemove: () => void;
   canRemove: boolean;
   products: ProductOption[];
@@ -42,17 +42,14 @@ export function EstimateItemRow({
   products,
 }: EstimateItemRowProps) {
   const [expanded, setExpanded] = useState(true);
-  const prefix = `items.${index}` as const;
 
   const quantity = watch(`items.${index}.quantity`);
   const unitPrice = watch(`items.${index}.unitPrice`);
 
-  // 이 품목의 에러
   const itemErrors = errors?.items?.[index] as
     | Record<string, { message?: string }>
     | undefined;
 
-  // 품목 선택 시 자동 채움
   const handleProductSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const productId = Number(e.target.value);
     if (!productId) {
@@ -69,7 +66,6 @@ export function EstimateItemRow({
     }
   };
 
-  // 공급가액 + 세액 자동계산
   const recalcAmounts = (q: unknown, u: unknown) => {
     const qtyNum = Number(q) || 0;
     const unitNum = Number(u) || 0;
@@ -89,7 +85,6 @@ export function EstimateItemRow({
     recalcAmounts(quantity, val);
   };
 
-  // 공급가액 직접 수정 시 세액 재계산
   const handleSupplyAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const supply = Number(e.target.value) || 0;
     const vat = Math.round(supply * 0.1);
@@ -98,7 +93,6 @@ export function EstimateItemRow({
 
   return (
     <div className="rounded-lg border bg-background p-4">
-      {/* 헤더 */}
       <div className="flex items-center justify-between">
         <button
           type="button"
@@ -137,7 +131,6 @@ export function EstimateItemRow({
 
       {expanded && (
         <div className="mt-4 space-y-4">
-          {/* 1행: 품목 선택 + 품목명 + 규격 */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">품목 선택</Label>
@@ -179,7 +172,6 @@ export function EstimateItemRow({
             </div>
           </div>
 
-          {/* 2행: 수량텍스트 + 수량(계산용) + 단가텍스트 + 단가(계산용) */}
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">발주수량 표시</Label>
@@ -221,7 +213,6 @@ export function EstimateItemRow({
             </div>
           </div>
 
-          {/* 3행: 공급가액 + 세액 + 비고 */}
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">공급가액</Label>

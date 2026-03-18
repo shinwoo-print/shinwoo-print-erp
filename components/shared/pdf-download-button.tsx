@@ -37,11 +37,20 @@ export function PdfDownloadButton({
         return;
       }
 
+      // 변경 후:
       const blob = await res.blob();
       const blobUrl = URL.createObjectURL(blob);
-      window.open(blobUrl, "_blank");
 
-      // 메모리 해제 (5초 후)
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+
+      // Content-Disposition에서 파일명이 inline이므로 새 탭에서 열기
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
       setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
     } catch {
       toast.error("PDF 다운로드 중 오류가 발생했습니다");

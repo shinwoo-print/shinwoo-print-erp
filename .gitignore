@@ -43,3 +43,9 @@ next-env.d.ts
 /lib/generated/prisma
 
 public/uploads/
+
+# 로컬 커밋 메시지·임시 스크립트·에디터 백업
+.git-commit-msg.txt
+_run-git-commit.mjs
+_push_log.txt
+*.tsx.bak

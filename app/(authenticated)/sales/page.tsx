@@ -21,7 +21,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatAmount } from "@/lib/utils/format";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -345,18 +344,8 @@ function SalesPageContent() {
   ];
 
   // 탭 내부 공통 콘텐츠
-  const tabContent = (
-    <div className="space-y-4">
-      <SearchInput
-        key={tab}
-        placeholder="거래처명 검색"
-        onSearch={(v) => {
-          setSearch(v);
-          setPage(1);
-        }}
-        defaultValue={search}
-      />
-
+  const tableOnly = (
+    <>
       {loading ? (
         <div className="text-muted-foreground flex h-32 items-center justify-center">
           불러오는 중...
@@ -374,7 +363,7 @@ function SalesPageContent() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 
   return (
@@ -461,17 +450,61 @@ function SalesPageContent() {
         </Card>
       </div>
 
-      {/* 매출/매입 탭 */}
-      <Tabs value={tab} onValueChange={handleTabChange}>
-        <TabsList>
-          <TabsTrigger value="매출">매출</TabsTrigger>
-          <TabsTrigger value="매입">매입</TabsTrigger>
-        </TabsList>
+      {/* 매출/매입 탭 + 검색 (한 줄) */}
+      <div className="flex items-center gap-3">
+        <div className="flex rounded-lg border bg-muted p-1">
+          <button
+            type="button"
+            onClick={() => handleTabChange("매출")}
+            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+              tab === "매출"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            매출
+          </button>
+          <button
+            type="button"
+            onClick={() => handleTabChange("매입")}
+            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+              tab === "매입"
+                ? "bg-background text-foreground shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            매입
+          </button>
+        </div>
+        <SearchInput
+          key={tab}
+          placeholder="거래처명 검색"
+          onSearch={(v) => {
+            setSearch(v);
+            setPage(1);
+          }}
+          defaultValue={search}
+        />
+      </div>
 
-        <TabsContent value="매출">{tab === "매출" && tabContent}</TabsContent>
-        <TabsContent value="매입">{tab === "매입" && tabContent}</TabsContent>
-      </Tabs>
-
+      {/* 테이블 */}
+      {loading ? (
+        <div className="text-muted-foreground flex h-32 items-center justify-center">
+          불러오는 중...
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <DataTable
+            columns={columns}
+            data={records}
+            totalCount={totalCount}
+            page={page}
+            pageSize={PAGE_SIZE}
+            onPageChange={setPage}
+            emptyMessage={`${tab} 데이터가 없습니다`}
+          />
+        </div>
+      )}
       {/* 등록/수정 Dialog */}
       <Dialog
         open={formOpen}
