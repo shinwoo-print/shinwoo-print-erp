@@ -10,19 +10,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { formatAmount } from "@/lib/utils/format";
 import {
   estimateFormSchema,
+  type EstimateFormInput,
   type EstimateFormValues,
 } from "@/lib/validators/estimate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Plus } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { z } from "zod";
 interface SystemOption {
   id: number;
   label: string;
   value: string;
 }
-type EstimateFormInput = z.input<typeof estimateFormSchema>;
 interface ClientOption {
   id: number;
   companyName: string;

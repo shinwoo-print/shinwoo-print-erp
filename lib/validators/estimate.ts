@@ -37,4 +37,5 @@ export const estimateFormSchema = z.object({
 });
 
 export type EstimateFormValues = z.infer<typeof estimateFormSchema>;
+export type EstimateFormInput = z.input<typeof estimateFormSchema>;
 export type EstimateItemFormValues = z.infer<typeof estimateItemSchema>;

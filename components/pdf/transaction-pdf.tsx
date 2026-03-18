@@ -9,7 +9,8 @@ import {
   View,
 } from "@react-pdf/renderer";
 
-/* ────────── 타입 ────────── */
+/* ═══════════════ 타입 정의 ═══════════════ */
+
 interface TransactionItemData {
   itemDate: string;
   productName: string;
@@ -64,21 +65,23 @@ interface TransactionPdfData {
   bank: BankData;
 }
 
-/* ────────── 상수: 1매 크기 ────────── */
-// 19cm × 13cm -> pt 변환 (1cm = 28.3465pt)
-const SLIP_WIDTH = 538.65; // 19cm
-const SLIP_HEIGHT = 122.0; // A4(841.89pt)를 3등분하면 약 280pt이지만 여백/점선 고려
-// A4: 595.28 × 841.89pt
-// 상하 마진 각 15pt = 30pt -> 사용가능 높이 = 811.89pt
-// 3매 + 점선2개(각 0.5pt) = 811.89 / 3 = 약 270.6pt
-const COPY_HEIGHT = 265;
-const PAGE_TOP = 12;
-const PAGE_LEFT = 28;
-const DASH_MARGIN = 5;
+/* ═══════════════ 레이아웃 상수 ═══════════════ */
+
+// A4: 595.28pt x 841.89pt
+// 상하 여백 각 14pt = 28pt, 절취선 영역 2개 x 12pt = 24pt
+// 사용 가능 높이: 841.89 - 28 - 24 = 789.89pt
+// 1매 높이: 789.89 / 3 ≈ 263pt
+const COPY_HEIGHT = 263;
+const PAGE_MARGIN_TOP = 14;
+const PAGE_MARGIN_LEFT = 28;
+const SLIP_WIDTH = 538;
+const DASH_AREA_HEIGHT = 12;
+const MAX_ITEMS = 5;
 
 const COPY_LABELS = ["공급자 보관용", "공급받는자 보관용", "확인용"] as const;
 
-/* ────────── 스타일 ────────── */
+/* ═══════════════ 스타일 ═══════════════ */
+
 const s = StyleSheet.create({
   page: {
     fontFamily: FONT_FAMILY,
@@ -86,144 +89,188 @@ const s = StyleSheet.create({
     color: COLORS.black,
     padding: 0,
   },
-  // 1매 슬립
   slip: {
     width: SLIP_WIDTH,
     height: COPY_HEIGHT,
-    marginLeft: PAGE_LEFT,
-    paddingHorizontal: 8,
-    paddingVertical: 6,
+    marginLeft: PAGE_MARGIN_LEFT,
+    paddingHorizontal: 6,
+    paddingTop: 5,
+    paddingBottom: 3,
   },
-  // 점선 구분
-  dashLine: {
+  dashArea: {
     width: SLIP_WIDTH,
-    marginLeft: PAGE_LEFT,
-    borderBottom: "0.5pt dashed #999999",
-    marginVertical: DASH_MARGIN,
+    marginLeft: PAGE_MARGIN_LEFT,
+    height: DASH_AREA_HEIGHT,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  // 상단 타이틀 행
+  dashLineLeft: {
+    flex: 1,
+    borderBottom: "0.5pt dashed #AAAAAA",
+  },
+  dashScissor: {
+    fontSize: 7,
+    color: "#AAAAAA",
+    marginHorizontal: 4,
+  },
+  dashLineRight: {
+    flex: 1,
+    borderBottom: "0.5pt dashed #AAAAAA",
+  },
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginBottom: 5,
+    marginBottom: 4,
+    borderBottom: "1pt solid #000000",
+    paddingBottom: 3,
+  },
+  titleGroup: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    gap: 6,
   },
   title: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: "bold",
   },
-  copyLabel: {
+  transDate: {
     fontSize: 7,
+    color: COLORS.darkGray,
+  },
+  headerRight: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+  },
+  transNo: {
+    fontSize: 6.5,
     color: COLORS.gray,
-    border: `0.5pt solid ${COLORS.gray}`,
+  },
+  copyLabel: {
+    fontSize: 6.5,
+    color: COLORS.gray,
+    border: "0.5pt solid #999999",
     paddingHorizontal: 4,
     paddingVertical: 1,
   },
-  // 공급자 / 공급받는자 정보 2열
   infoRow: {
     flexDirection: "row",
-    gap: 6,
-    marginBottom: 5,
+    gap: 5,
+    marginBottom: 4,
   },
   infoBox: {
     flex: 1,
-    border: `0.5pt solid ${COLORS.black}`,
+    border: "0.5pt solid #000000",
   },
   infoBoxTitle: {
-    fontSize: 7,
+    fontSize: 6.5,
     fontWeight: "bold",
     textAlign: "center",
-    padding: 2,
+    padding: 1.5,
     backgroundColor: "#E8E8E8",
-    borderBottom: `0.5pt solid ${COLORS.black}`,
+    borderBottom: "0.5pt solid #000000",
   },
   infoFieldRow: {
     flexDirection: "row",
-    borderBottom: `0.5pt solid ${COLORS.veryLightGray}`,
-    minHeight: 13,
+    borderBottom: "0.5pt solid #E5E5E5",
+    minHeight: 11,
   },
   infoLabel: {
-    width: 50,
-    fontSize: 6,
-    padding: 2,
+    width: 46,
+    fontSize: 5.5,
+    padding: 1.5,
     backgroundColor: "#F5F5F5",
-    borderRight: `0.5pt solid ${COLORS.veryLightGray}`,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
   },
   infoValue: {
     flex: 1,
-    fontSize: 6,
-    padding: 2,
+    fontSize: 5.5,
+    padding: 1.5,
+    justifyContent: "center",
   },
-  // 품목 테이블
   table: {
-    border: `0.5pt solid ${COLORS.black}`,
-    marginBottom: 4,
+    border: "0.5pt solid #000000",
+    marginBottom: 3,
   },
   tHeaderRow: {
     flexDirection: "row",
     backgroundColor: "#D9E2F3",
-    minHeight: 14,
+    minHeight: 12,
   },
   tRow: {
     flexDirection: "row",
-    borderTop: `0.5pt solid ${COLORS.veryLightGray}`,
-    minHeight: 12,
+    borderTop: "0.5pt solid #E5E5E5",
+    minHeight: 11,
   },
   tTotalRow: {
     flexDirection: "row",
-    borderTop: `0.5pt solid ${COLORS.black}`,
-    minHeight: 14,
+    borderTop: "0.5pt solid #000000",
+    minHeight: 12,
     backgroundColor: "#FFF3CD",
   },
   thCell: {
-    fontSize: 6,
+    fontSize: 5.5,
     fontWeight: "bold",
     textAlign: "center",
-    padding: 2,
-    borderRight: `0.5pt solid ${COLORS.veryLightGray}`,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
     justifyContent: "center",
   },
   tdCell: {
-    fontSize: 6,
-    padding: 2,
-    borderRight: `0.5pt solid ${COLORS.veryLightGray}`,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
     justifyContent: "center",
   },
-  // 컬럼 폭
-  colDate: { width: 46 },
+  colDate: { width: 42 },
   colName: { width: 110 },
-  colSpec: { width: 56 },
-  colQty: { width: 36 },
-  colUnit: { width: 26 },
+  colSpec: { width: 54 },
+  colQty: { width: 34 },
+  colUnit: { width: 24 },
   colUnitPrice: { width: 52 },
-  colSupply: { width: 62 },
-  colVat: { width: 52 },
-  // 합계 레이블
+  colSupply: { width: 60 },
+  colVat: { width: 50 },
   totalLabel: {
-    width: 238,
-    fontSize: 7,
+    width: 206,
+    fontSize: 6.5,
     fontWeight: "bold",
     textAlign: "center",
-    padding: 2,
-    borderRight: `0.5pt solid ${COLORS.veryLightGray}`,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
     justifyContent: "center",
   },
-  // 하단: 계좌 + 직인
   footerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
   },
+  footerLeft: {
+    flex: 1,
+  },
+  amountText: {
+    fontSize: 7,
+    fontWeight: "bold",
+    marginBottom: 1,
+  },
   bankText: {
-    fontSize: 6.5,
+    fontSize: 6,
+    marginBottom: 1,
+  },
+  noteText: {
+    fontSize: 5.5,
+    color: COLORS.gray,
   },
   sealImage: {
-    width: 35,
-    height: 35,
+    width: 32,
+    height: 32,
   },
 });
 
-/* ────────── 셀 컴포넌트 ────────── */
+/* ═══════════════ 셀 컴포넌트 ═══════════════ */
+
 function Th({ children, style }: { children: string; style?: object }) {
   return (
     <View style={[s.thCell, style]}>
@@ -255,7 +302,20 @@ function Td({
   );
 }
 
-/* ────────── 1매 슬립 컴포넌트 ────────── */
+/* ═══════════════ 절취선 컴포넌트 ═══════════════ */
+
+function DashCutLine() {
+  return (
+    <View style={s.dashArea}>
+      <View style={s.dashLineLeft} />
+      <Text style={s.dashScissor}>- - -</Text>
+      <View style={s.dashLineRight} />
+    </View>
+  );
+}
+
+/* ═══════════════ 1매 슬립 컴포넌트 ═══════════════ */
+
 function TransactionSlip({
   data,
   copyIndex,
@@ -267,88 +327,164 @@ function TransactionSlip({
   const totalVat = Number(data.totalVat) || 0;
   const totalAmount = Number(data.totalAmount) || 0;
 
-  // 최대 표시 아이템 수 (공간 제한)
-  const MAX_ITEMS = 6;
   const displayItems = data.items.slice(0, MAX_ITEMS);
+  const emptyCount = MAX_ITEMS - displayItems.length;
 
-  // 일자 포맷 (MM/DD)
-  const formatShortDate = (dateStr: string) => {
-    if (!dateStr) return "";
-    const d = new Date(dateStr);
-    return `${String(d.getMonth() + 1).padStart(2, "0")}/${String(d.getDate()).padStart(2, "0")}`;
+  const fmtShort = (ds: string) => {
+    if (!ds) return "";
+    const d = new Date(ds);
+    return (
+      String(d.getMonth() + 1).padStart(2, "0") +
+      "/" +
+      String(d.getDate()).padStart(2, "0")
+    );
+  };
+
+  const fmtDate = (ds: string) => {
+    if (!ds) return "";
+    const d = new Date(ds);
+    return (
+      d.getFullYear() +
+      "." +
+      String(d.getMonth() + 1).padStart(2, "0") +
+      "." +
+      String(d.getDate()).padStart(2, "0")
+    );
   };
 
   return (
     <View style={s.slip}>
-      {/* 타이틀 */}
+      {/* 타이틀 행 */}
       <View style={s.headerRow}>
-        <Text style={s.title}>거래명세서</Text>
-        <Text style={{ fontSize: 7, color: COLORS.gray }}>
-          {data.transactionNumber}
-        </Text>
-        <Text style={s.copyLabel}>{COPY_LABELS[copyIndex]}</Text>
+        <View style={s.titleGroup}>
+          <Text style={s.title}>거 래 명 세 서</Text>
+          <Text style={s.transDate}>{fmtDate(data.transactionDate)}</Text>
+        </View>
+        <View style={s.headerRight}>
+          <Text style={s.transNo}>No. {data.transactionNumber}</Text>
+          <Text style={s.copyLabel}>{COPY_LABELS[copyIndex]}</Text>
+        </View>
       </View>
 
       {/* 공급자 / 공급받는자 */}
       <View style={s.infoRow}>
-        {/* 공급자 */}
         <View style={s.infoBox}>
-          <Text style={s.infoBoxTitle}>공급자</Text>
+          <Text style={s.infoBoxTitle}>공 급 자</Text>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>사업자번호</Text>
-            <Text style={s.infoValue}>{data.company.businessNumber}</Text>
+            <View style={s.infoLabel}>
+              <Text>사업자번호</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.company.businessNumber}</Text>
+            </View>
           </View>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>상호</Text>
-            <Text style={s.infoValue}>{data.company.companyName}</Text>
+            <View style={s.infoLabel}>
+              <Text>상호(법인명)</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.company.companyName}</Text>
+            </View>
           </View>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>성명</Text>
-            <Text style={s.infoValue}>{data.company.representative}</Text>
+            <View style={s.infoLabel}>
+              <Text>대표자</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.company.representative}</Text>
+            </View>
           </View>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>주소</Text>
-            <Text style={s.infoValue}>{data.company.address}</Text>
+            <View style={s.infoLabel}>
+              <Text>주소</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.company.address}</Text>
+            </View>
+          </View>
+          <View style={s.infoFieldRow}>
+            <View style={s.infoLabel}>
+              <Text>업태/종목</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>
+                {data.company.businessType || ""} /{" "}
+                {data.company.businessItem || ""}
+              </Text>
+            </View>
           </View>
           <View style={[s.infoFieldRow, { borderBottom: "none" }]}>
-            <Text style={s.infoLabel}>TEL / FAX</Text>
-            <Text style={s.infoValue}>
-              {data.company.phone} / {data.company.fax || ""}
-            </Text>
+            <View style={s.infoLabel}>
+              <Text>TEL / FAX</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>
+                {data.company.phone} / {data.company.fax || ""}
+              </Text>
+            </View>
           </View>
         </View>
 
-        {/* 공급받는자 */}
         <View style={s.infoBox}>
-          <Text style={s.infoBoxTitle}>공급받는자</Text>
+          <Text style={s.infoBoxTitle}>공 급 받 는 자</Text>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>사업자번호</Text>
-            <Text style={s.infoValue}>{data.client.businessNumber || ""}</Text>
+            <View style={s.infoLabel}>
+              <Text>사업자번호</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.client.businessNumber || ""}</Text>
+            </View>
           </View>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>상호</Text>
-            <Text style={s.infoValue}>{data.client.companyName}</Text>
+            <View style={s.infoLabel}>
+              <Text>상호(법인명)</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.client.companyName}</Text>
+            </View>
           </View>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>성명</Text>
-            <Text style={s.infoValue}>{data.client.contactName || ""}</Text>
+            <View style={s.infoLabel}>
+              <Text>성명</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.client.contactName || ""}</Text>
+            </View>
           </View>
           <View style={s.infoFieldRow}>
-            <Text style={s.infoLabel}>주소</Text>
-            <Text style={s.infoValue}>{data.client.address || ""}</Text>
+            <View style={s.infoLabel}>
+              <Text>주소</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>{data.client.address || ""}</Text>
+            </View>
+          </View>
+          <View style={s.infoFieldRow}>
+            <View style={s.infoLabel}>
+              <Text>업태/종목</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>
+                {data.client.businessType || ""} /{" "}
+                {data.client.businessItem || ""}
+              </Text>
+            </View>
           </View>
           <View style={[s.infoFieldRow, { borderBottom: "none" }]}>
-            <Text style={s.infoLabel}>TEL / FAX</Text>
-            <Text style={s.infoValue}>
-              {data.client.phone || ""} / {data.client.fax || ""}
-            </Text>
+            <View style={s.infoLabel}>
+              <Text>TEL / FAX</Text>
+            </View>
+            <View style={s.infoValue}>
+              <Text>
+                {data.client.phone || ""} / {data.client.fax || ""}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
 
       {/* 품목 테이블 */}
       <View style={s.table}>
-        {/* 헤더 */}
         <View style={s.tHeaderRow}>
           <Th style={s.colDate}>일자</Th>
           <Th style={s.colName}>품명</Th>
@@ -360,11 +496,10 @@ function TransactionSlip({
           <Th style={[s.colVat, { borderRight: "none" }]}>부가세</Th>
         </View>
 
-        {/* 데이터 행 */}
         {displayItems.map((item, idx) => (
           <View key={idx} style={s.tRow}>
             <Td style={s.colDate} align="center">
-              {formatShortDate(item.itemDate)}
+              {fmtShort(item.itemDate)}
             </Td>
             <Td style={s.colName}>{item.productName}</Td>
             <Td style={s.colSpec} align="center">
@@ -388,24 +523,20 @@ function TransactionSlip({
           </View>
         ))}
 
-        {/* 빈 행 채우기 (최소 6행) */}
-        {displayItems.length < MAX_ITEMS &&
-          Array.from({ length: MAX_ITEMS - displayItems.length }).map(
-            (_, idx) => (
-              <View key={`empty-${idx}`} style={s.tRow}>
-                <Td style={s.colDate}>{""}</Td>
-                <Td style={s.colName}>{""}</Td>
-                <Td style={s.colSpec}>{""}</Td>
-                <Td style={s.colQty}>{""}</Td>
-                <Td style={s.colUnit}>{""}</Td>
-                <Td style={s.colUnitPrice}>{""}</Td>
-                <Td style={s.colSupply}>{""}</Td>
-                <Td style={[s.colVat, { borderRight: "none" }]}>{""}</Td>
-              </View>
-            ),
-          )}
+        {emptyCount > 0 &&
+          Array.from({ length: emptyCount }).map((_, idx) => (
+            <View key={"e" + idx} style={s.tRow}>
+              <Td style={s.colDate}>{""}</Td>
+              <Td style={s.colName}>{""}</Td>
+              <Td style={s.colSpec}>{""}</Td>
+              <Td style={s.colQty}>{""}</Td>
+              <Td style={s.colUnit}>{""}</Td>
+              <Td style={s.colUnitPrice}>{""}</Td>
+              <Td style={s.colSupply}>{""}</Td>
+              <Td style={[s.colVat, { borderRight: "none" }]}>{""}</Td>
+            </View>
+          ))}
 
-        {/* 합계 행 */}
         <View style={s.tTotalRow}>
           <View style={s.totalLabel}>
             <Text>합 계</Text>
@@ -424,40 +555,37 @@ function TransactionSlip({
         </View>
       </View>
 
-      {/* 하단: 합계금액 + 계좌 + 직인 */}
+      {/* 하단: 합계금액 + 계좌 + 비고 + 직인 */}
       <View style={s.footerRow}>
-        <View>
-          <Text style={{ fontSize: 7, fontWeight: "bold", marginBottom: 2 }}>
+        <View style={s.footerLeft}>
+          <Text style={s.amountText}>
             합계금액: {formatNumber(totalAmount)}원
           </Text>
           <Text style={s.bankText}>
             입금계좌: {data.bank.bankName} {data.bank.accountNumber} (예금주:{" "}
             {data.bank.accountHolder})
           </Text>
+          {data.note ? <Text style={s.noteText}>비고: {data.note}</Text> : null}
         </View>
-        {data.company.sealUrl && (
+        {data.company.sealUrl ? (
           <Image src={data.company.sealUrl} style={s.sealImage} />
-        )}
+        ) : null}
       </View>
     </View>
   );
 }
 
-/* ────────── Document ────────── */
+/* ═══════════════ Document (최종 export) ═══════════════ */
+
 export function TransactionPdfDocument({ data }: { data: TransactionPdfData }) {
   return (
-    <Document title={`거래명세서_${data.transactionNumber}`} author="신우씨링">
+    <Document title={"거래명세서_" + data.transactionNumber} author="신우씨링">
       <Page size="A4" style={s.page}>
-        <View style={{ paddingTop: PAGE_TOP }}>
-          {/* 1매: 공급자 보관용 */}
+        <View style={{ paddingTop: PAGE_MARGIN_TOP }}>
           <TransactionSlip data={data} copyIndex={0} />
-          <View style={s.dashLine} />
-
-          {/* 2매: 공급받는자 보관용 */}
+          <DashCutLine />
           <TransactionSlip data={data} copyIndex={1} />
-          <View style={s.dashLine} />
-
-          {/* 3매: 확인용 */}
+          <DashCutLine />
           <TransactionSlip data={data} copyIndex={2} />
         </View>
       </Page>
