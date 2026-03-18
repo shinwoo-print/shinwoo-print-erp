@@ -4,7 +4,7 @@ import { DesignImageUpload } from "@/components/orders/design-image-upload";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { OrderFormValues } from "@/lib/validators/order";
+import type { OrderFormInput } from "@/lib/validators/order";
 import { ChevronDown, ChevronUp, Trash2 } from "lucide-react";
 import { useState } from "react";
 import type {
@@ -13,7 +13,6 @@ import type {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-
 interface SystemOption {
   id: number;
   label: string;
@@ -30,10 +29,10 @@ interface ProductOption {
 
 interface OrderItemRowProps {
   index: number;
-  register: UseFormRegister<OrderFormValues>;
-  setValue: UseFormSetValue<OrderFormValues>;
-  watch: UseFormWatch<OrderFormValues>;
-  errors: FieldErrors<OrderFormValues>;
+  register: UseFormRegister<OrderFormInput>;
+  setValue: UseFormSetValue<OrderFormInput>;
+  watch: UseFormWatch<OrderFormInput>;
+  errors: FieldErrors<OrderFormInput>;
   onRemove: () => void;
   canRemove: boolean;
   products: ProductOption[];

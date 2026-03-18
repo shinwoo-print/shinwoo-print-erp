@@ -67,10 +67,6 @@ interface TransactionPdfData {
 
 /* ═══════════════ 레이아웃 상수 ═══════════════ */
 
-// A4: 595.28pt x 841.89pt
-// 상하 여백 각 14pt = 28pt, 절취선 영역 2개 x 12pt = 24pt
-// 사용 가능 높이: 841.89 - 28 - 24 = 789.89pt
-// 1매 높이: 789.89 / 3 ≈ 263pt
 const COPY_HEIGHT = 263;
 const PAGE_MARGIN_TOP = 14;
 const PAGE_MARGIN_LEFT = 28;
@@ -177,6 +173,10 @@ const s = StyleSheet.create({
     borderBottom: "0.5pt solid #E5E5E5",
     minHeight: 11,
   },
+  infoFieldRowLast: {
+    flexDirection: "row",
+    minHeight: 11,
+  },
   infoLabel: {
     width: 46,
     fontSize: 5.5,
@@ -211,7 +211,9 @@ const s = StyleSheet.create({
     minHeight: 12,
     backgroundColor: "#FFF3CD",
   },
-  thCell: {
+  /* 테이블 셀 - 각 컬럼별 미리 정의 */
+  thDate: {
+    width: 42,
     fontSize: 5.5,
     fontWeight: "bold",
     textAlign: "center",
@@ -219,20 +221,189 @@ const s = StyleSheet.create({
     borderRight: "0.5pt solid #E5E5E5",
     justifyContent: "center",
   },
-  tdCell: {
+  thName: {
+    width: 110,
+    fontSize: 5.5,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  thSpec: {
+    width: 54,
+    fontSize: 5.5,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  thQty: {
+    width: 34,
+    fontSize: 5.5,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  thUnit: {
+    width: 24,
+    fontSize: 5.5,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  thUnitPrice: {
+    width: 52,
+    fontSize: 5.5,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  thSupply: {
+    width: 60,
+    fontSize: 5.5,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  thVatLast: {
+    width: 50,
+    fontSize: 5.5,
+    fontWeight: "bold",
+    textAlign: "center",
+    padding: 1.5,
+    justifyContent: "center",
+  },
+
+  tdDate: {
+    width: 42,
+    fontSize: 5.5,
+    padding: 1.5,
+    textAlign: "center",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdName: {
+    width: 110,
     fontSize: 5.5,
     padding: 1.5,
     borderRight: "0.5pt solid #E5E5E5",
     justifyContent: "center",
   },
-  colDate: { width: 42 },
-  colName: { width: 110 },
-  colSpec: { width: 54 },
-  colQty: { width: 34 },
-  colUnit: { width: 24 },
-  colUnitPrice: { width: 52 },
-  colSupply: { width: 60 },
-  colVat: { width: 50 },
+  tdSpec: {
+    width: 54,
+    fontSize: 5.5,
+    padding: 1.5,
+    textAlign: "center",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdQty: {
+    width: 34,
+    fontSize: 5.5,
+    padding: 1.5,
+    textAlign: "right",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdUnit: {
+    width: 24,
+    fontSize: 5.5,
+    padding: 1.5,
+    textAlign: "center",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdUnitPrice: {
+    width: 52,
+    fontSize: 5.5,
+    padding: 1.5,
+    textAlign: "right",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdSupply: {
+    width: 60,
+    fontSize: 5.5,
+    padding: 1.5,
+    textAlign: "right",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdVatLast: {
+    width: 50,
+    fontSize: 5.5,
+    padding: 1.5,
+    textAlign: "right",
+    justifyContent: "center",
+  },
+
+  /* 빈 셀 (textAlign 불필요) */
+  tdDateEmpty: {
+    width: 42,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdNameEmpty: {
+    width: 110,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdSpecEmpty: {
+    width: 54,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdQtyEmpty: {
+    width: 34,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdUnitEmpty: {
+    width: 24,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdUnitPriceEmpty: {
+    width: 52,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdSupplyEmpty: {
+    width: 60,
+    fontSize: 5.5,
+    padding: 1.5,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdVatLastEmpty: {
+    width: 50,
+    fontSize: 5.5,
+    padding: 1.5,
+    justifyContent: "center",
+  },
+
   totalLabel: {
     width: 206,
     fontSize: 6.5,
@@ -268,39 +439,6 @@ const s = StyleSheet.create({
     height: 32,
   },
 });
-
-/* ═══════════════ 셀 컴포넌트 ═══════════════ */
-
-function Th({ children, style }: { children: string; style?: object }) {
-  return (
-    <View style={[s.thCell, style]}>
-      <Text>{children}</Text>
-    </View>
-  );
-}
-
-function Td({
-  children,
-  style,
-  align,
-}: {
-  children: string;
-  style?: object;
-  align?: "right" | "center";
-}) {
-  return (
-    <View
-      style={[
-        s.tdCell,
-        align === "right" && { textAlign: "right" },
-        align === "center" && { textAlign: "center" },
-        style,
-      ]}
-    >
-      <Text>{children}</Text>
-    </View>
-  );
-}
 
 /* ═══════════════ 절취선 컴포넌트 ═══════════════ */
 
@@ -413,7 +551,7 @@ function TransactionSlip({
               </Text>
             </View>
           </View>
-          <View style={[s.infoFieldRow, { borderBottom: "none" }]}>
+          <View style={s.infoFieldRowLast}>
             <View style={s.infoLabel}>
               <Text>TEL / FAX</Text>
             </View>
@@ -470,7 +608,7 @@ function TransactionSlip({
               </Text>
             </View>
           </View>
-          <View style={[s.infoFieldRow, { borderBottom: "none" }]}>
+          <View style={s.infoFieldRowLast}>
             <View style={s.infoLabel}>
               <Text>TEL / FAX</Text>
             </View>
@@ -486,54 +624,88 @@ function TransactionSlip({
       {/* 품목 테이블 */}
       <View style={s.table}>
         <View style={s.tHeaderRow}>
-          <Th style={s.colDate}>일자</Th>
-          <Th style={s.colName}>품명</Th>
-          <Th style={s.colSpec}>규격</Th>
-          <Th style={s.colQty}>수량</Th>
-          <Th style={s.colUnit}>단위</Th>
-          <Th style={s.colUnitPrice}>단가</Th>
-          <Th style={s.colSupply}>공급가액</Th>
-          <Th style={[s.colVat, { borderRight: "none" }]}>부가세</Th>
+          <View style={s.thDate}>
+            <Text>일자</Text>
+          </View>
+          <View style={s.thName}>
+            <Text>품명</Text>
+          </View>
+          <View style={s.thSpec}>
+            <Text>규격</Text>
+          </View>
+          <View style={s.thQty}>
+            <Text>수량</Text>
+          </View>
+          <View style={s.thUnit}>
+            <Text>단위</Text>
+          </View>
+          <View style={s.thUnitPrice}>
+            <Text>단가</Text>
+          </View>
+          <View style={s.thSupply}>
+            <Text>공급가액</Text>
+          </View>
+          <View style={s.thVatLast}>
+            <Text>부가세</Text>
+          </View>
         </View>
 
         {displayItems.map((item, idx) => (
           <View key={idx} style={s.tRow}>
-            <Td style={s.colDate} align="center">
-              {fmtShort(item.itemDate)}
-            </Td>
-            <Td style={s.colName}>{item.productName}</Td>
-            <Td style={s.colSpec} align="center">
-              {item.spec || ""}
-            </Td>
-            <Td style={s.colQty} align="right">
-              {formatNumber(item.quantity)}
-            </Td>
-            <Td style={s.colUnit} align="center">
-              {item.unit || "EA"}
-            </Td>
-            <Td style={s.colUnitPrice} align="right">
-              {formatNumber(item.unitPrice)}
-            </Td>
-            <Td style={s.colSupply} align="right">
-              {formatNumber(item.supplyAmount)}
-            </Td>
-            <Td style={[s.colVat, { borderRight: "none" }]} align="right">
-              {formatNumber(item.vat)}
-            </Td>
+            <View style={s.tdDate}>
+              <Text>{fmtShort(item.itemDate)}</Text>
+            </View>
+            <View style={s.tdName}>
+              <Text>{item.productName}</Text>
+            </View>
+            <View style={s.tdSpec}>
+              <Text>{item.spec || ""}</Text>
+            </View>
+            <View style={s.tdQty}>
+              <Text>{formatNumber(item.quantity)}</Text>
+            </View>
+            <View style={s.tdUnit}>
+              <Text>{item.unit || "EA"}</Text>
+            </View>
+            <View style={s.tdUnitPrice}>
+              <Text>{formatNumber(item.unitPrice)}</Text>
+            </View>
+            <View style={s.tdSupply}>
+              <Text>{formatNumber(item.supplyAmount)}</Text>
+            </View>
+            <View style={s.tdVatLast}>
+              <Text>{formatNumber(item.vat)}</Text>
+            </View>
           </View>
         ))}
 
         {emptyCount > 0 &&
           Array.from({ length: emptyCount }).map((_, idx) => (
             <View key={"e" + idx} style={s.tRow}>
-              <Td style={s.colDate}>{""}</Td>
-              <Td style={s.colName}>{""}</Td>
-              <Td style={s.colSpec}>{""}</Td>
-              <Td style={s.colQty}>{""}</Td>
-              <Td style={s.colUnit}>{""}</Td>
-              <Td style={s.colUnitPrice}>{""}</Td>
-              <Td style={s.colSupply}>{""}</Td>
-              <Td style={[s.colVat, { borderRight: "none" }]}>{""}</Td>
+              <View style={s.tdDateEmpty}>
+                <Text>{""}</Text>
+              </View>
+              <View style={s.tdNameEmpty}>
+                <Text>{""}</Text>
+              </View>
+              <View style={s.tdSpecEmpty}>
+                <Text>{""}</Text>
+              </View>
+              <View style={s.tdQtyEmpty}>
+                <Text>{""}</Text>
+              </View>
+              <View style={s.tdUnitEmpty}>
+                <Text>{""}</Text>
+              </View>
+              <View style={s.tdUnitPriceEmpty}>
+                <Text>{""}</Text>
+              </View>
+              <View style={s.tdSupplyEmpty}>
+                <Text>{""}</Text>
+              </View>
+              <View style={s.tdVatLastEmpty}>
+                <Text>{""}</Text>
+              </View>
             </View>
           ))}
 
@@ -541,21 +713,25 @@ function TransactionSlip({
           <View style={s.totalLabel}>
             <Text>합 계</Text>
           </View>
-          <Td style={s.colQty} align="right">
-            {formatNumber(data.totalQuantity)}
-          </Td>
-          <Td style={s.colUnit}>{""}</Td>
-          <Td style={s.colUnitPrice}>{""}</Td>
-          <Td style={s.colSupply} align="right">
-            {formatNumber(totalSupply)}
-          </Td>
-          <Td style={[s.colVat, { borderRight: "none" }]} align="right">
-            {formatNumber(totalVat)}
-          </Td>
+          <View style={s.tdQty}>
+            <Text>{formatNumber(data.totalQuantity)}</Text>
+          </View>
+          <View style={s.tdUnitEmpty}>
+            <Text>{""}</Text>
+          </View>
+          <View style={s.tdUnitPriceEmpty}>
+            <Text>{""}</Text>
+          </View>
+          <View style={s.tdSupply}>
+            <Text>{formatNumber(totalSupply)}</Text>
+          </View>
+          <View style={s.tdVatLast}>
+            <Text>{formatNumber(totalVat)}</Text>
+          </View>
         </View>
       </View>
 
-      {/* 하단: 합계금액 + 계좌 + 비고 + 직인 */}
+      {/* 하단 */}
       <View style={s.footerRow}>
         <View style={s.footerLeft}>
           <Text style={s.amountText}>
@@ -575,7 +751,7 @@ function TransactionSlip({
   );
 }
 
-/* ═══════════════ Document (최종 export) ═══════════════ */
+/* ═══════════════ Document ═══════════════ */
 
 export function TransactionPdfDocument({ data }: { data: TransactionPdfData }) {
   return (

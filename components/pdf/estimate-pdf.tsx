@@ -65,7 +65,6 @@ const s = StyleSheet.create({
     paddingTop: 40,
     color: COLORS.black,
   },
-  // 타이틀
   titleRow: {
     alignItems: "center",
     marginBottom: 16,
@@ -80,7 +79,6 @@ const s = StyleSheet.create({
     marginTop: 6,
     textAlign: "center",
   },
-  // 수신자 + 공급자
   infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -103,10 +101,9 @@ const s = StyleSheet.create({
     fontSize: 8,
     color: COLORS.red,
   },
-  // 공급자 박스
   supplierBox: {
     width: 240,
-    border: `1pt solid ${COLORS.black}`,
+    border: "1pt solid #000000",
     padding: 0,
   },
   supplierTitle: {
@@ -119,7 +116,11 @@ const s = StyleSheet.create({
   },
   supplierRow: {
     flexDirection: "row",
-    borderBottom: `0.5pt solid ${COLORS.veryLightGray}`,
+    borderBottom: "0.5pt solid #E5E5E5",
+    minHeight: 16,
+  },
+  supplierRowLast: {
+    flexDirection: "row",
     minHeight: 16,
   },
   supplierLabel: {
@@ -127,17 +128,16 @@ const s = StyleSheet.create({
     fontSize: 7.5,
     backgroundColor: "#F2F2F2",
     padding: 3,
-    borderRight: `0.5pt solid ${COLORS.veryLightGray}`,
+    borderRight: "0.5pt solid #E5E5E5",
   },
   supplierValue: {
     flex: 1,
     fontSize: 7.5,
     padding: 3,
   },
-  // 테이블
   table: {
     marginTop: 10,
-    border: `1pt solid ${COLORS.black}`,
+    border: "1pt solid #000000",
   },
   tableHeaderRow: {
     flexDirection: "row",
@@ -146,57 +146,264 @@ const s = StyleSheet.create({
   },
   tableRow: {
     flexDirection: "row",
-    borderTop: `0.5pt solid ${COLORS.veryLightGray}`,
+    borderTop: "0.5pt solid #E5E5E5",
     minHeight: 20,
   },
   tableRowAlt: {
+    flexDirection: "row",
+    borderTop: "0.5pt solid #E5E5E5",
+    minHeight: 20,
     backgroundColor: "#F8F9FA",
   },
   tableTotalRow: {
     flexDirection: "row",
-    borderTop: `1pt solid ${COLORS.black}`,
+    borderTop: "1pt solid #000000",
     minHeight: 22,
     backgroundColor: "#FFF3CD",
   },
   tableGrandTotalRow: {
     flexDirection: "row",
-    borderTop: `1pt solid ${COLORS.black}`,
+    borderTop: "1pt solid #000000",
     minHeight: 24,
     backgroundColor: "#D4EDDA",
   },
-  // 테이블 셀 헤더
-  thCell: {
+
+  /* 헤더 셀 - 컬럼별 */
+  thNo: {
+    width: 25,
     fontSize: 7.5,
     fontWeight: "bold",
     color: COLORS.white,
     textAlign: "center",
     padding: 4,
-    borderRight: `0.5pt solid rgba(255,255,255,0.3)`,
+    borderRight: "0.5pt solid rgba(255,255,255,0.3)",
     justifyContent: "center",
   },
-  // 테이블 셀 일반
-  tdCell: {
+  thName: {
+    width: 130,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    color: COLORS.white,
+    textAlign: "center",
+    padding: 4,
+    borderRight: "0.5pt solid rgba(255,255,255,0.3)",
+    justifyContent: "center",
+  },
+  thSpec: {
+    width: 70,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    color: COLORS.white,
+    textAlign: "center",
+    padding: 4,
+    borderRight: "0.5pt solid rgba(255,255,255,0.3)",
+    justifyContent: "center",
+  },
+  thQty: {
+    width: 55,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    color: COLORS.white,
+    textAlign: "center",
+    padding: 4,
+    borderRight: "0.5pt solid rgba(255,255,255,0.3)",
+    justifyContent: "center",
+  },
+  thUnitPrice: {
+    width: 65,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    color: COLORS.white,
+    textAlign: "center",
+    padding: 4,
+    borderRight: "0.5pt solid rgba(255,255,255,0.3)",
+    justifyContent: "center",
+  },
+  thSupply: {
+    width: 75,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    color: COLORS.white,
+    textAlign: "center",
+    padding: 4,
+    borderRight: "0.5pt solid rgba(255,255,255,0.3)",
+    justifyContent: "center",
+  },
+  thVat: {
+    width: 60,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    color: COLORS.white,
+    textAlign: "center",
+    padding: 4,
+    borderRight: "0.5pt solid rgba(255,255,255,0.3)",
+    justifyContent: "center",
+  },
+  thNoteLast: {
+    width: 55,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    color: COLORS.white,
+    textAlign: "center",
+    padding: 4,
+    justifyContent: "center",
+  },
+
+  /* 데이터 셀 - 컬럼별 */
+  tdNo: {
+    width: 25,
     fontSize: 7.5,
     padding: 4,
-    borderRight: `0.5pt solid ${COLORS.veryLightGray}`,
+    textAlign: "center",
+    borderRight: "0.5pt solid #E5E5E5",
     justifyContent: "center",
   },
-  tdCellRight: {
-    textAlign: "right",
+  tdName: {
+    width: 130,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
   },
-  tdCellCenter: {
+  tdSpec: {
+    width: 70,
+    fontSize: 7.5,
+    padding: 4,
     textAlign: "center",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
   },
-  // 컬럼 폭
-  colNo: { width: 25 },
-  colName: { width: 130 },
-  colSpec: { width: 70 },
-  colQty: { width: 55 },
-  colUnitPrice: { width: 65 },
-  colSupply: { width: 75 },
-  colVat: { width: 60 },
-  colNote: { width: 55 },
-  // 하단 섹션
+  tdQty: {
+    width: 55,
+    fontSize: 7.5,
+    padding: 4,
+    textAlign: "right",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdUnitPrice: {
+    width: 65,
+    fontSize: 7.5,
+    padding: 4,
+    textAlign: "right",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdSupply: {
+    width: 75,
+    fontSize: 7.5,
+    padding: 4,
+    textAlign: "right",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdVat: {
+    width: 60,
+    fontSize: 7.5,
+    padding: 4,
+    textAlign: "right",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdNoteLast: {
+    width: 55,
+    fontSize: 7.5,
+    padding: 4,
+    justifyContent: "center",
+  },
+
+  /* 빈 셀 */
+  tdNoEmpty: {
+    width: 25,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdNameEmpty: {
+    width: 130,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdSpecEmpty: {
+    width: 70,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdQtyEmpty: {
+    width: 55,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdUnitPriceEmpty: {
+    width: 65,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdSupplyEmpty: {
+    width: 75,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdVatEmpty: {
+    width: 60,
+    fontSize: 7.5,
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  tdNoteLastEmpty: {
+    width: 55,
+    fontSize: 7.5,
+    padding: 4,
+    justifyContent: "center",
+  },
+
+  /* 합계행 특수 셀 */
+  totalNoBold: {
+    width: 25,
+    fontSize: 7.5,
+    fontWeight: "bold",
+    padding: 4,
+    textAlign: "center",
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  totalLabelCell: {
+    width: 200,
+    fontSize: 8,
+    fontWeight: "bold",
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  grandTotalLabelCell: {
+    width: 260,
+    fontSize: 9,
+    fontWeight: "bold",
+    padding: 4,
+    borderRight: "0.5pt solid #E5E5E5",
+    justifyContent: "center",
+  },
+  grandTotalValueCell: {
+    flex: 1,
+    fontSize: 11,
+    fontWeight: "bold",
+    padding: 4,
+    textAlign: "right",
+    justifyContent: "center",
+  },
+
   footerSection: {
     marginTop: 14,
   },
@@ -210,6 +417,12 @@ const s = StyleSheet.create({
     fontSize: 7,
     lineHeight: 1.5,
     color: COLORS.darkGray,
+  },
+  footerNoteTextMt: {
+    fontSize: 7,
+    lineHeight: 1.5,
+    color: COLORS.darkGray,
+    marginTop: 4,
   },
   bankInfoRow: {
     flexDirection: "row",
@@ -240,7 +453,6 @@ const s = StyleSheet.create({
   managerValue: {
     fontSize: 8,
   },
-  // 직인
   sealContainer: {
     position: "absolute",
     bottom: 80,
@@ -254,60 +466,32 @@ const s = StyleSheet.create({
   },
 });
 
-/* ────────── 테이블 셀 헬퍼 ────────── */
-function Th({ children, style }: { children: string; style?: object }) {
-  return (
-    <View style={[s.thCell, style]}>
-      <Text>{children}</Text>
-    </View>
-  );
-}
-
-function Td({
-  children,
-  style,
-  align,
-}: {
-  children: string;
-  style?: object;
-  align?: "right" | "center";
-}) {
-  return (
-    <View
-      style={[
-        s.tdCell,
-        align === "right" && s.tdCellRight,
-        align === "center" && s.tdCellCenter,
-        style,
-      ]}
-    >
-      <Text>{children}</Text>
-    </View>
-  );
-}
-
 /* ────────── Document ────────── */
 export function EstimatePdfDocument({ data }: { data: EstimatePdfData }) {
   const recipientDisplay =
     data.recipientText ||
-    `${data.clientCompanyName} ${data.clientContactName || ""} 귀 하`.trim();
+    (
+      data.clientCompanyName +
+      " " +
+      (data.clientContactName || "") +
+      " 귀 하"
+    ).trim();
 
   const totalSupply = Number(data.totalSupplyAmount) || 0;
   const totalVat = Number(data.totalVat) || 0;
   const totalAmount = Number(data.totalAmount) || 0;
 
   return (
-    <Document title={`견적서_${data.estimateNumber}`} author="신우씨링">
+    <Document title={"견적서_" + data.estimateNumber} author="신우씨링">
       <Page size="A4" style={s.page}>
-        {/* ═══ 타이틀 ═══ */}
+        {/* 타이틀 */}
         <View style={s.titleRow}>
           <Text style={s.title}>견 적 서</Text>
           <Text style={s.dateText}>{formatDateKorean(data.estimateDate)}</Text>
         </View>
 
-        {/* ═══ 수신자 + 공급자 ═══ */}
+        {/* 수신자 + 공급자 */}
         <View style={s.infoRow}>
-          {/* 좌측: 수신자 */}
           <View style={s.recipientCol}>
             <Text style={s.recipientText}>{recipientDisplay}</Text>
             <Text style={s.greetingText}>하기와 같이 견적 합니다.</Text>
@@ -316,7 +500,6 @@ export function EstimatePdfDocument({ data }: { data: EstimatePdfData }) {
             </Text>
           </View>
 
-          {/* 우측: 공급자 */}
           <View style={s.supplierBox}>
             <Text style={s.supplierTitle}>공 급 자</Text>
             <View style={s.supplierRow}>
@@ -342,7 +525,7 @@ export function EstimatePdfDocument({ data }: { data: EstimatePdfData }) {
                 {data.company.businessItem || ""}
               </Text>
             </View>
-            <View style={[s.supplierRow, { borderBottom: "none" }]}>
+            <View style={s.supplierRowLast}>
               <Text style={s.supplierLabel}>TEL / FAX</Text>
               <Text style={s.supplierValue}>
                 {data.company.phone} / {data.company.fax || ""}
@@ -351,134 +534,143 @@ export function EstimatePdfDocument({ data }: { data: EstimatePdfData }) {
           </View>
         </View>
 
-        {/* ═══ 품목 테이블 ═══ */}
+        {/* 품목 테이블 */}
         <View style={s.table}>
-          {/* 헤더 */}
           <View style={s.tableHeaderRow}>
-            <Th style={s.colNo}>No</Th>
-            <Th style={s.colName}>품명</Th>
-            <Th style={s.colSpec}>규격(mm)</Th>
-            <Th style={s.colQty}>발주수량</Th>
-            <Th style={s.colUnitPrice}>단가(원)</Th>
-            <Th style={s.colSupply}>공급가액</Th>
-            <Th style={s.colVat}>세액</Th>
-            <Th style={[s.colNote, { borderRight: "none" }]}>비고</Th>
+            <View style={s.thNo}>
+              <Text>No</Text>
+            </View>
+            <View style={s.thName}>
+              <Text>품명</Text>
+            </View>
+            <View style={s.thSpec}>
+              <Text>규격(mm)</Text>
+            </View>
+            <View style={s.thQty}>
+              <Text>발주수량</Text>
+            </View>
+            <View style={s.thUnitPrice}>
+              <Text>단가(원)</Text>
+            </View>
+            <View style={s.thSupply}>
+              <Text>공급가액</Text>
+            </View>
+            <View style={s.thVat}>
+              <Text>세액</Text>
+            </View>
+            <View style={s.thNoteLast}>
+              <Text>비고</Text>
+            </View>
           </View>
 
-          {/* 데이터 행 */}
           {data.items.map((item, idx) => (
-            <View
-              key={idx}
-              style={[s.tableRow, idx % 2 === 1 && s.tableRowAlt]}
-            >
-              <Td style={s.colNo} align="center">
-                {String(idx + 1)}
-              </Td>
-              <Td style={s.colName}>{item.productName}</Td>
-              <Td style={s.colSpec} align="center">
-                {item.spec || ""}
-              </Td>
-              <Td style={s.colQty} align="right">
-                {item.quantityText || formatNumber(item.quantity)}
-              </Td>
-              <Td style={s.colUnitPrice} align="right">
-                {item.unitPriceText || formatNumber(item.unitPrice)}
-              </Td>
-              <Td style={s.colSupply} align="right">
-                {formatNumber(item.supplyAmount)}
-              </Td>
-              <Td style={s.colVat} align="right">
-                {formatNumber(item.vat)}
-              </Td>
-              <Td style={[s.colNote, { borderRight: "none" }]}>
-                {item.note || ""}
-              </Td>
+            <View key={idx} style={idx % 2 === 1 ? s.tableRowAlt : s.tableRow}>
+              <View style={s.tdNo}>
+                <Text>{String(idx + 1)}</Text>
+              </View>
+              <View style={s.tdName}>
+                <Text>{item.productName}</Text>
+              </View>
+              <View style={s.tdSpec}>
+                <Text>{item.spec || ""}</Text>
+              </View>
+              <View style={s.tdQty}>
+                <Text>{item.quantityText || formatNumber(item.quantity)}</Text>
+              </View>
+              <View style={s.tdUnitPrice}>
+                <Text>
+                  {item.unitPriceText || formatNumber(item.unitPrice)}
+                </Text>
+              </View>
+              <View style={s.tdSupply}>
+                <Text>{formatNumber(item.supplyAmount)}</Text>
+              </View>
+              <View style={s.tdVat}>
+                <Text>{formatNumber(item.vat)}</Text>
+              </View>
+              <View style={s.tdNoteLast}>
+                <Text>{item.note || ""}</Text>
+              </View>
             </View>
           ))}
 
-          {/* 빈 행 채우기 (최소 8행) */}
           {data.items.length < 8 &&
             Array.from({ length: 8 - data.items.length }).map((_, idx) => (
               <View
-                key={`empty-${idx}`}
-                style={[
-                  s.tableRow,
-                  (data.items.length + idx) % 2 === 1 && s.tableRowAlt,
-                ]}
+                key={"e" + idx}
+                style={
+                  (data.items.length + idx) % 2 === 1
+                    ? s.tableRowAlt
+                    : s.tableRow
+                }
               >
-                <Td style={s.colNo} align="center">
-                  {""}
-                </Td>
-                <Td style={s.colName}>{""}</Td>
-                <Td style={s.colSpec}>{""}</Td>
-                <Td style={s.colQty}>{""}</Td>
-                <Td style={s.colUnitPrice}>{""}</Td>
-                <Td style={s.colSupply}>{""}</Td>
-                <Td style={s.colVat}>{""}</Td>
-                <Td style={[s.colNote, { borderRight: "none" }]}>{""}</Td>
+                <View style={s.tdNoEmpty}>
+                  <Text>{""}</Text>
+                </View>
+                <View style={s.tdNameEmpty}>
+                  <Text>{""}</Text>
+                </View>
+                <View style={s.tdSpecEmpty}>
+                  <Text>{""}</Text>
+                </View>
+                <View style={s.tdQtyEmpty}>
+                  <Text>{""}</Text>
+                </View>
+                <View style={s.tdUnitPriceEmpty}>
+                  <Text>{""}</Text>
+                </View>
+                <View style={s.tdSupplyEmpty}>
+                  <Text>{""}</Text>
+                </View>
+                <View style={s.tdVatEmpty}>
+                  <Text>{""}</Text>
+                </View>
+                <View style={s.tdNoteLastEmpty}>
+                  <Text>{""}</Text>
+                </View>
               </View>
             ))}
 
-          {/* 합계금액 행 */}
+          {/* 합계 행 */}
           <View style={s.tableTotalRow}>
-            <Td style={[s.colNo, { fontWeight: "bold" }]} align="center">
-              {""}
-            </Td>
-            <View
-              style={[
-                s.tdCell,
-                {
-                  width: 200,
-                  fontWeight: "bold",
-                  justifyContent: "center",
-                },
-              ]}
-            >
-              <Text style={{ fontWeight: "bold", fontSize: 8 }}>합계금액</Text>
+            <View style={s.totalNoBold}>
+              <Text>{""}</Text>
             </View>
-            <Td style={s.colSpec}>{""}</Td>
-            <Td style={s.colQty}>{""}</Td>
-            <Td style={s.colUnitPrice}>{""}</Td>
-            <Td style={s.colSupply} align="right">
-              {formatNumber(totalSupply)}
-            </Td>
-            <Td style={s.colVat} align="right">
-              {formatNumber(totalVat)}
-            </Td>
-            <Td style={[s.colNote, { borderRight: "none" }]}>{""}</Td>
+            <View style={s.totalLabelCell}>
+              <Text>합계금액</Text>
+            </View>
+            <View style={s.tdSpecEmpty}>
+              <Text>{""}</Text>
+            </View>
+            <View style={s.tdQtyEmpty}>
+              <Text>{""}</Text>
+            </View>
+            <View style={s.tdUnitPriceEmpty}>
+              <Text>{""}</Text>
+            </View>
+            <View style={s.tdSupply}>
+              <Text>{formatNumber(totalSupply)}</Text>
+            </View>
+            <View style={s.tdVat}>
+              <Text>{formatNumber(totalVat)}</Text>
+            </View>
+            <View style={s.tdNoteLastEmpty}>
+              <Text>{""}</Text>
+            </View>
           </View>
 
-          {/* 총합계금액(VAT포함) 행 */}
+          {/* 총합계 행 */}
           <View style={s.tableGrandTotalRow}>
-            <View
-              style={[
-                s.tdCell,
-                {
-                  width: 260,
-                  fontWeight: "bold",
-                  justifyContent: "center",
-                },
-              ]}
-            >
-              <Text style={{ fontWeight: "bold", fontSize: 9 }}>
-                총합계금액(VAT포함)
-              </Text>
+            <View style={s.grandTotalLabelCell}>
+              <Text>총합계금액(VAT포함)</Text>
             </View>
-            <View style={[s.tdCell, { flex: 1, borderRight: "none" }]}>
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 11,
-                  textAlign: "right",
-                }}
-              >
-                {formatNumber(totalAmount)} 원
-              </Text>
+            <View style={s.grandTotalValueCell}>
+              <Text>{formatNumber(totalAmount)} 원</Text>
             </View>
           </View>
         </View>
 
-        {/* ═══ 특이사항 ═══ */}
+        {/* 특이사항 */}
         <View style={s.footerSection}>
           <Text style={s.footerNoteTitle}>특이사항</Text>
           <Text style={s.footerNoteText}>
@@ -486,14 +678,14 @@ export function EstimatePdfDocument({ data }: { data: EstimatePdfData }) {
               "※ 예상 입고일정은 시안확정 후 평일 기준 5~7일 정도 소요됩니다. 또한 택배사의 사정에 따라 배송 지연이 발생할 수 있습니다\n(긴급주문건의 경우 별도로 일정 관련 견적 담당자에게 별도로 문의 연락 부탁드립니다)"
             }
           </Text>
-          <Text style={[s.footerNoteText, { marginTop: 4 }]}>
+          <Text style={s.footerNoteTextMt}>
             {
               "※ 세금계산서 발행시 사업자등록증 사본(발행메일기재)을 함께 보내주시기 바랍니다."
             }
           </Text>
         </View>
 
-        {/* ═══ 입금계좌 ═══ */}
+        {/* 입금계좌 */}
         <View style={s.bankInfoRow}>
           <Text style={s.bankLabel}>입금계좌정보:</Text>
           <Text style={s.bankValue}>
@@ -502,7 +694,7 @@ export function EstimatePdfDocument({ data }: { data: EstimatePdfData }) {
           </Text>
         </View>
 
-        {/* ═══ 견적 담당자 ═══ */}
+        {/* 견적 담당자 */}
         <View style={s.managerRow}>
           <Text style={s.managerLabel}>견적 담당자</Text>
           <Text style={s.managerValue}>
@@ -510,12 +702,12 @@ export function EstimatePdfDocument({ data }: { data: EstimatePdfData }) {
           </Text>
         </View>
 
-        {/* ═══ 직인 ═══ */}
-        {data.company.sealUrl && (
+        {/* 직인 */}
+        {data.company.sealUrl ? (
           <View style={s.sealContainer}>
             <Image src={data.company.sealUrl} style={s.sealImage} />
           </View>
-        )}
+        ) : null}
       </Page>
     </Document>
   );

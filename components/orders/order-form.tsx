@@ -8,17 +8,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
-import { orderFormSchema, type OrderFormValues } from "@/lib/validators/order";
+import {
+  orderFormSchema,
+  type OrderFormInput,
+  type OrderFormValues,
+} from "@/lib/validators/order";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Copy, Loader2, Plus } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-
-interface SystemOption {
-  id: number;
-  label: string;
-  value: string;
-}
 
 interface ClientOption {
   id: number;
@@ -144,7 +143,7 @@ export function OrderForm({
     watch,
     reset,
     formState: { errors },
-  } = useForm<OrderFormValues>({
+  } = useForm<OrderFormInput, unknown, OrderFormValues>({
     resolver: zodResolver(orderFormSchema),
     defaultValues: defaultValues || defaultFormValues,
   });
