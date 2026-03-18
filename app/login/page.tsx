@@ -82,6 +82,18 @@ function LoginForm() {
   );
 }
 
+function LoginFormFallback() {
+  return (
+    <div className="space-y-5">
+      <div className="space-y-2">
+        <div className="bg-muted h-5 w-16 animate-pulse rounded" />
+        <div className="bg-muted h-12 w-full animate-pulse rounded-md" />
+      </div>
+      <div className="bg-muted h-12 w-full animate-pulse rounded-md" />
+    </div>
+  );
+}
+
 export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 px-4">
@@ -98,7 +110,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Suspense>
+          <Suspense fallback={<LoginFormFallback />}>
             <LoginForm />
           </Suspense>
         </CardContent>

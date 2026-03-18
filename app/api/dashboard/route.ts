@@ -9,6 +9,15 @@ export async function GET() {
     const monthStart = new Date(year, now.getMonth(), 1);
     const monthEnd = new Date(year, now.getMonth() + 1, 0, 23, 59, 59, 999);
 
+    // seed 데이터 왜곡 방지: 시스템 최초 생성 시점(회사정보) 이후에 생성된 거래처만 카운트
+    const companyInfo = await prisma.companyInfo.findFirst({
+      where: { id: 1 },
+      select: { createdAt: true },
+    });
+    const systemCreatedAt = companyInfo?.createdAt ?? new Date(0);
+    // seed 직후 1분 이내 생성된 거래처는 기존 데이터로 간주
+    const seedCutoff = new Date(systemCreatedAt.getTime() + 60_000);
+
     const [
       salesAgg,
       purchaseAgg,
@@ -33,7 +42,12 @@ export async function GET() {
         where: { status: "PROGRESS" },
       }),
       prisma.client.count({
-        where: { createdAt: { gte: monthStart, lte: monthEnd } },
+        where: {
+          createdAt: {
+            gte: monthStart > seedCutoff ? monthStart : seedCutoff,
+            lte: monthEnd,
+          },
+        },
       }),
       prisma.order.findMany({
         take: 5,
@@ -98,8 +112,10 @@ export async function GET() {
     });
   } catch (error) {
     console.error("대시보드 API 오류:", error);
+    const message =
+      error instanceof Error ? error.message : "알 수 없는 오류";
     return NextResponse.json(
-      { error: "데이터 조회 실패" },
+      { error: "데이터 조회 실패", detail: message },
       { status: 500 },
     );
   }

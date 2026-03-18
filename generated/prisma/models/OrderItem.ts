@@ -73,6 +73,11 @@ export type OrderItemMinAggregateOutputType = {
   supplyAmount: runtime.Decimal | null
   material: string | null
   materialWidth: runtime.Decimal | null
+  paperType: string | null
+  backing: string | null
+  adhesive: string | null
+  thickness: string | null
+  manufacturer: string | null
   perforation: boolean | null
   sizeWidth: runtime.Decimal | null
   sizeHeight: runtime.Decimal | null
@@ -110,6 +115,11 @@ export type OrderItemMaxAggregateOutputType = {
   supplyAmount: runtime.Decimal | null
   material: string | null
   materialWidth: runtime.Decimal | null
+  paperType: string | null
+  backing: string | null
+  adhesive: string | null
+  thickness: string | null
+  manufacturer: string | null
   perforation: boolean | null
   sizeWidth: runtime.Decimal | null
   sizeHeight: runtime.Decimal | null
@@ -147,6 +157,11 @@ export type OrderItemCountAggregateOutputType = {
   supplyAmount: number
   material: number
   materialWidth: number
+  paperType: number
+  backing: number
+  adhesive: number
+  thickness: number
+  manufacturer: number
   perforation: number
   sizeWidth: number
   sizeHeight: number
@@ -220,6 +235,11 @@ export type OrderItemMinAggregateInputType = {
   supplyAmount?: true
   material?: true
   materialWidth?: true
+  paperType?: true
+  backing?: true
+  adhesive?: true
+  thickness?: true
+  manufacturer?: true
   perforation?: true
   sizeWidth?: true
   sizeHeight?: true
@@ -257,6 +277,11 @@ export type OrderItemMaxAggregateInputType = {
   supplyAmount?: true
   material?: true
   materialWidth?: true
+  paperType?: true
+  backing?: true
+  adhesive?: true
+  thickness?: true
+  manufacturer?: true
   perforation?: true
   sizeWidth?: true
   sizeHeight?: true
@@ -294,6 +319,11 @@ export type OrderItemCountAggregateInputType = {
   supplyAmount?: true
   material?: true
   materialWidth?: true
+  paperType?: true
+  backing?: true
+  adhesive?: true
+  thickness?: true
+  manufacturer?: true
   perforation?: true
   sizeWidth?: true
   sizeHeight?: true
@@ -418,6 +448,11 @@ export type OrderItemGroupByOutputType = {
   supplyAmount: runtime.Decimal | null
   material: string | null
   materialWidth: runtime.Decimal | null
+  paperType: string | null
+  backing: string | null
+  adhesive: string | null
+  thickness: string | null
+  manufacturer: string | null
   perforation: boolean
   sizeWidth: runtime.Decimal | null
   sizeHeight: runtime.Decimal | null
@@ -478,6 +513,11 @@ export type OrderItemWhereInput = {
   supplyAmount?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  backing?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  adhesive?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  thickness?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  manufacturer?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   perforation?: Prisma.BoolFilter<"OrderItem"> | boolean
   sizeWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -517,6 +557,11 @@ export type OrderItemOrderByWithRelationInput = {
   supplyAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   material?: Prisma.SortOrderInput | Prisma.SortOrder
   materialWidth?: Prisma.SortOrderInput | Prisma.SortOrder
+  paperType?: Prisma.SortOrderInput | Prisma.SortOrder
+  backing?: Prisma.SortOrderInput | Prisma.SortOrder
+  adhesive?: Prisma.SortOrderInput | Prisma.SortOrder
+  thickness?: Prisma.SortOrderInput | Prisma.SortOrder
+  manufacturer?: Prisma.SortOrderInput | Prisma.SortOrder
   perforation?: Prisma.SortOrder
   sizeWidth?: Prisma.SortOrderInput | Prisma.SortOrder
   sizeHeight?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -560,6 +605,11 @@ export type OrderItemWhereUniqueInput = Prisma.AtLeast<{
   supplyAmount?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  backing?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  adhesive?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  thickness?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  manufacturer?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   perforation?: Prisma.BoolFilter<"OrderItem"> | boolean
   sizeWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -599,6 +649,11 @@ export type OrderItemOrderByWithAggregationInput = {
   supplyAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   material?: Prisma.SortOrderInput | Prisma.SortOrder
   materialWidth?: Prisma.SortOrderInput | Prisma.SortOrder
+  paperType?: Prisma.SortOrderInput | Prisma.SortOrder
+  backing?: Prisma.SortOrderInput | Prisma.SortOrder
+  adhesive?: Prisma.SortOrderInput | Prisma.SortOrder
+  thickness?: Prisma.SortOrderInput | Prisma.SortOrder
+  manufacturer?: Prisma.SortOrderInput | Prisma.SortOrder
   perforation?: Prisma.SortOrder
   sizeWidth?: Prisma.SortOrderInput | Prisma.SortOrder
   sizeHeight?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -644,6 +699,11 @@ export type OrderItemScalarWhereWithAggregatesInput = {
   supplyAmount?: Prisma.DecimalNullableWithAggregatesFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableWithAggregatesFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableWithAggregatesFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+  backing?: Prisma.StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+  adhesive?: Prisma.StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+  thickness?: Prisma.StringNullableWithAggregatesFilter<"OrderItem"> | string | null
+  manufacturer?: Prisma.StringNullableWithAggregatesFilter<"OrderItem"> | string | null
   perforation?: Prisma.BoolWithAggregatesFilter<"OrderItem"> | boolean
   sizeWidth?: Prisma.DecimalNullableWithAggregatesFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.DecimalNullableWithAggregatesFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -678,6 +738,11 @@ export type OrderItemCreateInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -717,6 +782,11 @@ export type OrderItemUncheckedCreateInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -751,6 +821,11 @@ export type OrderItemUpdateInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -790,6 +865,11 @@ export type OrderItemUncheckedUpdateInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -827,6 +907,11 @@ export type OrderItemCreateManyInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -861,6 +946,11 @@ export type OrderItemUpdateManyMutationInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -898,6 +988,11 @@ export type OrderItemUncheckedUpdateManyInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -951,6 +1046,11 @@ export type OrderItemCountOrderByAggregateInput = {
   supplyAmount?: Prisma.SortOrder
   material?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
+  paperType?: Prisma.SortOrder
+  backing?: Prisma.SortOrder
+  adhesive?: Prisma.SortOrder
+  thickness?: Prisma.SortOrder
+  manufacturer?: Prisma.SortOrder
   perforation?: Prisma.SortOrder
   sizeWidth?: Prisma.SortOrder
   sizeHeight?: Prisma.SortOrder
@@ -1005,6 +1105,11 @@ export type OrderItemMaxOrderByAggregateInput = {
   supplyAmount?: Prisma.SortOrder
   material?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
+  paperType?: Prisma.SortOrder
+  backing?: Prisma.SortOrder
+  adhesive?: Prisma.SortOrder
+  thickness?: Prisma.SortOrder
+  manufacturer?: Prisma.SortOrder
   perforation?: Prisma.SortOrder
   sizeWidth?: Prisma.SortOrder
   sizeHeight?: Prisma.SortOrder
@@ -1042,6 +1147,11 @@ export type OrderItemMinOrderByAggregateInput = {
   supplyAmount?: Prisma.SortOrder
   material?: Prisma.SortOrder
   materialWidth?: Prisma.SortOrder
+  paperType?: Prisma.SortOrder
+  backing?: Prisma.SortOrder
+  adhesive?: Prisma.SortOrder
+  thickness?: Prisma.SortOrder
+  manufacturer?: Prisma.SortOrder
   perforation?: Prisma.SortOrder
   sizeWidth?: Prisma.SortOrder
   sizeHeight?: Prisma.SortOrder
@@ -1185,6 +1295,11 @@ export type OrderItemCreateWithoutProductInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1222,6 +1337,11 @@ export type OrderItemUncheckedCreateWithoutProductInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1288,6 +1408,11 @@ export type OrderItemScalarWhereInput = {
   supplyAmount?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   materialWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  backing?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  adhesive?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  thickness?: Prisma.StringNullableFilter<"OrderItem"> | string | null
+  manufacturer?: Prisma.StringNullableFilter<"OrderItem"> | string | null
   perforation?: Prisma.BoolFilter<"OrderItem"> | boolean
   sizeWidth?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.DecimalNullableFilter<"OrderItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1322,6 +1447,11 @@ export type OrderItemCreateWithoutOrderInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1359,6 +1489,11 @@ export type OrderItemUncheckedCreateWithoutOrderInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1421,6 +1556,11 @@ export type OrderItemCreateManyProductInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1455,6 +1595,11 @@ export type OrderItemUpdateWithoutProductInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1492,6 +1637,11 @@ export type OrderItemUncheckedUpdateWithoutProductInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1528,6 +1678,11 @@ export type OrderItemUncheckedUpdateManyWithoutProductInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1564,6 +1719,11 @@ export type OrderItemCreateManyOrderInput = {
   supplyAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: string | null
   materialWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: string | null
+  backing?: string | null
+  adhesive?: string | null
+  thickness?: string | null
+  manufacturer?: string | null
   perforation?: boolean
   sizeWidth?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1598,6 +1758,11 @@ export type OrderItemUpdateWithoutOrderInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1635,6 +1800,11 @@ export type OrderItemUncheckedUpdateWithoutOrderInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1671,6 +1841,11 @@ export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
   supplyAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   material?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   materialWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  paperType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  backing?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  adhesive?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thickness?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  manufacturer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   perforation?: Prisma.BoolFieldUpdateOperationsInput | boolean
   sizeWidth?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   sizeHeight?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1710,6 +1885,11 @@ export type OrderItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   supplyAmount?: boolean
   material?: boolean
   materialWidth?: boolean
+  paperType?: boolean
+  backing?: boolean
+  adhesive?: boolean
+  thickness?: boolean
+  manufacturer?: boolean
   perforation?: boolean
   sizeWidth?: boolean
   sizeHeight?: boolean
@@ -1751,6 +1931,11 @@ export type OrderItemSelectScalar = {
   supplyAmount?: boolean
   material?: boolean
   materialWidth?: boolean
+  paperType?: boolean
+  backing?: boolean
+  adhesive?: boolean
+  thickness?: boolean
+  manufacturer?: boolean
   perforation?: boolean
   sizeWidth?: boolean
   sizeHeight?: boolean
@@ -1775,7 +1960,7 @@ export type OrderItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "productName" | "printType" | "printPrice" | "sheets" | "sheetsPerRoll" | "unitPrice" | "supplyAmount" | "material" | "materialWidth" | "perforation" | "sizeWidth" | "sizeHeight" | "shape" | "okkuri" | "lamination" | "foil" | "cuttingMethod" | "cuttingType" | "sheetsPerSheet" | "labelGap" | "dieCutter" | "resinPlate" | "rollDirection" | "slit" | "dataType" | "lastDataDate" | "designFileStatus" | "designImageUrl" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
+export type OrderItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "productId" | "productName" | "printType" | "printPrice" | "sheets" | "sheetsPerRoll" | "unitPrice" | "supplyAmount" | "material" | "materialWidth" | "paperType" | "backing" | "adhesive" | "thickness" | "manufacturer" | "perforation" | "sizeWidth" | "sizeHeight" | "shape" | "okkuri" | "lamination" | "foil" | "cuttingMethod" | "cuttingType" | "sheetsPerSheet" | "labelGap" | "dieCutter" | "resinPlate" | "rollDirection" | "slit" | "dataType" | "lastDataDate" | "designFileStatus" | "designImageUrl" | "sortOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["orderItem"]>
 export type OrderItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
   product?: boolean | Prisma.OrderItem$productArgs<ExtArgs>
@@ -1800,6 +1985,11 @@ export type $OrderItemPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     supplyAmount: runtime.Decimal | null
     material: string | null
     materialWidth: runtime.Decimal | null
+    paperType: string | null
+    backing: string | null
+    adhesive: string | null
+    thickness: string | null
+    manufacturer: string | null
     perforation: boolean
     sizeWidth: runtime.Decimal | null
     sizeHeight: runtime.Decimal | null
@@ -2205,6 +2395,11 @@ export interface OrderItemFieldRefs {
   readonly supplyAmount: Prisma.FieldRef<"OrderItem", 'Decimal'>
   readonly material: Prisma.FieldRef<"OrderItem", 'String'>
   readonly materialWidth: Prisma.FieldRef<"OrderItem", 'Decimal'>
+  readonly paperType: Prisma.FieldRef<"OrderItem", 'String'>
+  readonly backing: Prisma.FieldRef<"OrderItem", 'String'>
+  readonly adhesive: Prisma.FieldRef<"OrderItem", 'String'>
+  readonly thickness: Prisma.FieldRef<"OrderItem", 'String'>
+  readonly manufacturer: Prisma.FieldRef<"OrderItem", 'String'>
   readonly perforation: Prisma.FieldRef<"OrderItem", 'Boolean'>
   readonly sizeWidth: Prisma.FieldRef<"OrderItem", 'Decimal'>
   readonly sizeHeight: Prisma.FieldRef<"OrderItem", 'Decimal'>
@@ -2423,6 +2618,11 @@ export type OrderItemFindManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Skip the first `n` OrderItems.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of OrderItems.
+   */
   distinct?: Prisma.OrderItemScalarFieldEnum | Prisma.OrderItemScalarFieldEnum[]
 }
 

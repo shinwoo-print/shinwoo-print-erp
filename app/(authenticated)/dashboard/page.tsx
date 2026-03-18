@@ -3,6 +3,7 @@
 import { RecentOrdersTable } from "@/components/dashboard/recent-orders-table";
 import { RecentQuotesTable } from "@/components/dashboard/recent-quotes-table";
 import { PageHeader } from "@/components/shared/page-header";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -16,6 +17,7 @@ import {
   Banknote,
   Building2,
   ClipboardList,
+  RefreshCw,
   ShoppingCart,
 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -47,15 +49,26 @@ interface DashboardData {
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchDashboard = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       const res = await fetch("/api/dashboard");
+      if (!res.ok) {
+        throw new Error(`서버 응답 오류 (${res.status})`);
+      }
       const json = await res.json();
+      if (json.error) {
+        throw new Error(json.error);
+      }
       setData(json);
-    } catch (error) {
-      console.error("대시보드 데이터 조회 실패:", error);
+    } catch (err) {
+      const message =
+        err instanceof Error ? err.message : "데이터 조회에 실패했습니다";
+      setError(message);
+      console.error("대시보드 데이터 조회 실패:", err);
     } finally {
       setLoading(false);
     }
@@ -76,12 +89,18 @@ export default function DashboardPage() {
     );
   }
 
-  if (!data) {
+  if (error || !data) {
     return (
       <div className="space-y-6">
         <PageHeader title="대시보드" />
-        <div className="text-muted-foreground flex h-64 items-center justify-center text-lg">
-          데이터를 불러올 수 없습니다
+        <div className="flex h-64 flex-col items-center justify-center gap-4">
+          <p className="text-muted-foreground text-lg">
+            {error || "데이터를 불러올 수 없습니다"}
+          </p>
+          <Button variant="outline" onClick={fetchDashboard} className="gap-2">
+            <RefreshCw className="h-4 w-4" />
+            다시 시도
+          </Button>
         </div>
       </div>
     );
