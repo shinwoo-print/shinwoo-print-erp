@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Printer } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useState, type FormEvent } from "react";
+import { Suspense, useState } from "react";
 
 function LoginForm() {
   const router = useRouter();
@@ -21,7 +21,7 @@ function LoginForm() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setIsLoading(true);
@@ -60,7 +60,7 @@ function LoginForm() {
           type="password"
           placeholder="비밀번호를 입력하세요"
           value={password}
-          onChange={(e) => setPassword(e.currentTarget.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
           autoFocus
           className="h-12 text-base"
@@ -98,7 +98,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Suspense fallback={null}>
+          <Suspense>
             <LoginForm />
           </Suspense>
         </CardContent>
