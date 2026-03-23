@@ -5,8 +5,14 @@ import path from "path";
 /**
  * POST /api/upload — 로컬 디자인 시안 이미지 업로드
  * multipart/form-data로 file 필드 전송
- * public/uploads/designs/ 폴더에 저장
+ *
+ * Docker 환경: /app/uploads/designs/ 에 저장 (volume 마운트)
+ * 개발 환경:   public/uploads/designs/ 에 저장
  */
+
+const UPLOAD_BASE =
+  process.env.UPLOAD_DIR || path.join(process.cwd(), "public");
+
 export async function POST(request: NextRequest) {
   try {
     let formData: FormData;
@@ -46,7 +52,7 @@ export async function POST(request: NextRequest) {
     const fileName = `${timestamp}-${random}.${ext}`;
 
     // 저장 폴더 생성
-    const uploadDir = path.join(process.cwd(), "public", "uploads", "designs");
+    const uploadDir = path.join(UPLOAD_BASE, "uploads", "designs");
     await mkdir(uploadDir, { recursive: true });
 
     // 파일 저장

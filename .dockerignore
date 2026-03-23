@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build output
+.next
+out
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env (docker-compose에서 주입)
+.env
+.env.*
+!.env.example
+
+# Test
+coverage
+.playwright
+test-results
+playwright-report
+
+# Misc
+README.md
+LICENSE
+*.md
