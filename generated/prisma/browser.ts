@@ -68,6 +68,11 @@ export type Estimate = Prisma.EstimateModel
  */
 export type EstimateItem = Prisma.EstimateItemModel
 /**
+ * Model EstimateManager
+ * 
+ */
+export type EstimateManager = Prisma.EstimateManagerModel
+/**
  * Model Transaction
  * 
  */
@@ -92,8 +97,3 @@ export type SalesTarget = Prisma.SalesTargetModel
  * 
  */
 export type FileUpload = Prisma.FileUploadModel
-/**
- * Model EstimateManager
- * 
- */
-export type EstimateManager = Prisma.EstimateManagerModel

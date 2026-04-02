@@ -38,6 +38,7 @@ export type ClientMinAggregateOutputType = {
   id: number | null
   companyName: string | null
   clientType: string | null
+  representative: string | null
   contactName: string | null
   phone: string | null
   fax: string | null
@@ -56,6 +57,7 @@ export type ClientMaxAggregateOutputType = {
   id: number | null
   companyName: string | null
   clientType: string | null
+  representative: string | null
   contactName: string | null
   phone: string | null
   fax: string | null
@@ -74,6 +76,7 @@ export type ClientCountAggregateOutputType = {
   id: number
   companyName: number
   clientType: number
+  representative: number
   contactName: number
   phone: number
   fax: number
@@ -102,6 +105,7 @@ export type ClientMinAggregateInputType = {
   id?: true
   companyName?: true
   clientType?: true
+  representative?: true
   contactName?: true
   phone?: true
   fax?: true
@@ -120,6 +124,7 @@ export type ClientMaxAggregateInputType = {
   id?: true
   companyName?: true
   clientType?: true
+  representative?: true
   contactName?: true
   phone?: true
   fax?: true
@@ -138,6 +143,7 @@ export type ClientCountAggregateInputType = {
   id?: true
   companyName?: true
   clientType?: true
+  representative?: true
   contactName?: true
   phone?: true
   fax?: true
@@ -243,6 +249,7 @@ export type ClientGroupByOutputType = {
   id: number
   companyName: string
   clientType: string
+  representative: string | null
   contactName: string | null
   phone: string | null
   fax: string | null
@@ -284,6 +291,7 @@ export type ClientWhereInput = {
   id?: Prisma.IntFilter<"Client"> | number
   companyName?: Prisma.StringFilter<"Client"> | string
   clientType?: Prisma.StringFilter<"Client"> | string
+  representative?: Prisma.StringNullableFilter<"Client"> | string | null
   contactName?: Prisma.StringNullableFilter<"Client"> | string | null
   phone?: Prisma.StringNullableFilter<"Client"> | string | null
   fax?: Prisma.StringNullableFilter<"Client"> | string | null
@@ -306,6 +314,7 @@ export type ClientOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   clientType?: Prisma.SortOrder
+  representative?: Prisma.SortOrderInput | Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   fax?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -332,6 +341,7 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   companyName?: Prisma.StringFilter<"Client"> | string
   clientType?: Prisma.StringFilter<"Client"> | string
+  representative?: Prisma.StringNullableFilter<"Client"> | string | null
   contactName?: Prisma.StringNullableFilter<"Client"> | string | null
   phone?: Prisma.StringNullableFilter<"Client"> | string | null
   fax?: Prisma.StringNullableFilter<"Client"> | string | null
@@ -354,6 +364,7 @@ export type ClientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   clientType?: Prisma.SortOrder
+  representative?: Prisma.SortOrderInput | Prisma.SortOrder
   contactName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   fax?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -380,6 +391,7 @@ export type ClientScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Client"> | number
   companyName?: Prisma.StringWithAggregatesFilter<"Client"> | string
   clientType?: Prisma.StringWithAggregatesFilter<"Client"> | string
+  representative?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   contactName?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   fax?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
@@ -397,6 +409,7 @@ export type ClientScalarWhereWithAggregatesInput = {
 export type ClientCreateInput = {
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -419,6 +432,7 @@ export type ClientUncheckedCreateInput = {
   id?: number
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -440,6 +454,7 @@ export type ClientUncheckedCreateInput = {
 export type ClientUpdateInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -462,6 +477,7 @@ export type ClientUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -484,6 +500,7 @@ export type ClientCreateManyInput = {
   id?: number
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -501,6 +518,7 @@ export type ClientCreateManyInput = {
 export type ClientUpdateManyMutationInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -519,6 +537,7 @@ export type ClientUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -543,6 +562,7 @@ export type ClientCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   clientType?: Prisma.SortOrder
+  representative?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   fax?: Prisma.SortOrder
@@ -565,6 +585,7 @@ export type ClientMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   clientType?: Prisma.SortOrder
+  representative?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   fax?: Prisma.SortOrder
@@ -583,6 +604,7 @@ export type ClientMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
   clientType?: Prisma.SortOrder
+  representative?: Prisma.SortOrder
   contactName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   fax?: Prisma.SortOrder
@@ -665,6 +687,7 @@ export type ClientUpdateOneRequiredWithoutSalesRecordsNestedInput = {
 export type ClientCreateWithoutOrdersInput = {
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -686,6 +709,7 @@ export type ClientUncheckedCreateWithoutOrdersInput = {
   id?: number
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -722,6 +746,7 @@ export type ClientUpdateToOneWithWhereWithoutOrdersInput = {
 export type ClientUpdateWithoutOrdersInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -743,6 +768,7 @@ export type ClientUncheckedUpdateWithoutOrdersInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -763,6 +789,7 @@ export type ClientUncheckedUpdateWithoutOrdersInput = {
 export type ClientCreateWithoutEstimatesInput = {
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -784,6 +811,7 @@ export type ClientUncheckedCreateWithoutEstimatesInput = {
   id?: number
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -820,6 +848,7 @@ export type ClientUpdateToOneWithWhereWithoutEstimatesInput = {
 export type ClientUpdateWithoutEstimatesInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -841,6 +870,7 @@ export type ClientUncheckedUpdateWithoutEstimatesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -861,6 +891,7 @@ export type ClientUncheckedUpdateWithoutEstimatesInput = {
 export type ClientCreateWithoutTransactionsInput = {
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -882,6 +913,7 @@ export type ClientUncheckedCreateWithoutTransactionsInput = {
   id?: number
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -918,6 +950,7 @@ export type ClientUpdateToOneWithWhereWithoutTransactionsInput = {
 export type ClientUpdateWithoutTransactionsInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -939,6 +972,7 @@ export type ClientUncheckedUpdateWithoutTransactionsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -959,6 +993,7 @@ export type ClientUncheckedUpdateWithoutTransactionsInput = {
 export type ClientCreateWithoutSalesRecordsInput = {
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -980,6 +1015,7 @@ export type ClientUncheckedCreateWithoutSalesRecordsInput = {
   id?: number
   companyName: string
   clientType?: string
+  representative?: string | null
   contactName?: string | null
   phone?: string | null
   fax?: string | null
@@ -1016,6 +1052,7 @@ export type ClientUpdateToOneWithWhereWithoutSalesRecordsInput = {
 export type ClientUpdateWithoutSalesRecordsInput = {
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1037,6 +1074,7 @@ export type ClientUncheckedUpdateWithoutSalesRecordsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   companyName?: Prisma.StringFieldUpdateOperationsInput | string
   clientType?: Prisma.StringFieldUpdateOperationsInput | string
+  representative?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contactName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fax?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1116,6 +1154,7 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   companyName?: boolean
   clientType?: boolean
+  representative?: boolean
   contactName?: boolean
   phone?: boolean
   fax?: boolean
@@ -1141,6 +1180,7 @@ export type ClientSelectScalar = {
   id?: boolean
   companyName?: boolean
   clientType?: boolean
+  representative?: boolean
   contactName?: boolean
   phone?: boolean
   fax?: boolean
@@ -1155,7 +1195,7 @@ export type ClientSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyName" | "clientType" | "contactName" | "phone" | "fax" | "email" | "address" | "businessNumber" | "businessType" | "businessItem" | "memo" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyName" | "clientType" | "representative" | "contactName" | "phone" | "fax" | "email" | "address" | "businessNumber" | "businessType" | "businessItem" | "memo" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orders?: boolean | Prisma.Client$ordersArgs<ExtArgs>
   estimates?: boolean | Prisma.Client$estimatesArgs<ExtArgs>
@@ -1176,6 +1216,7 @@ export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: number
     companyName: string
     clientType: string
+    representative: string | null
     contactName: string | null
     phone: string | null
     fax: string | null
@@ -1564,6 +1605,7 @@ export interface ClientFieldRefs {
   readonly id: Prisma.FieldRef<"Client", 'Int'>
   readonly companyName: Prisma.FieldRef<"Client", 'String'>
   readonly clientType: Prisma.FieldRef<"Client", 'String'>
+  readonly representative: Prisma.FieldRef<"Client", 'String'>
   readonly contactName: Prisma.FieldRef<"Client", 'String'>
   readonly phone: Prisma.FieldRef<"Client", 'String'>
   readonly fax: Prisma.FieldRef<"Client", 'String'>

@@ -61,12 +61,12 @@ export const ModelName = {
   OrderItem: 'OrderItem',
   Estimate: 'Estimate',
   EstimateItem: 'EstimateItem',
+  EstimateManager: 'EstimateManager',
   Transaction: 'Transaction',
   TransactionItem: 'TransactionItem',
   SalesRecord: 'SalesRecord',
   SalesTarget: 'SalesTarget',
-  FileUpload: 'FileUpload',
-  EstimateManager: 'EstimateManager'
+  FileUpload: 'FileUpload'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -154,6 +154,7 @@ export const ClientScalarFieldEnum = {
   id: 'id',
   companyName: 'companyName',
   clientType: 'clientType',
+  representative: 'representative',
   contactName: 'contactName',
   phone: 'phone',
   fax: 'fax',
@@ -309,6 +310,22 @@ export const EstimateItemScalarFieldEnum = {
 export type EstimateItemScalarFieldEnum = (typeof EstimateItemScalarFieldEnum)[keyof typeof EstimateItemScalarFieldEnum]
 
 
+export const EstimateManagerScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  title: 'title',
+  phone: 'phone',
+  email: 'email',
+  isDefault: 'isDefault',
+  isActive: 'isActive',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EstimateManagerScalarFieldEnum = (typeof EstimateManagerScalarFieldEnum)[keyof typeof EstimateManagerScalarFieldEnum]
+
+
 export const TransactionScalarFieldEnum = {
   id: 'id',
   transactionNumber: 'transactionNumber',
@@ -402,22 +419,6 @@ export const FileUploadScalarFieldEnum = {
 export type FileUploadScalarFieldEnum = (typeof FileUploadScalarFieldEnum)[keyof typeof FileUploadScalarFieldEnum]
 
 
-export const EstimateManagerScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  title: 'title',
-  phone: 'phone',
-  email: 'email',
-  isDefault: 'isDefault',
-  isActive: 'isActive',
-  sortOrder: 'sortOrder',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type EstimateManagerScalarFieldEnum = (typeof EstimateManagerScalarFieldEnum)[keyof typeof EstimateManagerScalarFieldEnum]
-
-
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -485,6 +486,7 @@ export type MaterialOrderByRelevanceFieldEnum = (typeof MaterialOrderByRelevance
 export const ClientOrderByRelevanceFieldEnum = {
   companyName: 'companyName',
   clientType: 'clientType',
+  representative: 'representative',
   contactName: 'contactName',
   phone: 'phone',
   fax: 'fax',
@@ -584,6 +586,16 @@ export const EstimateItemOrderByRelevanceFieldEnum = {
 export type EstimateItemOrderByRelevanceFieldEnum = (typeof EstimateItemOrderByRelevanceFieldEnum)[keyof typeof EstimateItemOrderByRelevanceFieldEnum]
 
 
+export const EstimateManagerOrderByRelevanceFieldEnum = {
+  name: 'name',
+  title: 'title',
+  phone: 'phone',
+  email: 'email'
+} as const
+
+export type EstimateManagerOrderByRelevanceFieldEnum = (typeof EstimateManagerOrderByRelevanceFieldEnum)[keyof typeof EstimateManagerOrderByRelevanceFieldEnum]
+
+
 export const TransactionOrderByRelevanceFieldEnum = {
   transactionNumber: 'transactionNumber',
   note: 'note'
@@ -623,14 +635,4 @@ export const FileUploadOrderByRelevanceFieldEnum = {
 } as const
 
 export type FileUploadOrderByRelevanceFieldEnum = (typeof FileUploadOrderByRelevanceFieldEnum)[keyof typeof FileUploadOrderByRelevanceFieldEnum]
-
-
-export const EstimateManagerOrderByRelevanceFieldEnum = {
-  name: 'name',
-  title: 'title',
-  phone: 'phone',
-  email: 'email'
-} as const
-
-export type EstimateManagerOrderByRelevanceFieldEnum = (typeof EstimateManagerOrderByRelevanceFieldEnum)[keyof typeof EstimateManagerOrderByRelevanceFieldEnum]
 

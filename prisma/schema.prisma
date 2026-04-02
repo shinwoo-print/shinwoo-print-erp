@@ -330,7 +330,7 @@ model SalesRecord {
   year                Int
   month               Int
   transactionType     String?  @db.VarChar(10)
-  dataType       g?  @db.VarChar(20)
+  dataType       String?  @db.VarChar(20)
   worker              String?  @db.VarChar(50)
   deliveryType        String?  @db.VarChar(20)
   deliveryRegion      String?  @db.VarChar(50)

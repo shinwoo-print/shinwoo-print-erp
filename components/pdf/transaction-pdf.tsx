@@ -9,8 +9,6 @@ import {
   View,
 } from "@react-pdf/renderer";
 
-/* ═══════════════ 타입 정의 ═══════════════ */
-
 interface TransactionItemData {
   itemDate: string;
   productName: string;
@@ -67,8 +65,6 @@ interface TransactionPdfData {
   bank: BankData;
 }
 
-/* ═══════════════ 레이아웃 상수 ═══════════════ */
-
 const COPY_HEIGHT = 263;
 const PAGE_MARGIN_TOP = 14;
 const PAGE_MARGIN_LEFT = 28;
@@ -77,8 +73,6 @@ const DASH_AREA_HEIGHT = 12;
 const MAX_ITEMS = 5;
 
 const COPY_LABELS = ["공급자 보관용", "공급받는자 보관용", "확인용"] as const;
-
-/* ═══════════════ 스타일 ═══════════════ */
 
 const s = StyleSheet.create({
   page: { fontFamily: FONT_FAMILY, fontSize: 6.5, color: COLORS.black, padding: 0 },
@@ -138,8 +132,6 @@ const s = StyleSheet.create({
   sealImage: { width: 32, height: 32 },
 });
 
-/* ═══════════════ 절취선 ═══════════════ */
-
 function DashCutLine() {
   return (
     <View style={s.dashArea}>
@@ -150,13 +142,10 @@ function DashCutLine() {
   );
 }
 
-/* ═══════════════ 1매 슬립 ═══════════════ */
-
 function TransactionSlip({ data, copyIndex }: { data: TransactionPdfData; copyIndex: number }) {
   const totalSupply = Number(data.totalSupplyAmount) || 0;
   const totalVat = Number(data.totalVat) || 0;
   const totalAmount = Number(data.totalAmount) || 0;
-
   const displayItems = data.items.slice(0, MAX_ITEMS);
   const emptyCount = MAX_ITEMS - displayItems.length;
 
@@ -174,7 +163,7 @@ function TransactionSlip({ data, copyIndex }: { data: TransactionPdfData; copyIn
 
   return (
     <View style={s.slip}>
-      {/* 타이틀 행 */}
+      {/* Title row */}
       <View style={s.headerRow}>
         <View style={s.titleGroup}>
           {data.company.logoUrl && (
@@ -185,7 +174,18 @@ function TransactionSlip({ data, copyIndex }: { data: TransactionPdfData; copyIn
         </View>
         <View style={s.headerRight}>
           <Text style={s.transNo}>No. {data.transactionNumber}</Text>
-          <TexText>{data.company.businessNumber}</Text></View>
+          <Text style={s.copyLabel}>{COPY_LABELS[copyIndex]}</Text>
+        </View>
+      </View>
+
+      {/* Supplier & Receiver info */}
+      <View style={s.infoRow}>
+        {/* Supplier */}
+        <View style={s.infoBox}>
+          <Text style={s.infoBoxTitle}>공 급 자</Text>
+          <View style={s.infoFieldRow}>
+            <View style={s.infoLabel}><Text>사업자번호</Text></View>
+            <View style={s.infoValue}><Text>{data.company.businessNumber}</Text></View>
           </View>
           <View style={s.infoFieldRow}>
             <View style={s.infoLabel}><Text>상호(법인명)</Text></View>
@@ -209,7 +209,7 @@ function TransactionSlip({ data, copyIndex }: { data: TransactionPdfData; copyIn
           </View>
         </View>
 
-        {/* 공급받는자 — ★ 성명 필드를 대표자(representative)로 변경 */}
+        {/* Receiver - Item 1 applied: representative instead of contactName */}
         <View style={s.infoBox}>
           <Text style={s.infoBoxTitle}>공 급 받 는 자</Text>
           <View style={s.infoFieldRow}>
@@ -222,9 +222,7 @@ function TransactionSlip({ data, copyIndex }: { data: TransactionPdfData; copyIn
           </View>
           <View style={s.infoFieldRow}>
             <View style={s.infoLabel}><Text>성명</Text></View>
-            <View style={s.infoValue}>
-              <Text>{data.client.representative || ""}</Text>
-            </View>
+            <View style={s.infoValue}><Text>{data.client.representative || ""}</Text></View>
           </View>
           <View style={s.infoFieldRow}>
             <View style={s.infoLabel}><Text>주소</Text></View>
@@ -240,73 +238,9 @@ function TransactionSlip({ data, copyIndex }: { data: TransactionPdfData; copyIn
           </View>
         </View>
       </View>
-
-      {/* 품목 테이블 */}
-      <View style={s.table}>
-        <View style={s.tHeaderRow}>
-          <View style={s.thDate}><Text>일자</Text></View>
-          <View style={s.thName}><Text>품명</Text></View>
-          <View style={s.thSpec}><Text>규격</Text></View>
-          <View style={s.thQty}><Text>수량</Text></View>
-          <View style={s.thUnit}><Text>단위</Text></View>
-          <View style={s.thUnitPrice}><Text>단가</Text></View>
-          <View style={s.thSupply}><Text>공급가액</Text></View>
-          <View style={s.thVatLast}><Text>부가세</Text></View>
-        </View>
-
-        {displayItems.map((item, idx) => (
-          <View key={idx} style={s.tRow}>
-            <View style={s.tdDate}><Text>{fmtShort(item.itemDate)}</Text></View>
-            <View style={s.tdName}><Text>{item.productName}</Text></View>
-            <View style={s.tdSpec}><Text>{item.spec || ""}</Text></View>
-            <View style={s.tdQty}><Text>{formatNumber(item.quantity)}</Text></View>
-            <View style={s.tdUnit}><Text>{item.unit || "EA"}</Text></View>
-            <View style={s.tdUnitPrice}><Text>{formatNumber(item.unitPrice)}</Text></View>
-            <View style={s.tdSupply}><Text>{formatNumber(item.supplyAmount)}</Text></View>
-            <View style={s.tdVatLast}><Text>{formatNumber(item.vat)}</Text></View>
-          </View>
-        ))}
-
-        {emptyCount > 0 &&
-          Array.from({ length: emptyCount }).map((_, idx) => (
-            <View key={"e" + idx} style={s.tRow}>
-              <View style={s.tdDateEmpty}><Text>{""}</Text></View>
-              <View style={s.tdNameEmpty}><Text>{""}</Text></View>
-              <View style={s.tdSpecEmpty}><Text>{""}</Text></View>
-              <View style={s.tdQtyEmpty}><Text>{""}</Text></View>
-              <View style={s.tdUnitEmpty}><Text>{""}</Text></View>
-              <View style={s.tdUnitPriceEmpty}><Text>{""}</Text></View>
-              <View style={s.tdSupplyEmpty}><Text>{""}</Text></View>
-              <View style={s.tdVatLastEmpty}><Text>{""}</Text></View>
-            </View>
-          ))}
-
-        <View style={s.tTotalRow}>
-          <View style={s.totalLabel}><Text>합 계</Text></View>
-          <View style={s.tdQty}><Text>{formatNumber(data.totalQuantity)}</Text></View>
-          <View style={s.tdUnitEmpty}><Text>{""}</Text></View>
-          <View style={s.tdUnitPriceEmpty}><Text>{""}</Text></View>
-          <View style={s.tdSupply}><Text>{formatNumber(totalSupply)}</Text></View>
-          <View style={s.tdVatLast}><Text>{formatNumber(totalVat)}</Text></View>
-        </View>
-      </View>
-
-      {/* 하단 */}
-      <View style={s.footerRow}>
-        <View style={s.footerLeft}>
-          <Text style={s.amountText}>합계금액: {formatNumber(totalAmount)}원</Text>
-          <Text style={s.bankText}>입금계좌: {data.bank.bankName} {data.bank.accountNumber} (예금주: {data.bank.accountHolder})</Text>
-          {data.note ? <Text style={s.noteText}>비고: {data.note}</Text> : null}
-        </View>
-        {data.company.sealUrl ? (
-          <Image src={data.company.sealUrl} style={s.sealImage} />
-        ) : null}
-      </View>
     </View>
   );
 }
-
-/* ═══════════════ Document ═══════════════ */
 
 export function TransactionPdfDocument({ data }: { data: TransactionPdfData }) {
   return (

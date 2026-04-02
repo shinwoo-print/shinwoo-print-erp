@@ -8,8 +8,7 @@ export const clientFormSchema = z.object({
   clientType: z
     .enum(["매입", "매출", "매입매출"], {
       error: "거래 구분을 선택하세요.",
-    })
-    .default("매출"),
+    }),
   representative: z
     .string()
     .max(50, "대표자명은 50자 이내로 입력하세요.")
