@@ -12,6 +12,7 @@ interface DesignImageUploadProps {
 export function DesignImageUpload({ value, onChange }: DesignImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -29,6 +30,7 @@ export function DesignImageUpload({ value, onChange }: DesignImageUploadProps) {
 
       if (res.ok) {
         const json = await res.json();
+        setImgError(false);
         onChange(json.url);
       } else {
         const err = await res.json();
@@ -48,17 +50,27 @@ export function DesignImageUpload({ value, onChange }: DesignImageUploadProps) {
     <div className="space-y-2">
       {value ? (
         <div className="relative inline-block">
-          <img
-            src={value}
-            alt="디자인 시안"
-            className="h-40 w-40 rounded-md border object-cover"
-          />
+          {imgError ? (
+            <div className="flex h-40 w-40 items-center justify-center rounded-md border bg-muted text-xs text-muted-foreground">
+              이미지 로드 실패
+            </div>
+          ) : (
+            <img
+              src={value}
+              alt="디자인 시안"
+              className="h-40 w-40 rounded-md border object-cover"
+              onError={() => setImgError(true)}
+            />
+          )}
           <Button
             type="button"
             variant="destructive"
             size="icon"
             className="absolute -top-2 -right-2 h-6 w-6"
-            onClick={() => onChange("")}
+            onClick={() => {
+              setImgError(false);
+              onChange("");
+            }}
           >
             <Trash2 className="h-3 w-3" />
           </Button>
