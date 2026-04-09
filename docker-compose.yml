@@ -44,6 +44,9 @@ services:
       NODE_ENV: production
       HOSTNAME: "0.0.0.0"
       PORT: "3000"
+      UPLOAD_DIR: "/app/public"
+    volumes:
+      - uploads:/app/public/uploads
     networks:
       - app-network
     depends_on:

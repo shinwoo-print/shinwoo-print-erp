@@ -30,7 +30,7 @@ export const estimateFormSchema = z.object({
     return isNaN(n) || n < 1 ? 10 : n;
   }),
   // ★ 담당자 필드 추가
-  managerId: z.union([z.number(), z.null()]),
+  managerId: z.union([z.number(), z.null()]).optional().default(null),
   managerName: z.string().max(50).optional().or(z.literal("")),
   managerTitle: z.string().max(50).optional().or(z.literal("")),
   managerPhone: z.string().max(30).optional().or(z.literal("")),

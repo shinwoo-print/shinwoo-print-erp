@@ -238,6 +238,71 @@ function TransactionSlip({ data, copyIndex }: { data: TransactionPdfData; copyIn
           </View>
         </View>
       </View>
+
+      {/* ═══ 품목 테이블 ═══ */}
+      <View style={s.table}>
+        {/* 테이블 헤더 */}
+        <View style={s.tHeaderRow}>
+          <View style={s.thDate}><Text>일자</Text></View>
+          <View style={s.thName}><Text>품명</Text></View>
+          <View style={s.thSpec}><Text>규격</Text></View>
+          <View style={s.thQty}><Text>수량</Text></View>
+          <View style={s.thUnit}><Text>단위</Text></View>
+          <View style={s.thUnitPrice}><Text>단가</Text></View>
+          <View style={s.thSupply}><Text>공급가액</Text></View>
+          <View style={s.thVatLast}><Text>세액</Text></View>
+        </View>
+
+        {/* 데이터 행 */}
+        {displayItems.map((item, idx) => (
+          <View key={idx} style={s.tRow}>
+            <View style={s.tdDate}><Text>{fmtShort(item.itemDate)}</Text></View>
+            <View style={s.tdName}><Text>{item.productName}</Text></View>
+            <View style={s.tdSpec}><Text>{item.spec || ""}</Text></View>
+            <View style={s.tdQty}><Text>{formatNumber(item.quantity)}</Text></View>
+            <View style={s.tdUnit}><Text>{item.unit || ""}</Text></View>
+            <View style={s.tdUnitPrice}><Text>{formatNumber(item.unitPrice)}</Text></View>
+            <View style={s.tdSupply}><Text>{formatNumber(item.supplyAmount)}</Text></View>
+            <View style={s.tdVatLast}><Text>{formatNumber(item.vat)}</Text></View>
+          </View>
+        ))}
+
+        {/* 빈 행 */}
+        {Array.from({ length: emptyCount }).map((_, idx) => (
+          <View key={`empty-${idx}`} style={s.tRow}>
+            <View style={s.tdDateEmpty}><Text> </Text></View>
+            <View style={s.tdNameEmpty}><Text> </Text></View>
+            <View style={s.tdSpecEmpty}><Text> </Text></View>
+            <View style={s.tdQtyEmpty}><Text> </Text></View>
+            <View style={s.tdUnitEmpty}><Text> </Text></View>
+            <View style={s.tdUnitPriceEmpty}><Text> </Text></View>
+            <View style={s.tdSupplyEmpty}><Text> </Text></View>
+            <View style={s.tdVatLastEmpty}><Text> </Text></View>
+          </View>
+        ))}
+
+        {/* 합계 행 */}
+        <View style={s.tTotalRow}>
+          <View style={s.totalLabel}><Text>합 계</Text></View>
+          <View style={s.thQty}><Text style={{ fontSize: 6.5, textAlign: "right" }}>{formatNumber(data.totalQuantity)}</Text></View>
+          <View style={s.thUnit}><Text> </Text></View>
+          <View style={s.thUnitPrice}><Text> </Text></View>
+          <View style={s.thSupply}><Text style={{ fontSize: 6.5, fontWeight: "bold", textAlign: "right" }}>{formatNumber(totalSupply)}</Text></View>
+          <View style={s.thVatLast}><Text style={{ fontSize: 6.5, fontWeight: "bold", textAlign: "right" }}>{formatNumber(totalVat)}</Text></View>
+        </View>
+      </View>
+
+      {/* ═══ 하단 (금액 + 계좌 + 비고 + 직인) ═══ */}
+      <View style={s.footerRow}>
+        <View style={s.footerLeft}>
+          <Text style={s.amountText}>합계금액(VAT포함): {formatNumber(totalAmount)}원</Text>
+          <Text style={s.bankText}>입금계좌: {data.bank.bankName} {data.bank.accountNumber} ({data.bank.accountHolder})</Text>
+          {data.note ? <Text style={s.noteText}>비고: {data.note}</Text> : null}
+        </View>
+        {data.company.sealUrl && (
+          <Image src={data.company.sealUrl} style={s.sealImage} />
+        )}
+      </View>
     </View>
   );
 }

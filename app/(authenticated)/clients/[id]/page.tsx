@@ -39,6 +39,39 @@ interface ClientData {
   updatedAt: string;
 }
 
+interface OrderRecord {
+  id: number;
+  orderNumber: string;
+  orderDate: string;
+  dueDate: string | null;
+  status: string;
+  itemCount: number;
+}
+
+interface EstimateRecord {
+  id: number;
+  estimateNumber: string;
+  estimateDate: string;
+  stage: string;
+  totalAmount: string;
+  itemCount: number;
+}
+
+interface TransactionRecord {
+  id: number;
+  transactionNumber: string;
+  transactionDate: string;
+  totalAmount: string;
+  itemCount: number;
+}
+
+function formatAmount(value: string | number | null | undefined): string {
+  if (value === null || value === undefined || value === "") return "";
+  const num = typeof value === "string" ? parseFloat(value) : value;
+  if (isNaN(num)) return "";
+  return num.toLocaleString("ko-KR");
+}
+
 export default function ClientDetailPage() {
   const router = useRouter();
   const params = useParams();
@@ -50,6 +83,14 @@ export default function ClientDetailPage() {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>("info");
+
+  // ★ 이력 데이터 상태
+  const [orders, setOrders] = useState<OrderRecord[]>([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [estimates, setEstimates] = useState<EstimateRecord[]>([]);
+  const [estimatesLoading, setEstimatesLoading] = useState(false);
+  const [transactions, setTransactions] = useState<TransactionRecord[]>([]);
+  const [transactionsLoading, setTransactionsLoading] = useState(false);
 
   const fetchClient = useCallback(async () => {
     setLoading(true);
@@ -73,6 +114,68 @@ export default function ClientDetailPage() {
   useEffect(() => {
     fetchClient();
   }, [fetchClient]);
+
+  // ★ 탭 전환 시 이력 데이터 로드
+  useEffect(() => {
+    if (activeTab === "orders" && orders.length === 0) {
+      setOrdersLoading(true);
+      fetch(`/api/orders?clientId=${id}&pageSize=100`)
+        .then((res) => res.json())
+        .then((json) => {
+          setOrders(
+            (json.data || []).map((o: Record<string, unknown>) => ({
+              id: o.id as number,
+              orderNumber: o.orderNumber as string,
+              orderDate: o.orderDate as string,
+              dueDate: (o.dueDate as string) || null,
+              status: o.status as string,
+              itemCount: (o.itemCount as number) || 0,
+            }))
+          );
+        })
+        .catch(() => setOrders([]))
+        .finally(() => setOrdersLoading(false));
+    }
+
+    if (activeTab === "estimates" && estimates.length === 0) {
+      setEstimatesLoading(true);
+      fetch(`/api/estimates?clientId=${id}&pageSize=100`)
+        .then((res) => res.json())
+        .then((json) => {
+          setEstimates(
+            (json.data || []).map((e: Record<string, unknown>) => ({
+              id: e.id as number,
+              estimateNumber: e.estimateNumber as string,
+              estimateDate: e.estimateDate as string,
+              stage: e.stage as string,
+              totalAmount: (e.totalAmount as string) || "0",
+              itemCount: (e.itemCount as number) || 0,
+            }))
+          );
+        })
+        .catch(() => setEstimates([]))
+        .finally(() => setEstimatesLoading(false));
+    }
+
+    if (activeTab === "transactions" && transactions.length === 0) {
+      setTransactionsLoading(true);
+      fetch(`/api/transactions?clientId=${id}&pageSize=100`)
+        .then((res) => res.json())
+        .then((json) => {
+          setTransactions(
+            (json.data || []).map((t: Record<string, unknown>) => ({
+              id: t.id as number,
+              transactionNumber: t.transactionNumber as string,
+              transactionDate: t.transactionDate as string,
+              totalAmount: (t.totalAmount as string) || "0",
+              itemCount: (t.itemCount as number) || 0,
+            }))
+          );
+        })
+        .catch(() => setTransactions([]))
+        .finally(() => setTransactionsLoading(false));
+    }
+  }, [activeTab, id, orders.length, estimates.length, transactions.length]);
 
   const handleSubmit = async (data: ClientFormValues) => {
     setSaving(true);
@@ -179,7 +282,42 @@ export default function ClientDetailPage() {
           <CardHeader><CardTitle className="text-lg">발주 이력</CardTitle></CardHeader>
           <Separator />
           <CardContent className="pt-6">
-            <p className="text-muted-foreground text-[0.95rem]">발주 데이터가 없습니다 (발주 모듈 구현 후 연동됩니다)</p>
+            {ordersLoading ? (
+              <div className="flex h-32 items-center justify-center">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : orders.length === 0 ? (
+              <p className="text-muted-foreground text-[0.95rem]">발주 데이터가 없습니다</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-[0.9rem]">
+                  <thead>
+                    <tr className="border-b text-left text-muted-foreground">
+                      <th className="py-2 pr-4 font-medium">발주번호</th>
+                      <th className="py-2 pr-4 font-medium">발주일</th>
+                      <th className="py-2 pr-4 font-medium">납기요청일</th>
+                      <th className="py-2 pr-4 font-medium">상태</th>
+                      <th className="py-2 pr-4 font-medium text-right">품목수</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders.map((o) => (
+                      <tr
+                        key={o.id}
+                        className="border-b cursor-pointer hover:bg-muted/50"
+                        onClick={() => router.push(`/orders/${o.id}`)}
+                      >
+                        <td className="py-2 pr-4 font-medium text-blue-600">{o.orderNumber}</td>
+                        <td className="py-2 pr-4">{o.orderDate}</td>
+                        <td className="py-2 pr-4">{o.dueDate || "-"}</td>
+                        <td className="py-2 pr-4">{o.status}</td>
+                        <td className="py-2 pr-4 text-right">{o.itemCount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
@@ -189,7 +327,42 @@ export default function ClientDetailPage() {
           <CardHeader><CardTitle className="text-lg">견적 이력</CardTitle></CardHeader>
           <Separator />
           <CardContent className="pt-6">
-            <p className="text-muted-foreground text-[0.95rem]">견적 데이터가 없습니다 (견적 모듈 구현 후 연동됩니다)</p>
+            {estimatesLoading ? (
+              <div className="flex h-32 items-center justify-center">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : estimates.length === 0 ? (
+              <p className="text-muted-foreground text-[0.95rem]">견적 데이터가 없습니다</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-[0.9rem]">
+                  <thead>
+                    <tr className="border-b text-left text-muted-foreground">
+                      <th className="py-2 pr-4 font-medium">견적번호</th>
+                      <th className="py-2 pr-4 font-medium">견적일</th>
+                      <th className="py-2 pr-4 font-medium">진행단계</th>
+                      <th className="py-2 pr-4 font-medium text-right">합계금액</th>
+                      <th className="py-2 pr-4 font-medium text-right">품목수</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {estimates.map((e) => (
+                      <tr
+                        key={e.id}
+                        className="border-b cursor-pointer hover:bg-muted/50"
+                        onClick={() => router.push(`/quotes/${e.id}`)}
+                      >
+                        <td className="py-2 pr-4 font-medium text-blue-600">{e.estimateNumber}</td>
+                        <td className="py-2 pr-4">{e.estimateDate}</td>
+                        <td className="py-2 pr-4">{e.stage}</td>
+                        <td className="py-2 pr-4 text-right tabular-nums">{formatAmount(e.totalAmount)}원</td>
+                        <td className="py-2 pr-4 text-right">{e.itemCount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}
@@ -199,7 +372,40 @@ export default function ClientDetailPage() {
           <CardHeader><CardTitle className="text-lg">거래명세서 이력</CardTitle></CardHeader>
           <Separator />
           <CardContent className="pt-6">
-            <p className="text-muted-foreground text-[0.95rem]">거래명세서 데이터가 없습니다 (거래명세서 모듈 구현 후 연동됩니다)</p>
+            {transactionsLoading ? (
+              <div className="flex h-32 items-center justify-center">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : transactions.length === 0 ? (
+              <p className="text-muted-foreground text-[0.95rem]">거래명세서 데이터가 없습니다</p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-[0.9rem]">
+                  <thead>
+                    <tr className="border-b text-left text-muted-foreground">
+                      <th className="py-2 pr-4 font-medium">명세서번호</th>
+                      <th className="py-2 pr-4 font-medium">거래일</th>
+                      <th className="py-2 pr-4 font-medium text-right">합계금액</th>
+                      <th className="py-2 pr-4 font-medium text-right">품목수</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {transactions.map((t) => (
+                      <tr
+                        key={t.id}
+                        className="border-b cursor-pointer hover:bg-muted/50"
+                        onClick={() => router.push(`/transactions/${t.id}`)}
+                      >
+                        <td className="py-2 pr-4 font-medium text-blue-600">{t.transactionNumber}</td>
+                        <td className="py-2 pr-4">{t.transactionDate}</td>
+                        <td className="py-2 pr-4 text-right tabular-nums">{formatAmount(t.totalAmount)}원</td>
+                        <td className="py-2 pr-4 text-right">{t.itemCount}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </CardContent>
         </Card>
       )}

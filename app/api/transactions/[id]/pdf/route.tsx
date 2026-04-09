@@ -1,5 +1,6 @@
 import { TransactionPdfDocument } from "@/components/pdf/transaction-pdf";
 import { renderPdfToResponse } from "@/lib/pdf/render-pdf";
+import { resolveImageSrc } from "@/lib/pdf/resolve-image";
 import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -65,6 +66,14 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
       );
     }
 
+    // ★ 로고/직인을 base64 data URI로 변환 (Docker standalone 호환)
+    const companyLogoSrc = company.logoUrl
+      ? await resolveImageSrc(company.logoUrl)
+      : null;
+    const companySealSrc = company.sealUrl
+      ? await resolveImageSrc(company.sealUrl)
+      : null;
+
     const pdfData = {
       transactionNumber: transaction.transactionNumber,
       transactionDate: transaction.transactionDate.toISOString().split("T")[0],
@@ -92,8 +101,8 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         businessNumber: company.businessNumber,
         businessType: company.businessType,
         businessItem: company.businessItem,
-        logoUrl: company.logoUrl,
-        sealUrl: company.sealUrl,
+        logoUrl: companyLogoSrc,
+        sealUrl: companySealSrc,
       },
       client: {
         companyName: transaction.client.companyName,

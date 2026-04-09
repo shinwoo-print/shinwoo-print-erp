@@ -12,11 +12,17 @@ export async function GET(request: NextRequest) {
     const { searchParams } = request.nextUrl;
     const search = searchParams.get("search") || "";
     const status = searchParams.get("status") || "";
+    const clientId = searchParams.get("clientId") || "";
     const page = Math.max(1, Number(searchParams.get("page")) || 1);
     const pageSize = Math.max(1, Number(searchParams.get("pageSize")) || 10);
     const skip = (page - 1) * pageSize;
 
     const where: Record<string, unknown> = {};
+
+    if (clientId) {
+      const cid = Number(clientId);
+      if (!isNaN(cid)) where.clientId = cid;
+    }
 
     if (status) {
       where.status = status;

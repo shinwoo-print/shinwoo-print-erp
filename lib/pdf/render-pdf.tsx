@@ -9,12 +9,17 @@ export async function renderPdfToResponse(
   document: ReactElement<DocumentProps>,
   fileName: string,
 ): Promise<Response> {
-  const buffer = await renderToBuffer(document);
+  try {
+    const buffer = await renderToBuffer(document);
 
-  return new Response(new Uint8Array(buffer), {
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Disposition": `inline; filename="${encodeURIComponent(fileName)}.pdf"`,
-    },
-  });
+    return new Response(new Uint8Array(buffer), {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `inline; filename="${encodeURIComponent(fileName)}.pdf"`,
+      },
+    });
+  } catch (error) {
+    console.error("[renderPdfToResponse] PDF 렌더링 실패:", error);
+    throw error;
+  }
 }
