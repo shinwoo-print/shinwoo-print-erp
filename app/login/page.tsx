@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Printer } from "lucide-react";
+import { Printer, Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
@@ -18,6 +18,7 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -55,16 +56,30 @@ function LoginForm() {
         <Label htmlFor="password" className="text-base">
           비밀번호
         </Label>
-        <Input
-          id="password"
-          type="password"
-          placeholder="비밀번호를 입력하세요"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          autoFocus
-          className="h-12 text-base"
-        />
+        <div className="relative">
+          <Input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            placeholder="비밀번호를 입력하세요"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            autoFocus
+            className="h-12 pr-12 text-base"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+            tabIndex={-1}
+          >
+            {showPassword ? (
+              <EyeOff className="h-5 w-5" />
+            ) : (
+              <Eye className="h-5 w-5" />
+            )}
+          </button>
+        </div>
       </div>
 
       {error && (
