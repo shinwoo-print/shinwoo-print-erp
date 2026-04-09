@@ -16,7 +16,7 @@
 # next.js
 /.next/
 /out/
-
+tests/*
 # production
 /build
 
@@ -54,3 +54,5 @@ docker-compose.override.yml
 
 # SSL certificates
 certbot/
+
+bugfix-5-critical.*
