@@ -394,7 +394,7 @@ export default function ClientDetailPage() {
                       <tr
                         key={t.id}
                         className="border-b cursor-pointer hover:bg-muted/50"
-                        onClick={() => router.push(`/transactions/${t.id}`)}
+                        onClick={() => router.push(`/invoices/${t.id}`)}
                       >
                         <td className="py-2 pr-4 font-medium text-blue-600">{t.transactionNumber}</td>
                         <td className="py-2 pr-4">{t.transactionDate}</td>
