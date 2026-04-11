@@ -81,6 +81,7 @@ model Client {
   representative    String?  @db.VarChar(50)
   contactName       String?  @db.VarChar(50)
   phone             String?  @db.VarChar(30)
+  mobilePhone       String?  @db.VarChar(30)
   fax               String?  @db.VarChar(30)
   email             String?  @db.VarChar(100)
   address           String?  @db.VarChar(200)
