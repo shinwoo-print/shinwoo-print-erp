@@ -488,20 +488,7 @@ export function OrderForm({
 
 
 
-              {/* 체크박스: 사진검수 + 샘플발송 + 롤짱짱하게 */}
-              <div className="flex items-center gap-6 col-span-2">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="tightRoll"
-                    className="h-4 w-4 rounded border-gray-300"
-                    {...register("tightRoll")}
-                  />
-                  <Label htmlFor="tightRoll" className="text-[0.95rem]">
-                    롤 짱짱하게 감아주세요
-                  </Label>
-                </div>
-              </div>
+              {/* 체크박스: 사진검수/샘플발송/롤짱짱하게 — UI 숨김 (DB 컬럼 유지) */}
             </div>
           </CardContent>
         </Card>
@@ -589,25 +576,7 @@ export function OrderForm({
               </div>
             </div>
 
-            {/* 배송방법/배송지역 */}
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label className="text-[0.95rem]">배송방법</Label>
-                <Input
-                  className="text-[0.95rem]"
-                  placeholder="배송방법 입력"
-                  {...register("deliveryMethod")}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-[0.95rem]">배송지역</Label>
-                <Input
-                  className="text-[0.95rem]"
-                  placeholder="배송지역 입력"
-                  {...register("deliveryRegion")}
-                />
-              </div>
-            </div>
+            {/* 배송방법/배송지역 — UI 숨김 (DB 컬럼 유지) */}
 
             {/* 배송 주소 */}
             <div className="space-y-2">

@@ -333,11 +333,11 @@ function OrderItemPage({
         {/* 좌: 인쇄 */}
         <View style={s.col}>
           <Text style={s.colTitle}>인쇄</Text>
-          <Field label="인쇄가격" value={formatNumber(item.printPrice)} />
+          <Field label="디지털 인쇄가격" value={formatNumber(item.printPrice)} />
           <Field label="발주수량" value={formatNumber(item.sheets)} />
           <Field label="단가" value={formatNumber(item.unitPrice)} />
-          <Field label="롤당매수" value={formatNumber(item.sheetsPerRoll)} />
           <Field label="시트당매수" value={item.sheetsPerSheet} />
+          <Field label="롤당매수" value={formatNumber(item.sheetsPerRoll)} />
           <Field label="재단방식" value={item.cuttingMethod} />
         </View>
         {/* 중: 후가공 */}
@@ -371,19 +371,14 @@ function OrderItemPage({
         </View>
         <View style={s.halfCol}>
           <Text style={s.colTitle}>배송</Text>
-          <Field label="배송방법" value={data.deliveryMethod} />
           <Field label="배송주소" value={data.deliveryAddress} />
-          <Field label="배송지역" value={data.deliveryRegion} />
         </View>
       </View>
 
-      {/* ═══ 비고 + 체크 ═══ */}
+      {/* ═══ 비고 ═══ */}
       <View style={s.noteSection}>
         <Text style={s.noteTitle}>비고</Text>
         <Text style={s.noteText}>{data.note || "-"}</Text>
-        <View style={s.checkRow}>
-          <CheckItem label="롤짱짱하게" checked={data.tightRoll} />
-        </View>
       </View>
 
       {/* ★ 직인 — noteSection 바깥 */}

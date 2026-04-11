@@ -209,7 +209,7 @@ export function OrderItemRow({
               </select>
             </div>
             <div className="space-y-1">
-              <Label className="text-[0.85rem]">인쇄가격</Label>
+              <Label className="text-[0.85rem]">디지털 인쇄가격</Label>
               <Input
                 className="text-[0.9rem]"
                 placeholder="0"
@@ -230,7 +230,7 @@ export function OrderItemRow({
             </div>
           </div>
 
-          {/* 3행: 단가 + 공급가액 + 롤당매수 + 시트당매수 */}
+          {/* 3행: 단가 + 공급가액 + 시트당매수 + 롤당매수 */}
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">단가</Label>
@@ -252,6 +252,14 @@ export function OrderItemRow({
               />
             </div>
             <div className="space-y-1">
+              <Label className="text-[0.85rem]">시트당매수</Label>
+              <Input
+                className="text-[0.9rem]"
+                placeholder="예: 100매"
+                {...register(`items.${index}.sheetsPerSheet`)}
+              />
+            </div>
+            <div className="space-y-1">
               <Label className="text-[0.85rem]">롤당매수</Label>
               <Input
                 className="text-[0.9rem]"
@@ -259,14 +267,6 @@ export function OrderItemRow({
                 type="number"
                 min="0"
                 {...register(`items.${index}.sheetsPerRoll`)}
-              />
-            </div>
-            <div className="space-y-1">
-              <Label className="text-[0.85rem]">시트당매수</Label>
-              <Input
-                className="text-[0.9rem]"
-                placeholder="예: 100매"
-                {...register(`items.${index}.sheetsPerSheet`)}
               />
             </div>
           </div>

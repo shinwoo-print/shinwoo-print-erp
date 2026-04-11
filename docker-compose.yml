@@ -45,6 +45,9 @@ services:
       HOSTNAME: "0.0.0.0"
       PORT: "3000"
       UPLOAD_DIR: "/app/public"
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+      AUTH_SECRET: ${AUTH_SECRET:-shinwoo-erp-secret-key-2026}
+      AUTH_COOKIE_NAME: ${AUTH_COOKIE_NAME:-shinwoo_session}
     volumes:
       - uploads:/app/public/uploads
     networks:
@@ -64,9 +67,12 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - uploads:/usr/share/nginx/uploads:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /home/deploy/shinwoo-print-erp/certbot/www:/var/www/certbot:ro
     networks:
       - app-network
     depends_on:
