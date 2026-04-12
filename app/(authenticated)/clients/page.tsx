@@ -139,6 +139,13 @@ export default function ClientsPage() {
       key: "businessNumber",
       header: "사업자번호",
       className: "min-w-[130px]",
+      render: (row) => {
+        const num = (row.businessNumber || "").replace(/[^0-9]/g, "");
+        if (num.length === 10) {
+          return `${num.slice(0, 3)}-${num.slice(3, 5)}-${num.slice(5)}`;
+        }
+        return row.businessNumber || "-";
+      },
     },
     {
       key: "status",
