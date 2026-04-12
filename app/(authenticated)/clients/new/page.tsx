@@ -21,7 +21,8 @@ export default function ClientNewPage() {
       });
 
       if (res.ok) {
-        router.push("/clients");
+        const result = await res.json();
+        router.push(`/clients/${result.id}`);
       } else {
         const error = await res.json();
         alert(error.message || "등록에 실패했습니다.");
