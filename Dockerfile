@@ -27,7 +27,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/generated ./generated
 
 COPY . .
-
+RUN DATABASE_URL="mysql://dummy:dummy@localhost:3306/dummy" npx prisma generate
 # ★ 누락된 shadcn/ui 컴포넌트 자동 추가
 RUN npx shadcn@latest add sheet -y -o
 
