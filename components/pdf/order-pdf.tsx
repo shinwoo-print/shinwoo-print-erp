@@ -77,37 +77,36 @@ interface OrderPdfData {
 const s = StyleSheet.create({
   page: {
     fontFamily: FONT_FAMILY,
-    fontSize: 9,
+    fontSize: 11,
     padding: PAGE_PADDING,
     color: COLORS.black,
   },
-  // 상단
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 12,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    marginBottom: 6,
+    marginBottom: 8,
   },
   labelText: {
-    fontSize: 9,
+    fontSize: 10,
     color: COLORS.gray,
     marginBottom: 2,
   },
   valueText: {
-    fontSize: 11,
-    marginBottom: 4,
+    fontSize: 14,
+    fontWeight: "bold",
+    marginBottom: 5,
   },
-  // 인쇄종류
   printTypeBadge: {
-    fontSize: 8,
-    paddingHorizontal: 5,
-    paddingVertical: 2,
-    borderRadius: 2,
-    marginRight: 3,
+    fontSize: 11,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 3,
+    marginRight: 4,
   },
   printTypeActive: {
     backgroundColor: COLORS.blue,
@@ -117,111 +116,107 @@ const s = StyleSheet.create({
     backgroundColor: COLORS.veryLightGray,
     color: COLORS.lightGray,
   },
-  // 디자인 이미지
   designArea: {
     width: "100%",
-    height: 180,
+    height: 200,
     border: `1pt solid ${COLORS.veryLightGray}`,
-    marginVertical: 8,
+    marginVertical: 10,
     justifyContent: "center",
     alignItems: "center",
   },
   designImage: {
     maxWidth: "100%",
-    maxHeight: 178,
+    maxHeight: 198,
     objectFit: "contain",
   },
   designPlaceholder: {
     color: COLORS.lightGray,
-    fontSize: 10,
+    fontSize: 12,
   },
-  // 3열 하단
   threeCol: {
     flexDirection: "row",
     gap: 6,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   col: {
     flex: 1,
     border: `0.5pt solid ${COLORS.veryLightGray}`,
-    padding: 6,
+    padding: 8,
   },
   colTitle: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: "bold",
-    marginBottom: 4,
-    paddingBottom: 3,
+    marginBottom: 5,
+    paddingBottom: 4,
     borderBottom: `0.5pt solid ${COLORS.veryLightGray}`,
   },
   fieldRow: {
     flexDirection: "row",
-    marginBottom: 2,
+    marginBottom: 3,
   },
   fieldLabel: {
-    fontSize: 8,
+    fontSize: 10,
     color: COLORS.gray,
-    width: 62,
+    width: 72,
   },
   fieldValue: {
-    fontSize: 8.5,
+    fontSize: 10.5,
+    fontWeight: "bold",
     flex: 1,
   },
-  // 포장/배송
   twoCol: {
     flexDirection: "row",
     gap: 6,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   halfCol: {
     flex: 1,
     border: `0.5pt solid ${COLORS.veryLightGray}`,
-    padding: 6,
+    padding: 8,
   },
-  // 하단 비고
   noteSection: {
     border: `0.5pt solid ${COLORS.veryLightGray}`,
-    padding: 6,
-    marginBottom: 6,
+    padding: 8,
+    marginBottom: 8,
   },
   noteTitle: {
-    fontSize: 9,
+    fontSize: 11,
     fontWeight: "bold",
-    marginBottom: 3,
+    marginBottom: 4,
   },
   noteText: {
-    fontSize: 8.5,
-    lineHeight: 1.4,
+    fontSize: 10.5,
+    lineHeight: 1.5,
   },
   checkRow: {
     flexDirection: "row",
-    gap: 12,
-    marginTop: 4,
+    gap: 14,
+    marginTop: 5,
   },
   checkItem: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 2,
+    gap: 3,
   },
   checkBox: {
-    width: 8,
-    height: 8,
+    width: 10,
+    height: 10,
     border: `0.5pt solid ${COLORS.black}`,
     justifyContent: "center",
     alignItems: "center",
   },
   checkMark: {
-    fontSize: 6,
+    fontSize: 8,
     fontWeight: "bold",
   },
   checkLabel: {
-    fontSize: 8,
+    fontSize: 10,
   },
-  // 페이지 번호
   pageNumber: {
     position: "absolute",
     bottom: 15,
     right: 30,
-    fontSize: 7,
+    fontSize: 8,
     color: COLORS.lightGray,
   },
 });
