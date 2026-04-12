@@ -97,7 +97,7 @@ const s = StyleSheet.create({
     marginBottom: 2,
   },
   valueText: {
-    fontSize: 14,
+    fontSize: 11,
     fontWeight: "bold",
     marginBottom: 5,
   },
