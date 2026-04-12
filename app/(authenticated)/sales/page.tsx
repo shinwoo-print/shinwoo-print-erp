@@ -4,6 +4,7 @@ import { SalesRecordForm } from "@/components/sales/sales-record-form";
 import { SalesTargetForm } from "@/components/sales/sales-target-form";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Column, DataTable } from "@/components/shared/data-table";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SearchInput } from "@/components/shared/search-input";
 import { Button } from "@/components/ui/button";
@@ -372,10 +373,16 @@ function SalesPageContent() {
         title="매출/매입 관리"
         description={`${year}년 ${month}월 ${tab} 현황`}
         actions={
-          <Button onClick={handleCreate}>
-            <Plus className="mr-2 h-4 w-4" />
-            신규 등록
-          </Button>
+          <div className="flex items-center gap-2">
+            <ExcelDownloadButton
+              url={`/api/sales/excel?year=${year}&month=${month}&transactionType=${tab}${search ? `&search=${search}` : ""}`}
+              fileName={`매출매입_${year}년${month}월_${tab}_${new Date().toISOString().split("T")[0]}`}
+            />
+            <Button onClick={handleCreate}>
+              <Plus className="mr-2 h-4 w-4" />
+              신규 등록
+            </Button>
+          </div>
         }
       />
 

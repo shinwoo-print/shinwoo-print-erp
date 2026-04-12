@@ -24,6 +24,11 @@ export const clientFormSchema = z.object({
     .max(30, "연락처는 30자 이내로 입력하세요.")
     .optional()
     .or(z.literal("")),
+  mobilePhone: z
+    .string()
+    .max(30, "핸드폰번호는 30자 이내로 입력하세요.")
+    .optional()
+    .or(z.literal("")),
   fax: z
     .string()
     .max(30, "팩스는 30자 이내로 입력하세요.")

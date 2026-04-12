@@ -38,6 +38,7 @@ export function ClientForm({
       representative: "",
       contactName: "",
       phone: "",
+      mobilePhone: "",
       fax: "",
       email: "",
       address: "",
@@ -126,6 +127,13 @@ export function ClientForm({
               <Label htmlFor="phone" className="text-[0.95rem]">연락처</Label>
               <Input id="phone" placeholder="02-000-0000" className="text-[0.95rem]" {...register("phone")} />
               {errors.phone && <p className="text-destructive text-sm">{errors.phone.message}</p>}
+            </div>
+
+            {/* 핸드폰번호 */}
+            <div className="space-y-2">
+              <Label htmlFor="mobilePhone" className="text-[0.95rem]">핸드폰번호</Label>
+              <Input id="mobilePhone" placeholder="010-0000-0000" className="text-[0.95rem]" {...register("mobilePhone")} />
+              {errors.mobilePhone && <p className="text-destructive text-sm">{errors.mobilePhone.message}</p>}
             </div>
 
             {/* 팩스 */}

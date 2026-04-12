@@ -69,6 +69,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
         representative: data.representative || null,
         contactName: data.contactName || null,
         phone: data.phone || null,
+        mobilePhone: data.mobilePhone || null,
         fax: data.fax || null,
         email: data.email || null,
         address: data.address || null,

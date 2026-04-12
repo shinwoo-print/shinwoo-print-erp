@@ -2,6 +2,7 @@
 
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Column, DataTable } from "@/components/shared/data-table";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SearchInput } from "@/components/shared/search-input";
 import { Badge } from "@/components/ui/badge";
@@ -98,6 +99,13 @@ export default function QuotesPage() {
     }
   };
 
+  const excelUrl = (() => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (stageFilter) params.set("stage", stageFilter);
+    return `/api/estimates/excel?${params.toString()}`;
+  })();
+
   const columns: Column<EstimateRow>[] = [
     {
       key: "estimateNumber",
@@ -114,11 +122,13 @@ export default function QuotesPage() {
       key: "estimateDate",
       header: "견적일",
       className: "min-w-[100px]",
+      sortType: "date",
     },
     {
       key: "validDays",
       header: "유효기간",
       className: "w-[80px] text-center",
+      sortType: "number",
       render: (row) => <span>{row.validDays}일</span>,
     },
     {
@@ -137,6 +147,7 @@ export default function QuotesPage() {
       key: "totalSupplyAmount",
       header: "공급가액",
       className: "min-w-[110px] text-right",
+      sortType: "number",
       render: (row) => (
         <span className="tabular-nums">
           {formatAmount(row.totalSupplyAmount)}
@@ -147,6 +158,7 @@ export default function QuotesPage() {
       key: "totalAmount",
       header: "총합계(VAT)",
       className: "min-w-[110px] text-right",
+      sortType: "number",
       render: (row) => (
         <span className="tabular-nums font-semibold">
           {formatAmount(row.totalAmount)}
@@ -157,6 +169,7 @@ export default function QuotesPage() {
       key: "actions",
       header: "",
       className: "w-[50px]",
+      sortable: false,
       render: (row) => (
         <Button
           variant="ghost"
@@ -179,13 +192,19 @@ export default function QuotesPage() {
         title="견적서 관리"
         description="견적서 목록을 조회하고 관리합니다"
         actions={
-          <Button
-            onClick={() => router.push("/quotes/new")}
-            className="text-[0.95rem]"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            견적서 작성
-          </Button>
+          <div className="flex items-center gap-2">
+            <ExcelDownloadButton
+              url={excelUrl}
+              fileName={`견적서목록_${new Date().toISOString().split("T")[0]}`}
+            />
+            <Button
+              onClick={() => router.push("/quotes/new")}
+              className="text-[0.95rem]"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              견적서 작성
+            </Button>
+          </div>
         }
       />
 

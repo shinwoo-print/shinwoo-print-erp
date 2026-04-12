@@ -2,10 +2,18 @@
 
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Column, DataTable } from "@/components/shared/data-table";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SearchInput } from "@/components/shared/search-input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -35,6 +43,9 @@ const statusConfig: Record<
   HOLD: { label: "보류", variant: "destructive" },
 };
 
+const YEARS = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - 2 + i);
+const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
+
 export default function OrdersPage() {
   const router = useRouter();
   const [data, setData] = useState<OrderRow[]>([]);
@@ -42,6 +53,8 @@ export default function OrdersPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [yearFilter, setYearFilter] = useState("");
+  const [monthFilter, setMonthFilter] = useState("");
   const [loading, setLoading] = useState(true);
   const [deleteTarget, setDeleteTarget] = useState<OrderRow | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -59,14 +72,31 @@ export default function OrdersPage() {
       });
       const res = await fetch(`/api/orders?${params}`);
       const json = await res.json();
-      setData(json.data || []);
-      setTotalCount(json.totalCount || 0);
+
+      let filtered = json.data || [];
+
+      // 클라이언트 사이드 년/월 필터 (서버 API 수정 최소화)
+      if (yearFilter) {
+        filtered = filtered.filter((row: OrderRow) => {
+          const d = new Date(row.orderDate);
+          return d.getFullYear() === Number(yearFilter);
+        });
+      }
+      if (monthFilter) {
+        filtered = filtered.filter((row: OrderRow) => {
+          const d = new Date(row.orderDate);
+          return d.getMonth() + 1 === Number(monthFilter);
+        });
+      }
+
+      setData(filtered);
+      setTotalCount(yearFilter || monthFilter ? filtered.length : json.totalCount || 0);
     } catch (error) {
       console.error("발주서 목록 조회 실패:", error);
     } finally {
       setLoading(false);
     }
-  }, [page, search, statusFilter]);
+  }, [page, search, statusFilter, yearFilter, monthFilter]);
 
   useEffect(() => {
     fetchData();
@@ -95,6 +125,15 @@ export default function OrdersPage() {
     }
   };
 
+  const excelUrl = (() => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (statusFilter) params.set("status", statusFilter);
+    if (yearFilter) params.set("year", yearFilter);
+    if (monthFilter) params.set("month", monthFilter);
+    return `/api/orders/excel?${params.toString()}`;
+  })();
+
   const columns: Column<OrderRow>[] = [
     {
       key: "orderNumber",
@@ -111,11 +150,13 @@ export default function OrdersPage() {
       key: "orderDate",
       header: "발주일",
       className: "min-w-[100px]",
+      sortType: "date",
     },
     {
       key: "dueDate",
       header: "납기일",
       className: "min-w-[100px]",
+      sortType: "date",
       render: (row) => row.dueDate || "-",
     },
     {
@@ -128,6 +169,7 @@ export default function OrdersPage() {
       key: "itemCount",
       header: "품목수",
       className: "w-[70px] text-center",
+      sortType: "number",
       render: (row) => <span>{row.itemCount}건</span>,
     },
     {
@@ -146,6 +188,7 @@ export default function OrdersPage() {
       key: "actions",
       header: "",
       className: "w-[50px]",
+      sortable: false,
       render: (row) => (
         <Button
           variant="ghost"
@@ -168,17 +211,23 @@ export default function OrdersPage() {
         title="발주서 관리"
         description="발주서 목록을 조회하고 관리합니다"
         actions={
-          <Button
-            onClick={() => router.push("/orders/new")}
-            className="text-[0.95rem]"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            발주서 작성
-          </Button>
+          <div className="flex items-center gap-2">
+            <ExcelDownloadButton
+              url={excelUrl}
+              fileName={`발주서목록_${new Date().toISOString().split("T")[0]}`}
+            />
+            <Button
+              onClick={() => router.push("/orders/new")}
+              className="text-[0.95rem]"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              발주서 작성
+            </Button>
+          </div>
         }
       />
 
-      {/* 검색 + 상태 필터 */}
+      {/* 검색 + 상태 필터 + 년/월 필터 */}
       <div className="flex flex-wrap items-center gap-4">
         <SearchInput
           placeholder="발주번호/거래처명/발주자로 검색"
@@ -206,6 +255,64 @@ export default function OrdersPage() {
             </Button>
           ))}
         </div>
+      </div>
+
+      {/* 년/월 필터 */}
+      <div className="flex items-center gap-2">
+        <Select
+          value={yearFilter}
+          onValueChange={(v) => {
+            setYearFilter(v === "all" ? "" : v);
+            setPage(1);
+          }}
+        >
+          <SelectTrigger className="w-[110px]">
+            <SelectValue placeholder="년도" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">전체 년도</SelectItem>
+            {YEARS.map((y) => (
+              <SelectItem key={y} value={String(y)}>
+                {y}년
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          value={monthFilter}
+          onValueChange={(v) => {
+            setMonthFilter(v === "all" ? "" : v);
+            setPage(1);
+          }}
+        >
+          <SelectTrigger className="w-[100px]">
+            <SelectValue placeholder="월" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">전체 월</SelectItem>
+            {MONTHS.map((m) => (
+              <SelectItem key={m} value={String(m)}>
+                {m}월
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {(yearFilter || monthFilter) && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              setYearFilter("");
+              setMonthFilter("");
+              setPage(1);
+            }}
+            className="text-[0.85rem]"
+          >
+            필터 초기화
+          </Button>
+        )}
       </div>
 
       {loading ? (

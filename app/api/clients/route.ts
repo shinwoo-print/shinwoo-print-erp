@@ -65,6 +65,7 @@ export async function POST(request: NextRequest) {
         representative: data.representative || null,
         contactName: data.contactName || null,
         phone: data.phone || null,
+        mobilePhone: data.mobilePhone || null,
         fax: data.fax || null,
         email: data.email || null,
         address: data.address || null,

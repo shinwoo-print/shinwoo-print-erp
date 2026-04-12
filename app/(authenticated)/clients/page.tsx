@@ -2,6 +2,7 @@
 
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Column, DataTable } from "@/components/shared/data-table";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SearchInput } from "@/components/shared/search-input";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +15,7 @@ interface ClientRow {
   id: number;
   companyName: string;
   clientType: string;
+  representative: string | null;
   contactName: string | null;
   phone: string | null;
   email: string | null;
@@ -82,6 +84,14 @@ export default function ClientsPage() {
     }
   };
 
+  // 엑셀 다운로드 URL 생성
+  const excelUrl = (() => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    if (clientTypeFilter) params.set("clientType", clientTypeFilter);
+    return `/api/clients/excel?${params.toString()}`;
+  })();
+
   const columns: Column<ClientRow>[] = [
     {
       key: "companyName",
@@ -90,7 +100,7 @@ export default function ClientsPage() {
     },
     {
       key: "clientType",
-      header: "구분",
+      header: "거래구분",
       className: "w-[90px]",
       render: (row) => {
         const colorMap: Record<string, string> = {
@@ -104,6 +114,11 @@ export default function ClientsPage() {
           </Badge>
         );
       },
+    },
+    {
+      key: "representative",
+      header: "대표자명",
+      className: "min-w-[100px]",
     },
     {
       key: "contactName",
@@ -139,6 +154,7 @@ export default function ClientsPage() {
       key: "actions",
       header: "",
       className: "w-[50px]",
+      sortable: false,
       render: (row) => (
         <Button
           variant="ghost"
@@ -161,13 +177,19 @@ export default function ClientsPage() {
         title="거래처 관리"
         description="거래처 목록을 조회하고 관리합니다."
         actions={
-          <Button
-            onClick={() => router.push("/clients/new")}
-            className="text-[0.95rem]"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            거래처 등록
-          </Button>
+          <div className="flex items-center gap-2">
+            <ExcelDownloadButton
+              url={excelUrl}
+              fileName={`거래처목록_${new Date().toISOString().split("T")[0]}`}
+            />
+            <Button
+              onClick={() => router.push("/clients/new")}
+              className="text-[0.95rem]"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              거래처 등록
+            </Button>
+          </div>
         }
       />
 

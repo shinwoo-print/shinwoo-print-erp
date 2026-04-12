@@ -1,8 +1,8 @@
-// src/app/(authenticated)/products/page.tsx
 "use client";
 
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { Column, DataTable } from "@/components/shared/data-table";
+import { ExcelDownloadButton } from "@/components/shared/excel-download-button";
 import { PageHeader } from "@/components/shared/page-header";
 import { SearchInput } from "@/components/shared/search-input";
 import { Badge } from "@/components/ui/badge";
@@ -86,6 +86,12 @@ export default function ProductsPage() {
     }
   };
 
+  const excelUrl = (() => {
+    const params = new URLSearchParams();
+    if (search) params.set("search", search);
+    return `/api/products/excel?${params.toString()}`;
+  })();
+
   const columns: Column<ProductRow>[] = [
     {
       key: "productName",
@@ -111,6 +117,7 @@ export default function ProductsPage() {
       key: "unitPrice",
       header: "기본단가",
       className: "min-w-[120px] text-right",
+      sortType: "number",
       render: (row) => (
         <span className="tabular-nums">{formatPrice(row.unitPrice)}</span>
       ),
@@ -129,6 +136,7 @@ export default function ProductsPage() {
       key: "actions",
       header: "",
       className: "w-[50px]",
+      sortable: false,
       render: (row) => (
         <Button
           variant="ghost"
@@ -151,13 +159,19 @@ export default function ProductsPage() {
         title="품목 관리"
         description="품목 목록을 조회하고 관리합니다."
         actions={
-          <Button
-            onClick={() => router.push("/products/new")}
-            className="text-[0.95rem]"
-          >
-            <Plus className="mr-2 h-4 w-4" />
-            품목 등록
-          </Button>
+          <div className="flex items-center gap-2">
+            <ExcelDownloadButton
+              url={excelUrl}
+              fileName={`품목목록_${new Date().toISOString().split("T")[0]}`}
+            />
+            <Button
+              onClick={() => router.push("/products/new")}
+              className="text-[0.95rem]"
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              품목 등록
+            </Button>
+          </div>
         }
       />
 
