@@ -1,4 +1,4 @@
-ARG NODE_VERSION=24-bookworm-slim
+ARG NODE_VERSION=24.14.0-bookworm-slim
 
 # ============================================================
 # Stage 1: Dependencies
