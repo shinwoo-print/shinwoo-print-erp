@@ -58,3 +58,4 @@ certbot/
 bugfix-5-critical.*
 
 patch/
+*.tar.gz
