@@ -65,26 +65,26 @@ interface EstimatePdfData {
 
 /* ────────── 컬럼 폭 상수 ────────── */
 const COL = {
-  no: 28,
-  name: 125,
-  spec: 65,
+  no: 25,
+  name: 130,
+  spec: 70,
   qty: 55,
   unitPrice: 65,
   supply: 75,
   vat: 60,
-  note: 62,
+  note: 55,
 };
 
-// 합계행: No + Name + Spec + Qty + UnitPrice = 338
+// 합계행: No + Name + Spec + Qty + UnitPrice = 345
 const TOTAL_LABEL_WIDTH =
   COL.no + COL.name + COL.spec + COL.qty + COL.unitPrice;
-// 총합계행: 위 + Supply + Vat = 473
+// 총합계행: 위 + Supply + Vat = 480
 const GRAND_TOTAL_LABEL_WIDTH = TOTAL_LABEL_WIDTH + COL.supply + COL.vat;
 
 /* ────────── 공통 셀 베이스 ────────── */
 const cellBase = {
-  fontSize: 10,
-  padding: 5,
+  fontSize: 8.5,
+  padding: 4,
   justifyContent: "center" as const,
 };
 
@@ -102,113 +102,113 @@ const borderRWhite = { borderRight: "0.5pt solid rgba(255,255,255,0.3)" };
 const s = StyleSheet.create({
   page: {
     fontFamily: FONT_FAMILY,
-    fontSize: 10,
+    fontSize: 9,
     padding: PAGE_PADDING,
-    paddingTop: 36,
+    paddingTop: 40,
     color: COLORS.black,
   },
   titleRow: {
     alignItems: "center",
-    marginBottom: 14,
+    marginBottom: 16,
   },
   title: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
     letterSpacing: 8,
   },
   dateText: {
-    fontSize: 11,
+    fontSize: 10,
     marginTop: 6,
     textAlign: "center",
   },
   infoRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 12,
   },
   recipientCol: {
     flex: 1,
     paddingRight: 20,
   },
   recipientText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "bold",
     marginBottom: 8,
   },
   greetingText: {
-    fontSize: 10,
+    fontSize: 9,
     marginBottom: 4,
   },
   validText: {
-    fontSize: 10,
+    fontSize: 9,
     color: COLORS.red,
   },
   supplierBox: {
-    width: 245,
+    width: 240,
     border: "1pt solid #000000",
     padding: 0,
   },
   supplierTitle: {
     backgroundColor: COLORS.blue,
     color: COLORS.white,
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: "bold",
     textAlign: "center",
-    padding: 5,
+    padding: 4,
   },
   supplierRow: {
     flexDirection: "row",
     borderBottom: "0.5pt solid #E5E5E5",
-    minHeight: 18,
+    minHeight: 16,
   },
   supplierRowLast: {
     flexDirection: "row",
-    minHeight: 18,
+    minHeight: 16,
   },
   supplierLabel: {
-    width: 80,
-    fontSize: 9.5,
+    width: 75,
+    fontSize: 8.5,
     backgroundColor: "#F2F2F2",
-    padding: 4,
+    padding: 3,
     borderRight: "0.5pt solid #E5E5E5",
   },
   supplierValue: {
     flex: 1,
-    fontSize: 9.5,
-    padding: 4,
+    fontSize: 8.5,
+    padding: 3,
   },
 
   /* ── 테이블 ── */
   table: {
-    marginTop: 8,
+    marginTop: 10,
     border: "1pt solid #000000",
   },
   tableHeaderRow: {
     flexDirection: "row",
     backgroundColor: COLORS.blue,
-    minHeight: 26,
+    minHeight: 22,
   },
   tableRow: {
     flexDirection: "row",
     borderTop: "0.5pt solid #E5E5E5",
-    minHeight: 24,
+    minHeight: 20,
   },
   tableRowAlt: {
     flexDirection: "row",
     borderTop: "0.5pt solid #E5E5E5",
-    minHeight: 24,
+    minHeight: 20,
     backgroundColor: "#F8F9FA",
   },
   tableTotalRow: {
     flexDirection: "row",
     borderTop: "1pt solid #000000",
-    minHeight: 26,
+    minHeight: 22,
     backgroundColor: "#FFF3CD",
   },
   tableGrandTotalRow: {
     flexDirection: "row",
     borderTop: "1pt solid #000000",
-    minHeight: 28,
+    minHeight: 24,
     backgroundColor: "#D4EDDA",
   },
 
@@ -241,7 +241,7 @@ const s = StyleSheet.create({
   totalLabel: {
     ...cellBase,
     width: TOTAL_LABEL_WIDTH,
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: "bold",
     textAlign: "center",
     borderRight: "0.5pt solid #E5E5E5",
@@ -269,35 +269,35 @@ const s = StyleSheet.create({
   grandTotalLabel: {
     ...cellBase,
     width: GRAND_TOTAL_LABEL_WIDTH - 40,
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: "bold",
     borderRight: "0.5pt solid #E5E5E5",
   },
   grandTotalValue: {
     ...cellBase,
     width: COL.note + 40,
-    fontSize: 13,
+    fontSize: 11,
     fontWeight: "bold",
     textAlign: "right",
   },
 
   /* ── 하단 ── */
   footerSection: {
-    marginTop: 12,
+    marginTop: 14,
   },
   footerNoteTitle: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: "bold",
     marginBottom: 3,
     color: COLORS.darkGray,
   },
   footerNoteText: {
-    fontSize: 9.5,
+    fontSize: 8,
     lineHeight: 1.5,
     color: COLORS.darkGray,
   },
   footerNoteTextMt: {
-    fontSize: 9.5,
+    fontSize: 8,
     lineHeight: 1.5,
     color: COLORS.darkGray,
     marginTop: 4,
@@ -305,31 +305,31 @@ const s = StyleSheet.create({
   bankInfoRow: {
     flexDirection: "row",
     marginTop: 10,
-    padding: 8,
+    padding: 6,
     backgroundColor: "#E8F4FD",
     borderRadius: 3,
   },
   bankLabel: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: "bold",
     marginRight: 6,
   },
   bankValue: {
-    fontSize: 10,
+    fontSize: 9,
   },
   managerRow: {
     marginTop: 8,
-    padding: 8,
+    padding: 6,
     backgroundColor: "#F5F5F5",
     borderRadius: 3,
   },
   managerLabel: {
-    fontSize: 10,
+    fontSize: 9,
     fontWeight: "bold",
     marginBottom: 2,
   },
   managerValue: {
-    fontSize: 10,
+    fontSize: 9,
   },
   sealContainer: {
     position: "absolute",

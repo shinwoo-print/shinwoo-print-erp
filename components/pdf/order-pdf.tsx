@@ -77,7 +77,7 @@ interface OrderPdfData {
 const s = StyleSheet.create({
   page: {
     fontFamily: FONT_FAMILY,
-    fontSize: 11,
+    fontSize: 9,
     padding: PAGE_PADDING,
     color: COLORS.black,
   },
@@ -85,53 +85,29 @@ const s = StyleSheet.create({
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 12,
+    marginBottom: 10,
   },
   title: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 8,
+    marginBottom: 6,
   },
   labelText: {
-    fontSize: 10,
+    fontSize: 9,
     color: COLORS.gray,
     marginBottom: 2,
   },
   valueText: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  // 전광판 영역 (발주처/제품명/인쇄종류/납기요청일/주문구분)
-  bannerArea: {
-    backgroundColor: "#F0F4FA",
-    border: `1.5pt solid ${COLORS.blue}`,
-    borderRadius: 4,
-    padding: 10,
-    marginBottom: 10,
-  },
-  bannerRow: {
-    flexDirection: "row",
-    marginBottom: 4,
-  },
-  bannerLabel: {
     fontSize: 11,
-    color: COLORS.blue,
-    fontWeight: "bold",
-    width: 90,
-  },
-  bannerValue: {
-    fontSize: 16,
-    fontWeight: "bold",
-    flex: 1,
+    marginBottom: 4,
   },
   // 인쇄종류
   printTypeBadge: {
-    fontSize: 11,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 3,
-    marginRight: 4,
+    fontSize: 8,
+    paddingHorizontal: 5,
+    paddingVertical: 2,
+    borderRadius: 2,
+    marginRight: 3,
   },
   printTypeActive: {
     backgroundColor: COLORS.blue,
@@ -144,109 +120,108 @@ const s = StyleSheet.create({
   // 디자인 이미지
   designArea: {
     width: "100%",
-    height: 200,
+    height: 180,
     border: `1pt solid ${COLORS.veryLightGray}`,
-    marginVertical: 10,
+    marginVertical: 8,
     justifyContent: "center",
     alignItems: "center",
   },
   designImage: {
     maxWidth: "100%",
-    maxHeight: 198,
+    maxHeight: 178,
     objectFit: "contain",
   },
   designPlaceholder: {
     color: COLORS.lightGray,
-    fontSize: 12,
+    fontSize: 10,
   },
   // 3열 하단
   threeCol: {
     flexDirection: "row",
     gap: 6,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   col: {
     flex: 1,
     border: `0.5pt solid ${COLORS.veryLightGray}`,
-    padding: 8,
+    padding: 6,
   },
   colTitle: {
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "bold",
-    marginBottom: 5,
-    paddingBottom: 4,
+    marginBottom: 4,
+    paddingBottom: 3,
     borderBottom: `0.5pt solid ${COLORS.veryLightGray}`,
   },
   fieldRow: {
     flexDirection: "row",
-    marginBottom: 3,
+    marginBottom: 2,
   },
   fieldLabel: {
-    fontSize: 10,
+    fontSize: 8,
     color: COLORS.gray,
-    width: 72,
+    width: 62,
   },
   fieldValue: {
-    fontSize: 10.5,
-    fontWeight: "bold",
+    fontSize: 8.5,
     flex: 1,
   },
   // 포장/배송
   twoCol: {
     flexDirection: "row",
     gap: 6,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   halfCol: {
     flex: 1,
     border: `0.5pt solid ${COLORS.veryLightGray}`,
-    padding: 8,
+    padding: 6,
   },
   // 하단 비고
   noteSection: {
     border: `0.5pt solid ${COLORS.veryLightGray}`,
-    padding: 8,
-    marginBottom: 8,
+    padding: 6,
+    marginBottom: 6,
   },
   noteTitle: {
-    fontSize: 11,
+    fontSize: 9,
     fontWeight: "bold",
-    marginBottom: 4,
+    marginBottom: 3,
   },
   noteText: {
-    fontSize: 10.5,
-    lineHeight: 1.5,
+    fontSize: 8.5,
+    lineHeight: 1.4,
   },
   checkRow: {
     flexDirection: "row",
-    gap: 14,
-    marginTop: 5,
+    gap: 12,
+    marginTop: 4,
   },
   checkItem: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 3,
+    gap: 2,
   },
   checkBox: {
-    width: 10,
-    height: 10,
+    width: 8,
+    height: 8,
     border: `0.5pt solid ${COLORS.black}`,
     justifyContent: "center",
     alignItems: "center",
   },
   checkMark: {
-    fontSize: 8,
+    fontSize: 6,
     fontWeight: "bold",
   },
   checkLabel: {
-    fontSize: 10,
+    fontSize: 8,
   },
   // 페이지 번호
   pageNumber: {
     position: "absolute",
     bottom: 15,
     right: 30,
-    fontSize: 8,
+    fontSize: 7,
     color: COLORS.lightGray,
   },
 });
@@ -306,39 +281,16 @@ function OrderItemPage({
           {data.company.logoUrl && (
             <Image
               src={data.company.logoUrl}
-              style={{ width: 90, height: 34, marginBottom: 6, objectFit: "contain" as const }}
+              style={{ width: 80, height: 30, marginBottom: 4, objectFit: "contain" as const }}
             />
           )}
           <Text style={s.title}>발주서</Text>
-        </View>
-        {/* 우측 */}
-        <View style={{ width: 160, alignItems: "flex-end" }}>
-          <Text style={s.labelText}>발주번호</Text>
-          <Text style={s.valueText}>{data.orderNumber}</Text>
-          <Text style={s.labelText}>발주일</Text>
-          <Text style={s.valueText}>{formatDate(data.orderDate)}</Text>
-          <Text style={s.labelText}>발주자</Text>
-          <Text style={s.valueText}>{data.orderer || "-"}</Text>
-        </View>
-      </View>
-
-      {/* ═══ 전광판 배너 (핵심 정보 크게 표시) ═══ */}
-      <View style={s.bannerArea}>
-        <View style={s.bannerRow}>
-          <Text style={s.bannerLabel}>발주처</Text>
-          <Text style={s.bannerValue}>{data.clientCompanyName}</Text>
-        </View>
-        <View style={s.bannerRow}>
-          <Text style={s.bannerLabel}>제품명</Text>
-          <Text style={s.bannerValue}>{item.productName}</Text>
-        </View>
-        <View style={s.bannerRow}>
-          <Text style={s.bannerLabel}>납기요청일</Text>
-          <Text style={s.bannerValue}>{formatDate(data.dueDate) || "-"}</Text>
-        </View>
-        <View style={{ ...s.bannerRow, marginBottom: 0 }}>
-          <Text style={s.bannerLabel}>인쇄종류</Text>
-          <View style={{ flexDirection: "row", flex: 1, alignItems: "center" }}>
+          <Text style={s.labelText}>발주처</Text>
+          <Text style={s.valueText}>{data.clientCompanyName}</Text>
+          <Text style={s.labelText}>제품명</Text>
+          <Text style={s.valueText}>{item.productName}</Text>
+          <Text style={s.labelText}>인쇄종류</Text>
+          <View style={{ flexDirection: "row", marginTop: 2 }}>
             {PRINT_TYPES.map((pt) => (
               <Text
                 key={pt}
@@ -353,6 +305,17 @@ function OrderItemPage({
               </Text>
             ))}
           </View>
+        </View>
+        {/* 우측 */}
+        <View style={{ width: 140, alignItems: "flex-end" }}>
+          <Text style={s.labelText}>발주번호</Text>
+          <Text style={s.valueText}>{data.orderNumber}</Text>
+          <Text style={s.labelText}>발주일</Text>
+          <Text style={s.valueText}>{formatDate(data.orderDate)}</Text>
+          <Text style={s.labelText}>납기요청일</Text>
+          <Text style={s.valueText}>{formatDate(data.dueDate)}</Text>
+          <Text style={s.labelText}>발주자</Text>
+          <Text style={s.valueText}>{data.orderer || "-"}</Text>
         </View>
       </View>
 
