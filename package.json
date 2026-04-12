@@ -52,6 +52,11 @@
     "typescript": "^5"
   },
   "overrides": {
-    "@react-pdf/layout": "4.4.2"
+    "@react-pdf/layout": "4.4.2",
+    "@react-pdf/font": "4.0.4",
+    "@react-pdf/primitives": "4.1.1",
+    "@react-pdf/render": "4.3.2",
+    "@react-pdf/stylesheet": "6.1.2",
+    "@react-pdf/textkit": "6.1.0"
   }
 }
