@@ -302,7 +302,7 @@ function OrderItemPage({
           </View>
         </View>
         {/* 우측 */}
-        <View style={{ width: 140, alignItems: "flex-end" }}>
+        <View style={{ width: 200, alignItems: "flex-end" }}>
           <Text style={s.labelText}>발주번호</Text>
           <Text style={s.valueText}>{data.orderNumber}</Text>
           <Text style={s.labelText}>발주일</Text>
