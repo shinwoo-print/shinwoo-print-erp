@@ -21,13 +21,12 @@ import { useState } from "react";
 interface ProductOption {
   id: number;
   productName: string;
-  [key: string]: unknown;
 }
 
 interface ProductComboboxProps {
   value: number | null | undefined;
-  onChange: (product: ProductOption | null) => void;
-  products: ProductOption[];
+  onChange: (product: { id: number; productName: string;[key: string]: unknown } | null) => void;
+  products: { id: number; productName: string;[key: string]: unknown }[];
   placeholder?: string;
   disabled?: boolean;
   className?: string;
