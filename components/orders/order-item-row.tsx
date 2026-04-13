@@ -2,6 +2,7 @@
 
 import { DesignImageUpload } from "@/components/orders/design-image-upload";
 import { ComboboxInput } from "@/components/shared/combobox-input";
+import { ProductCombobox } from "@/components/shared/product-combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -82,21 +83,17 @@ export function OrderItemRow({
     | undefined;
 
   // 품목 선택 시 자동 채움
-  const handleProductSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const productId = Number(e.target.value);
-    if (!productId) {
+  const handleProductSelect = (product: ProductOption | null) => {
+    if (!product) {
       setValue(`items.${index}.productId`, null);
       return;
     }
-    const product = products.find((p) => p.id === productId);
-    if (product) {
-      setValue(`items.${index}.productId`, product.id);
-      setValue(`items.${index}.productName`, product.productName);
-      setValue(`items.${index}.printType`, product.printType || "");
-      setValue(`items.${index}.material`, product.material || "");
-      setValue(`items.${index}.unitPrice`, product.unitPrice || "");
-      recalcSupply(sheets, product.unitPrice || "");
-    }
+    setValue(`items.${index}.productId`, product.id);
+    setValue(`items.${index}.productName`, product.productName);
+    setValue(`items.${index}.printType`, product.printType || "");
+    setValue(`items.${index}.material`, product.material || "");
+    setValue(`items.${index}.unitPrice`, product.unitPrice || "");
+    recalcSupply(sheets, product.unitPrice || "");
   };
 
   // 공급가액 자동계산
@@ -162,18 +159,12 @@ export function OrderItemRow({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">품목 선택</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <ProductCombobox
+                value={watch(`items.${index}.productId`) ?? null}
                 onChange={handleProductSelect}
-                value={watch(`items.${index}.productId`) ?? ""}
-              >
-                <option value="">직접 입력</option>
-                {products.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.productName}
-                  </option>
-                ))}
-              </select>
+                products={products}
+                placeholder="품목 검색"
+              />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">
@@ -196,17 +187,15 @@ export function OrderItemRow({
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">인쇄종류</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <Input
+                className="text-[0.9rem]"
+                placeholder={
+                  options.PRINT_TYPE.length > 0
+                    ? `예: ${options.PRINT_TYPE.slice(0, 3).map((o) => o.label).join(", ")}${options.PRINT_TYPE.length > 3 ? " 등" : ""}`
+                    : "인쇄종류 입력"
+                }
                 {...register(`items.${index}.printType`)}
-              >
-                <option value="">선택</option>
-                {options.PRINT_TYPE.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">디지털 인쇄가격</Label>
@@ -366,45 +355,39 @@ export function OrderItemRow({
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">라미</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <Input
+                className="text-[0.9rem]"
+                placeholder={
+                  options.LAMI.length > 0
+                    ? `예: ${options.LAMI.slice(0, 3).map((o) => o.label).join(", ")}${options.LAMI.length > 3 ? " 등" : ""}`
+                    : "라미 입력"
+                }
                 {...register(`items.${index}.lamination`)}
-              >
-                <option value="">선택</option>
-                {options.LAMI.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">박</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <Input
+                className="text-[0.9rem]"
+                placeholder={
+                  options.FOIL.length > 0
+                    ? `예: ${options.FOIL.slice(0, 3).map((o) => o.label).join(", ")}${options.FOIL.length > 3 ? " 등" : ""}`
+                    : "박 입력"
+                }
                 {...register(`items.${index}.foil`)}
-              >
-                <option value="">선택</option>
-                {options.FOIL.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">롤방향</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <Input
+                className="text-[0.9rem]"
+                placeholder={
+                  options.ROLL_DIR.length > 0
+                    ? `예: ${options.ROLL_DIR.slice(0, 3).map((o) => o.label).join(", ")}${options.ROLL_DIR.length > 3 ? " 등" : ""}`
+                    : "롤방향 입력"
+                }
                 {...register(`items.${index}.rollDirection`)}
-              >
-                <option value="">선택</option>
-                {options.ROLL_DIR.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
           </div>
 
@@ -412,17 +395,15 @@ export function OrderItemRow({
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">DATA종류</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <Input
+                className="text-[0.9rem]"
+                placeholder={
+                  options.DATA_TYPE.length > 0
+                    ? `예: ${options.DATA_TYPE.slice(0, 3).map((o) => o.label).join(", ")}${options.DATA_TYPE.length > 3 ? " 등" : ""}`
+                    : "DATA종류 입력"
+                }
                 {...register(`items.${index}.dataType`)}
-              >
-                <option value="">선택</option>
-                {options.DATA_TYPE.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">최종DATA날짜</Label>
@@ -434,17 +415,15 @@ export function OrderItemRow({
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">기존디자인파일</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <Input
+                className="text-[0.9rem]"
+                placeholder={
+                  options.DESIGN_STATUS.length > 0
+                    ? `예: ${options.DESIGN_STATUS.slice(0, 3).map((o) => o.label).join(", ")}${options.DESIGN_STATUS.length > 3 ? " 등" : ""}`
+                    : "디자인파일 상태 입력"
+                }
                 {...register(`items.${index}.designFileStatus`)}
-              >
-                <option value="">선택</option>
-                {options.DESIGN_STATUS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">디자인 시안</Label>

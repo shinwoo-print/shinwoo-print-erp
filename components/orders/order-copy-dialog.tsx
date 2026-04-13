@@ -1,5 +1,6 @@
 "use client";
 
+import { ClientCombobox } from "@/components/shared/client-combobox";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Copy, Loader2, Search } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 interface ClientOption {
   id: number;
@@ -26,6 +27,7 @@ interface PastOrder {
   status: string;
   clientName: string;
   itemCount: number;
+  itemNames: string[];
 }
 
 interface OrderCopyDialogProps {
@@ -43,6 +45,7 @@ export function OrderCopyDialog({
   const [selectedClientId, setSelectedClientId] = useState<number | null>(null);
   const [orders, setOrders] = useState<PastOrder[]>([]);
   const [searchText, setSearchText] = useState("");
+  const [productSearchText, setProductSearchText] = useState("");
   const [loadingClients, setLoadingClients] = useState(false);
   const [loadingOrders, setLoadingOrders] = useState(false);
 
@@ -55,8 +58,8 @@ export function OrderCopyDialog({
       .then((json) => {
         setClients(
           (json.data || []).map((c: Record<string, unknown>) => ({
-            id: c.id,
-            companyName: c.companyName,
+            id: c.id as number,
+            companyName: c.companyName as string,
           })),
         );
       })
@@ -83,14 +86,22 @@ export function OrderCopyDialog({
           (o: Record<string, unknown>) =>
             (o.client as Record<string, unknown>)?.id === selectedClientId,
         )
-        .map((o: Record<string, unknown>) => ({
-          id: o.id,
-          orderNumber: o.orderNumber,
-          orderDate: o.orderDate,
-          status: o.status,
-          clientName: (o.client as Record<string, unknown>)?.companyName || "",
-          itemCount: o.itemCount || 0,
-        }));
+        .map((o: Record<string, unknown>) => {
+          const items = (o.items as Record<string, unknown>[]) || [];
+          return {
+            id: o.id as number,
+            orderNumber: o.orderNumber as string,
+            orderDate: o.orderDate as string,
+            status: o.status as string,
+            clientName:
+              ((o.client as Record<string, unknown>)?.companyName as string) ||
+              "",
+            itemCount: (o.itemCount as number) || items.length || 0,
+            itemNames: items
+              .map((item) => (item.productName as string) || "")
+              .filter(Boolean),
+          };
+        });
       setOrders(filtered);
     } catch {
       setOrders([]);
@@ -103,11 +114,21 @@ export function OrderCopyDialog({
     fetchOrders();
   }, [fetchOrders]);
 
+  // 품목명 클라이언트 사이드 필터링
+  const filteredOrders = useMemo(() => {
+    if (!productSearchText.trim()) return orders;
+    const keyword = productSearchText.trim().toLowerCase();
+    return orders.filter((order) =>
+      order.itemNames.some((name) => name.toLowerCase().includes(keyword)),
+    );
+  }, [orders, productSearchText]);
+
   const handleSelect = (orderId: number) => {
     onSelect(orderId);
     onOpenChange(false);
     setSelectedClientId(null);
     setSearchText("");
+    setProductSearchText("");
     setOrders([]);
   };
 
@@ -138,34 +159,36 @@ export function OrderCopyDialog({
                 불러오는 중
               </div>
             ) : (
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                value={selectedClientId ?? ""}
-                onChange={(e) => {
-                  const val = Number(e.target.value);
-                  setSelectedClientId(val || null);
-                }}
-              >
-                <option value="">거래처를 선택하세요</option>
-                {clients.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.companyName}
-                  </option>
-                ))}
-              </select>
+              <ClientCombobox
+                value={selectedClientId}
+                onChange={(clientId) => setSelectedClientId(clientId)}
+                clients={clients}
+                placeholder="거래처를 검색하세요"
+              />
             )}
           </div>
 
-          {/* 검색 */}
+          {/* 검색 필터 */}
           {selectedClientId && (
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="발주번호로 검색"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                className="pl-9 text-[0.9rem]"
-              />
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="발주번호로 검색"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  className="pl-9 text-[0.9rem]"
+                />
+              </div>
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  placeholder="품목명으로 검색"
+                  value={productSearchText}
+                  onChange={(e) => setProductSearchText(e.target.value)}
+                  className="pl-9 text-[0.9rem]"
+                />
+              </div>
             </div>
           )}
 
@@ -177,13 +200,15 @@ export function OrderCopyDialog({
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   불러오는 중
                 </div>
-              ) : orders.length === 0 ? (
+              ) : filteredOrders.length === 0 ? (
                 <div className="p-6 text-center text-sm text-muted-foreground">
-                  해당 거래처의 발주서가 없습니다
+                  {orders.length > 0 && productSearchText
+                    ? "해당 품목명이 포함된 발주서가 없습니다"
+                    : "해당 거래처의 발주서가 없습니다"}
                 </div>
               ) : (
                 <div className="divide-y">
-                  {orders.map((order) => (
+                  {filteredOrders.map((order) => (
                     <button
                       key={order.id}
                       type="button"
@@ -197,6 +222,12 @@ export function OrderCopyDialog({
                         <p className="text-[0.8rem] text-muted-foreground">
                           {order.orderDate} · 품목 {order.itemCount}건
                         </p>
+                        {order.itemNames.length > 0 && (
+                          <p className="mt-0.5 text-[0.75rem] text-muted-foreground truncate max-w-[400px]">
+                            {order.itemNames.slice(0, 3).join(", ")}
+                            {order.itemNames.length > 3 && ` 외 ${order.itemNames.length - 3}건`}
+                          </p>
+                        )}
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-[0.8rem] text-muted-foreground">

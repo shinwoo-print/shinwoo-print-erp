@@ -1,5 +1,6 @@
 "use client";
 
+import { ProductCombobox } from "@/components/shared/product-combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -50,20 +51,16 @@ export function EstimateItemRow({
     | Record<string, { message?: string }>
     | undefined;
 
-  const handleProductSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const productId = Number(e.target.value);
-    if (!productId) {
+  const handleProductSelect = (product: ProductOption | null) => {
+    if (!product) {
       setValue(`items.${index}.productId`, null);
       return;
     }
-    const product = products.find((p) => p.id === productId);
-    if (product) {
-      setValue(`items.${index}.productId`, product.id);
-      setValue(`items.${index}.productName`, product.productName);
-      setValue(`items.${index}.spec`, product.spec || "");
-      setValue(`items.${index}.unitPrice`, product.unitPrice || "0");
-      recalcAmounts(quantity, product.unitPrice || "0");
-    }
+    setValue(`items.${index}.productId`, product.id);
+    setValue(`items.${index}.productName`, product.productName);
+    setValue(`items.${index}.spec`, product.spec || "");
+    setValue(`items.${index}.unitPrice`, product.unitPrice || "0");
+    recalcAmounts(quantity, product.unitPrice || "0");
   };
 
   const recalcAmounts = (q: unknown, u: unknown) => {
@@ -134,18 +131,12 @@ export function EstimateItemRow({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">품목 선택</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.9rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              <ProductCombobox
+                value={watch(`items.${index}.productId`) ?? null}
                 onChange={handleProductSelect}
-                value={watch(`items.${index}.productId`) ?? ""}
-              >
-                <option value="">직접 입력</option>
-                {products.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.productName}
-                  </option>
-                ))}
-              </select>
+                products={products}
+                placeholder="품목 검색"
+              />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">

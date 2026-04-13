@@ -1,6 +1,7 @@
 "use client";
 
 import { EstimateItemRow } from "@/components/estimates/estimate-item-row";
+import { ClientCombobox } from "@/components/shared/client-combobox";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -243,18 +244,12 @@ export function EstimateForm({
               <Label className="text-[0.95rem] font-semibold">
                 거래처 <span className="text-destructive">*</span>
               </Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-[0.95rem] shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-                value={watch("clientId") || ""}
-                onChange={(e) => handleClientChange(Number(e.target.value))}
-              >
-                <option value="">거래처를 선택하세요</option>
-                {clients.map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.companyName}
-                  </option>
-                ))}
-              </select>
+              <ClientCombobox
+                value={watch("clientId") || null}
+                onChange={(clientId) => handleClientChange(clientId)}
+                clients={clients}
+                placeholder="거래처를 검색하세요"
+              />
               {errors.clientId && (
                 <p className="text-destructive text-sm">
                   {errors.clientId.message}
