@@ -51,16 +51,16 @@ export function EstimateItemRow({
     | Record<string, { message?: string }>
     | undefined;
 
-  const handleProductSelect = (product: { id: number; productName: string;[key: string]: unknown } | null) => {
+  const handleProductSelect = (product: ProductOption | null) => {
     if (!product) {
       setValue(`items.${index}.productId`, null);
       return;
     }
     setValue(`items.${index}.productId`, product.id);
     setValue(`items.${index}.productName`, product.productName);
-    setValue(`items.${index}.spec`, (product.spec as string) || "");
-    setValue(`items.${index}.unitPrice`, (product.unitPrice as string) || "0");
-    recalcAmounts(quantity, (product.unitPrice as string) || "0");
+    setValue(`items.${index}.spec`, product.spec || "");
+    setValue(`items.${index}.unitPrice`, product.unitPrice || "0");
+    recalcAmounts(quantity, product.unitPrice || "0");
   };
 
   const recalcAmounts = (q: unknown, u: unknown) => {

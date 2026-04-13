@@ -18,28 +18,23 @@ import { cn } from "@/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 
-interface ProductOption {
-  id: number;
-  productName: string;
-}
-
-interface ProductComboboxProps {
+interface ProductComboboxProps<T extends { id: number; productName: string }> {
   value: number | null | undefined;
-  onChange: (product: { id: number; productName: string;[key: string]: unknown } | null) => void;
-  products: { id: number; productName: string;[key: string]: unknown }[];
+  onChange: (product: T | null) => void;
+  products: T[];
   placeholder?: string;
   disabled?: boolean;
   className?: string;
 }
 
-export function ProductCombobox({
+export function ProductCombobox<T extends { id: number; productName: string }>({
   value,
   onChange,
   products,
   placeholder = "품목 검색",
   disabled = false,
   className,
-}: ProductComboboxProps) {
+}: ProductComboboxProps<T>) {
   const [open, setOpen] = useState(false);
 
   const selectedProduct = products.find((p) => p.id === value) ?? null;
@@ -76,7 +71,6 @@ export function ProductCombobox({
           <CommandList>
             <CommandEmpty>검색 결과가 없습니다</CommandEmpty>
             <CommandGroup>
-              {/* 직접 입력 옵션 */}
               <CommandItem
                 value="__direct_input__"
                 onSelect={() => {

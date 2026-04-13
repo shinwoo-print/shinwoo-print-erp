@@ -83,17 +83,17 @@ export function OrderItemRow({
     | undefined;
 
   // 품목 선택 시 자동 채움
-  const handleProductSelect = (product: { id: number; productName: string;[key: string]: unknown } | null) => {
+  const handleProductSelect = (product: ProductOption | null) => {
     if (!product) {
       setValue(`items.${index}.productId`, null);
       return;
     }
     setValue(`items.${index}.productId`, product.id);
     setValue(`items.${index}.productName`, product.productName);
-    setValue(`items.${index}.printType`, (product.printType as string) || "");
-    setValue(`items.${index}.material`, (product.material as string) || "");
-    setValue(`items.${index}.unitPrice`, (product.unitPrice as string) || "");
-    recalcSupply(sheets, (product.unitPrice as string) || "");
+    setValue(`items.${index}.printType`, product.printType || "");
+    setValue(`items.${index}.material`, product.material || "");
+    setValue(`items.${index}.unitPrice`, product.unitPrice || "");
+    recalcSupply(sheets, product.unitPrice || "");
   };
 
   // 공급가액 자동계산

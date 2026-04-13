@@ -71,7 +71,7 @@ export function TransactionItemRow({
     setValue(`items.${index}.vat`, vat);
   };
 
-  const handleProductSelect = (product: { id: number; productName: string;[key: string]: unknown } | null) => {
+  const handleProductSelect = (product: ProductOption | null) => {
     if (!product) {
       setValue(`items.${index}.productId`, undefined);
       return;
