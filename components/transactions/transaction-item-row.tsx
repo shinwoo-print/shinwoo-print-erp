@@ -71,17 +71,17 @@ export function TransactionItemRow({
     setValue(`items.${index}.vat`, vat);
   };
 
-  const handleProductSelect = (product: ProductOption | null) => {
+  const handleProductSelect = (product: { id: number; productName: string;[key: string]: unknown } | null) => {
     if (!product) {
       setValue(`items.${index}.productId`, undefined);
       return;
     }
 
-    const nextUnitPrice = Number(product.unitPrice || "0");
+    const nextUnitPrice = Number((product.unitPrice as string) || "0");
 
     setValue(`items.${index}.productId`, product.id);
     setValue(`items.${index}.productName`, product.productName);
-    setValue(`items.${index}.spec`, product.spec || "");
+    setValue(`items.${index}.spec`, (product.spec as string) || "");
     setValue(`items.${index}.unitPrice`, nextUnitPrice);
 
     recalcAmounts(quantity, nextUnitPrice);
