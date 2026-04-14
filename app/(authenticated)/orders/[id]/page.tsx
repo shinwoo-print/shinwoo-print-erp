@@ -72,6 +72,11 @@ interface OrderData {
     dieCutter: string | null;
     resinPlate: string | null;
     sortOrder: number;
+    paperType: string | null;
+    backing: string | null;
+    adhesive: string | null;
+    thickness: string | null;
+    manufacturer: string | null;
   }>;
 }
 
@@ -231,6 +236,11 @@ export default function OrderDetailPage() {
       dieCutter: item.dieCutter || "",
       resinPlate: item.resinPlate || "",
       sortOrder: idx,
+      paperType: item.paperType || "",
+      backing: item.backing || "",
+      adhesive: item.adhesive || "",
+      thickness: item.thickness || "",
+      manufacturer: item.manufacturer || "",
     })),
   };
 
