@@ -1,7 +1,6 @@
 "use client";
 
 import { DesignImageUpload } from "@/components/orders/design-image-upload";
-import { ComboboxInput } from "@/components/shared/combobox-input";
 import { ProductCombobox } from "@/components/shared/product-combobox";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -49,13 +48,6 @@ interface OrderItemRowProps {
     DATA_TYPE: SystemOption[];
     DESIGN_STATUS: SystemOption[];
   };
-  materialOptions: {
-    paperType: string[];
-    backing: string[];
-    adhesive: string[];
-    thickness: string[];
-    manufacturer: string[];
-  };
 }
 
 export function OrderItemRow({
@@ -68,7 +60,6 @@ export function OrderItemRow({
   canRemove,
   products,
   options,
-  materialOptions,
 }: OrderItemRowProps) {
   const [expanded, setExpanded] = useState(true);
   const prefix = `items.${index}` as const;
@@ -264,47 +255,42 @@ export function OrderItemRow({
           <div className="grid grid-cols-1 gap-4 md:grid-cols-6">
             <div className="space-y-1">
               <Label className="text-[0.85rem]">원단종류</Label>
-              <ComboboxInput
-                value={watch(`items.${index}.paperType`) || ""}
-                onChange={(v) => setValue(`items.${index}.paperType`, v)}
-                options={materialOptions.paperType}
-                placeholder="선택"
+              <Input
+                className="text-[0.9rem]"
+                placeholder="예: 아트지, 유포지"
+                {...register(`items.${index}.paperType`)}
               />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">후지</Label>
-              <ComboboxInput
-                value={watch(`items.${index}.backing`) || ""}
-                onChange={(v) => setValue(`items.${index}.backing`, v)}
-                options={materialOptions.backing}
-                placeholder="선택"
+              <Input
+                className="text-[0.9rem]"
+                placeholder="예: 백산"
+                {...register(`items.${index}.backing`)}
               />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">접착제</Label>
-              <ComboboxInput
-                value={watch(`items.${index}.adhesive`) || ""}
-                onChange={(v) => setValue(`items.${index}.adhesive`, v)}
-                options={materialOptions.adhesive}
-                placeholder="선택"
+              <Input
+                className="text-[0.9rem]"
+                placeholder="예: 아크릴, 유성"
+                {...register(`items.${index}.adhesive`)}
               />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">두께</Label>
-              <ComboboxInput
-                value={watch(`items.${index}.thickness`) || ""}
-                onChange={(v) => setValue(`items.${index}.thickness`, v)}
-                options={materialOptions.thickness}
-                placeholder="선택"
+              <Input
+                className="text-[0.9rem]"
+                placeholder="예: 80μ, 100μ"
+                {...register(`items.${index}.thickness`)}
               />
             </div>
             <div className="space-y-1">
               <Label className="text-[0.85rem]">제조사</Label>
-              <ComboboxInput
-                value={watch(`items.${index}.manufacturer`) || ""}
-                onChange={(v) => setValue(`items.${index}.manufacturer`, v)}
-                options={materialOptions.manufacturer}
-                placeholder="선택"
+              <Input
+                className="text-[0.9rem]"
+                placeholder="예: 한솔, 무림"
+                {...register(`items.${index}.manufacturer`)}
               />
             </div>
             <div className="space-y-1">

@@ -144,13 +144,6 @@ export function OrderForm({
     COURIER: [],
   });
   const [copyOpen, setCopyOpen] = useState(false);
-  const [materialOptions, setMaterialOptions] = useState({
-    paperType: [] as string[],
-    backing: [] as string[],
-    adhesive: [] as string[],
-    thickness: [] as string[],
-    manufacturer: [] as string[],
-  });
 
   const {
     register,
@@ -240,30 +233,6 @@ export function OrderForm({
   useEffect(() => {
     fetchOptions();
   }, [fetchOptions]);
-
-  // 원단 옵션 로드
-  useEffect(() => {
-    fetch("/api/materials/options")
-      .then((res) => res.json())
-      .then((json) => {
-        setMaterialOptions({
-          paperType: (json.paperType as string[]) || [],
-          backing: (json.backing as string[]) || [],
-          adhesive: (json.adhesive as string[]) || [],
-          thickness: (json.thickness as string[]) || [],
-          manufacturer: (json.manufacturer as string[]) || [],
-        });
-      })
-      .catch(() =>
-        setMaterialOptions({
-          paperType: [],
-          backing: [],
-          adhesive: [],
-          thickness: [],
-          manufacturer: [],
-        }),
-      );
-  }, []);
 
   // 기존 발주서 불러오기
   const handleCopySelect = async (orderId: number) => {
@@ -527,7 +496,6 @@ export function OrderForm({
                   canRemove={fields.length > 1}
                   products={products}
                   options={options}
-                  materialOptions={materialOptions}
                 />
               ))}
             </div>
