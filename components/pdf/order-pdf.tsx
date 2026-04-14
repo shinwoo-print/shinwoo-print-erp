@@ -35,6 +35,11 @@ interface OrderItemData {
   resinPlate: string | null;
   rollDirection: string | null;
   slit: boolean;
+  paperType: string | null;
+  backing: string | null;
+  adhesive: string | null;
+  thickness: string | null;
+  manufacturer: string | null;
   dataType: string | null;
   lastDataDate: string | null;
   designFileStatus: string | null;
@@ -334,6 +339,11 @@ function OrderItemPage({
           <Field label="시트당매수" value={item.sheetsPerSheet} />
           <Field label="롤당매수" value={formatNumber(item.sheetsPerRoll)} />
           <Field label="재단방식" value={item.cuttingMethod} />
+          <Field label="원단종류" value={item.paperType} />
+          <Field label="후지" value={item.backing} />
+          <Field label="접착제" value={item.adhesive} />
+          <Field label="두께" value={item.thickness} />
+          <Field label="제조사" value={item.manufacturer} />
         </View>
         {/* 중: 후가공 */}
         <View style={s.col}>

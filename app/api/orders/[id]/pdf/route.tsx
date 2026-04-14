@@ -120,6 +120,11 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         resinPlate: item.resinPlate,
         rollDirection: item.rollDirection,
         slit: item.slit,
+        paperType: item.paperType,
+        backing: item.backing,
+        adhesive: item.adhesive,
+        thickness: item.thickness,
+        manufacturer: item.manufacturer,
         dataType: item.dataType,
         lastDataDate: item.lastDataDate
           ? item.lastDataDate.toISOString().split("T")[0]
