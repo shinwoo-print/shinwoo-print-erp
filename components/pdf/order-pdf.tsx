@@ -106,21 +106,6 @@ const s = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  printTypeBadge: {
-    fontSize: 11,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 3,
-    marginRight: 4,
-  },
-  printTypeActive: {
-    backgroundColor: COLORS.blue,
-    color: COLORS.white,
-  },
-  printTypeInactive: {
-    backgroundColor: COLORS.veryLightGray,
-    color: COLORS.lightGray,
-  },
   designArea: {
     width: "100%",
     height: 200,
@@ -226,8 +211,6 @@ const s = StyleSheet.create({
   },
 });
 
-const PRINT_TYPES = ["옵셋", "디지털", "실크", "레터프레스", "플렉소"];
-
 /* ────────── Field 컴포넌트 ────────── */
 function Field({
   label,
@@ -290,21 +273,7 @@ function OrderItemPage({
           <Text style={s.labelText}>제품명</Text>
           <Text style={s.valueText}>{item.productName}</Text>
           <Text style={s.labelText}>인쇄종류</Text>
-          <View style={{ flexDirection: "row", marginTop: 2 }}>
-            {PRINT_TYPES.map((pt) => (
-              <Text
-                key={pt}
-                style={[
-                  s.printTypeBadge,
-                  item.printType === pt
-                    ? s.printTypeActive
-                    : s.printTypeInactive,
-                ]}
-              >
-                {pt}
-              </Text>
-            ))}
-          </View>
+          <Text style={s.valueText}>{item.printType || "-"}</Text>
         </View>
         {/* 우측 */}
         <View style={{ width: 200, alignItems: "flex-end" }}>
