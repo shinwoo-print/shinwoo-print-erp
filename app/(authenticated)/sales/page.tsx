@@ -60,7 +60,7 @@ interface TargetData {
   targetAmount: string;
 }
 
-const YEARS = [2025, 2026, 2027];
+const YEARS = Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - 2 + i);
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
 const PAGE_SIZE = 20;
 
